@@ -81,13 +81,13 @@ const Header = () => {
 
             {/* Footer Section */}
             <Link href='/' className=''>
-                <div className=' max-md:hidden flex place-items-center  dark:text-slate-400 text-4xl   p-3 pb-6 rounded-t-2xl  rounded-l-2xl drop-shadow-slate'>
+                <div className=' max-md:hidden flex place-items-center  dark:text-yellow-500 text-4xl   p-3 pb-6 rounded-t-2xl  rounded-l-2xl drop-shadow-slate'>
 
 
 
                     <BsBookmarkCheckFill className="hidden animate-pulse  mr-3 -mb-3  dark:block"></BsBookmarkCheckFill>
                     <BsBookmarkCheckFill className="block animate-pulse  mr-3 -mb-3  dark:hidden"></BsBookmarkCheckFill>
-                    <h2 className=" dark:text-slate-400 font-arabicUI text-4xl text-slate-800 ">كويزاتك</h2>
+                    <h2 className=" dark:text-yellow-500 font-arabicUI text-4xl text-yellow-400 ">كويزاتك</h2>
                 </div>
             </Link>
         </div>

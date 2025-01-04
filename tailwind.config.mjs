@@ -25,6 +25,9 @@ export default {
       backgroundImage: {
         'quiz': "url('/brain.jpeg')",
         'quiz2': "url('/brain.jpeg')",
+        'paton': "url('/pato.jpg')",
+        'bio': "url('/bio.jpg')",
+        'bio': "url('/bio2.jpg')",
         'noise': "url('/noise.jpg')",
       }
     },
