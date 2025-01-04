@@ -49,17 +49,17 @@ const Hero = () => {
             {/* Features Section */}
             <div className="grid grid-cols-1 lg:grid-cols-3 m-8 gap-4">
                 {/* Left Section */}
-                <div className="rtl relative col-span-2 h-fit  bg-yellow-400 outline-dashed outline-offset-2 outline-yellow-300 mx-4 md:mx-9 p-6 rounded-xl">
+                <div className="rtl relative shadow-2xl shadow-yellow-400/70 col-span-2 h-fit  bg-yellow-400 outline-dashed outline-offset-2 outline-yellow-300 mx-4 md:mx-9 p-6 rounded-xl">
                     <h1 className="font-arabicUI2 m-auto flex justify-center text-yellow-800 text-3xl md:text-5xl">
                         مميزات منصة كويزاتك
                         <HiBadgeCheck />
 
                     </h1>
-                    <div className="relative  mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="relative   mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {Features.map((item, index) => (
                             <div
                                 key={index}
-                                className="bg-yellow-500 p-4 rounded-xl hover:scale-105 cursor-default transition"
+                                className="bg-yellow-500 hover:shadow-2xl shadow-black p-4 rounded-xl hover:scale-105 cursor-default transition"
                             >
                                 <h2 className="font-arabicUI3 text-center text-xl md:text-2xl">
                                     {item.name}
@@ -73,7 +73,7 @@ const Hero = () => {
                 </div>
 
                 {/* Right Section */}
-                <div className="hidden lg:block mx-8  outline-dashed outline-offset-2 outline-yellow-300 bg-yellow-400 p-6 rounded-xl shadow-lg">
+                <div className="hidden shadow-2xl shadow-yellow-400/70 lg:block mx-8  outline-dashed outline-offset-2 outline-yellow-300 bg-yellow-400 p-6 rounded-xl ">
                     <div className="">
                         <h1 className="font-arabicUI2 m-auto flex justify-center text-yellow-800 text-3xl md:text-5xl">
 
