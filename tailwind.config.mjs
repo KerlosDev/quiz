@@ -39,6 +39,7 @@ export default {
         'bio': "url('/bio2.jpg')",
         'noise': "url('/noise.jpg')",
         'shits': "url('/shits.png')",
+        'non': "url('/non.png')",
       }
     },
   },
