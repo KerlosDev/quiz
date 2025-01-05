@@ -4,6 +4,7 @@ import { HiBadgeCheck } from "react-icons/hi";
 import { GiTrophyCup } from "react-icons/gi";
 import { FaClipboardList } from "react-icons/fa";
 import { TbMessageFilled } from "react-icons/tb";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 const Hero = () => {
     const Features = [
@@ -47,36 +48,37 @@ const Hero = () => {
             <div className=' absolute w-80 h-80 bg-slate-900 right-0  -bottom-48 rounded-full blur-2xl -z-20'></div>
             <div className=' absolute w-80 h-80 bg-slate-900 right-auto left-auto -bottom-48 rounded-full blur-2xl -z-20'></div>
 
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-60 mx-4 md:mx-8">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-60  md:mx-8">
                 {/* Main Section */}
 
                 {/* Secondary Section */}
                 <div className="relative   col-span-1 bg-yellow-400 shadow-2xl bg-non bg-cover outline-dashed outline-offset-2 outline-red-500 w-fit p-6 md:p-9 rounded-xl flex items-center">
                     {/* Noise Effect */}
-                    <div className="absolute pointer-events-none h-full w-full opacity-5 bg-noise z-50"></div>
+                    <div className="absolute pointer-events-none h-full w-fit opacity-5 bg-noise z-50"></div>
 
                     {/* Content */}
-                    <h3 className="flex flex-col md:flex-row font-arabicUI3 items-center  justify-center gap-3 text-xl md:text-3xl lg:text-4xl text-center text-white">
+                    <h3 className="flex flex-col md:flex-row font-arabicUI3 items-center  justify-center  text-xl md:text-3xl lg:text-4xl text-center text-white">
                         <TbMessageFilled className="text-6xl md:text-8xl transition  hover:scale-150 hover:cursor-pointer" />
-                        رسالة اليوم
+                         رسالة اليوم
                     </h3>
                 </div>
-                <div className="relative  col-span-1 bg-yellow-400 shadow-2xl bg-paton bg-cover outline-dashed outline-offset-2 outline-yellow-300 w-fit p-6 md:p-9 rounded-xl flex items-center">
+                
+                <div className="relative   col-span-1  bg-yellow-400  shadow-2xl bg-non2 bg-cover outline-dashed outline-offset-2 outline-green-500 w-fit p-4 md:p-9 rounded-xl flex items-center">
                     {/* Noise Effect */}
                     <div className="absolute pointer-events-none h-full w-full opacity-5 bg-noise z-50"></div>
 
                     {/* Content */}
-                    <h3 className="flex flex-col md:flex-row font-arabicUI3 items-center  justify-center gap-3 text-xl md:text-3xl lg:text-4xl text-center text-yellow-800">
-                        <GiTrophyCup className="text-6xl md:text-8xl transition  hover:scale-150 hover:cursor-pointer" />
-                        رسالة اليوم
+                    <h3 className="flex flex-col md:flex-row font-arabicUI3 items-center  justify-center  text-xl md:text-3xl lg:text-4xl text-center text-white">
+                        <FaExclamationTriangle className="text-6xl md:text-8xl transition  hover:scale-150 hover:cursor-pointer" />
+                         تفعيل الحساب
                     </h3>
                 </div>
-                <div className="relative col-span-2 md:col-span-3 bg-yellow-400 shadow-2xl bg-paton bg-cover outline-dashed outline-offset-2 outline-yellow-300 w-full p-6 md:p-9 rounded-xl flex items-center">
+                <div className="relative   col-span-2   md:col-span-3 bg-yellow-400 shadow-2xl bg-paton bg-cover outline-dashed outline-offset-2 outline-yellow-300 w-full p-6 md:p-9 rounded-xl flex items-center">
                     {/* Noise Effect */}
                     <div className="absolute pointer-events-none h-full w-full opacity-5 bg-noise z-50"></div>
 
                     {/* Content */}
-                    <h3 className="flex flex-col md:flex-row font-arabicUI3 items-center justify-center gap-3 text-xl md:text-3xl lg:text-4xl text-center text-yellow-800">
+                    <h3 className="flex flex-col md:flex-row font-arabicUI3 items-center justify-center  text-xl md:text-3xl lg:text-4xl text-center text-yellow-800">
                         <GiTrophyCup className="text-6xl md:text-8xl transition hover:scale-150 hover:cursor-pointer" />
                         موقع كويزاتك اكبر بنك اسئلة للمراجعة النهائية من جميع الكتب الخارجيه
                     </h3>

@@ -40,6 +40,7 @@ export default {
         'noise': "url('/noise.jpg')",
         'shits': "url('/shits.png')",
         'non': "url('/non.png')",
+        'non2': "url('/non2.png')",
       }
     },
   },
