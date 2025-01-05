@@ -81,7 +81,7 @@ const Page = () => {
                     </div>
 
                     <div className='backdrop-blur-lg p-5 border mt-5 rounded-2xl'>
-                        <h1 className='m-auto mt-6 flex justify-center font-arabicUI3 place-items-center leading-relaxed max-md:text-4xl'>
+                        <h1 className='m-auto mt-6 flex justify-center text-center  font-arabicUI3 place-items-center leading-relaxed max-md:text-4xl'>
                             <span>وسيلة الدفع فودافون كاش</span>
                         </h1>
                         <h1 className='m-auto mt-6 flex justify-center font-arabicUI3 place-items-center'>
@@ -92,6 +92,9 @@ const Page = () => {
                         </h1>
                         <h1 className='m-auto mt-6 flex justify-center font-arabicUI3 bg-black/15 border shadow-2xl shadow-white/20 p-4 rounded-xl w-fit place-items-center'>
                             مبلغ : 50 جنيه
+                        </h1>
+                        <h1 className='m-auto mt-6 flex justify-center leading-relaxed text-center text-sm font-arabicUI3 place-items-center'>
+                            علي كل عمليه دفع بيتم تحويل 5 جنية لجمعية الهلال الاحمر الفلسطيني عشان توصل لاخواتنا هناك
                         </h1>
 
 

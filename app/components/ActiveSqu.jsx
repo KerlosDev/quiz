@@ -48,7 +48,7 @@ const ActiveSqu = () => {
     };
 
     return (
-        <div className="relative col-span-1 bg-yellow-400 shadow-2xl bg-non2 bg-cover outline-dashed outline-offset-2 outline-green-500 w-fit p-4 md:p-9 rounded-xl flex items-center">
+        <div className="relative col-span-1 hover:brightness-90 transition bg-green-500 shadow-2xl bg-non2 bg-cover outline-dashed outline-offset-2 outline-green-500 w-fit p-4 md:p-9 rounded-xl flex items-center">
             {/* Noise Effect */}
             <div className="absolute pointer-events-none h-full w-full opacity-5 bg-noise z-50"></div>
 
