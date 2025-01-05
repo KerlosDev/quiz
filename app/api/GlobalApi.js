@@ -77,6 +77,8 @@ const EnrollmentUsers = async (userEmail) => {
 }
   `
 
+
+
   const result4 = await request(MASTER_URL, query4)
   return result4;
 }
@@ -202,9 +204,52 @@ const publishEnrolls = async () => {
   return back
 }
 
+
+const dataofChem = async (quizid) => {
+  const shite = gql`
+  
+  query MyQuery {
+  quiz(where: {id: "`+quizid+`"}) {
+        quiztitle
+        question {
+          opationA
+          opationC
+          opationB
+          opationD
+          trueChoisevip
+          qus
+        }
+      }
+}
+
+  `
+
+  const shitosd = await request(MASTER_URL, shite)
+  return shitosd
+}
+
+const subchem = async () => {
+  const shite = gql`
+  query MyQuery {
+  chems {
+    emthanch {
+      quiz {
+        quiztitle
+        id
+      }
+    }
+  }
+}
+
+  `
+
+  const shitosd = await request(MASTER_URL, shite)
+  return shitosd
+}
+
 export default {
-  
-  
+
+
   sendEnrollData,
   EnrollmentUsers,
   getQuizDataWithEnroll,
@@ -213,7 +258,9 @@ export default {
   data4admin,
   editStateSub,
   publishEnrolls,
-  getquizdata
+  getquizdata,
+  dataofChem,
+  subchem
 
 
 }

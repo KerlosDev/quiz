@@ -25,31 +25,28 @@ const QuizData = ({ params }) => {
 
     // Function to fetch quiz data
 
-    const quizqus = (quizid) => {
+    const chemdata = (quizid) => {
         console.log("Quiz ID: ", quizid);
-        GlobalApi.getquizdata(quizid)
+        GlobalApi.dataofChem(quizid)
             .then((req) => {
-                console.log("Response: ", req);
+                console.log("Response: ", req.quiz);
                 setEnrolQuiz(req.quiz)
+                
+                
             })
             .catch((err) => {
                 console.error("Error: ", err);
             });
     };
 
+    
 
-    const quizdata = (email) => {
-        GlobalApi.getQuizDataWithEnroll(email).then((req) => {
-            setEnrolQuiz(req);
-            console.log(req)
-        });
-    };
 
     // Load answers from localStorage when component mounts
     useEffect(() => {
         if (email && quizid) {
-            quizdata(email);
-            quizqus(quizid);
+           
+            chemdata(quizid)
         }
 
         // Load answers from localStorage
@@ -59,6 +56,7 @@ const QuizData = ({ params }) => {
         }
     }, [user, quizid]);
 
+   
     const handleClickNumber = (index) => {
         setActiveINdex(index);
         setActive4quiz(0);
@@ -141,7 +139,7 @@ const QuizData = ({ params }) => {
                 const saveGrade = async () => {
                     try {
                         const response = await GlobalApi.SaveGradesOfQuiz(
-                            email, user?.fullName, finalScore, enrolquiz.quiztitle, enrolquiz?.question?.length
+                            email, user?.fullName, finalScore, enrolquiz?.quiztitle, enrolquiz?.question?.length
 
                         );
 
@@ -180,13 +178,13 @@ const QuizData = ({ params }) => {
                 <div className='bg-quiz cursor-default bg-cover rounded-xl max-sm:p-4 p-8 max-sm:m-2 m-4'>
                     <div className='backdrop-blur-xl p-3 px-8 rounded-xl outline-dashed outline-white outline-2'>
                         <div className='flex justify-end'>
-                            <h4 className='text-right max-sm:text-lg font-arabicUI3 text-6xl bg-white/10 p-4 w-fit rounded-md justify-start flex text-white'>
-                                <BiSolidPencil /> {enrolquiz.quiztitle}
+                            <h4 className='text-right max-sm:text-lg  font-arabicUI3 text-6xl bg-white/10 p-4 w-fit rounded-md justify-start flex text-white'>
+                                <BiSolidPencil /> {enrolquiz?.quiztitle}
                             </h4>
                         </div>
                         <div>
 
-                            <h2 className={`m-7 cursor-pointer font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center hover:bg-white/40 duration-500 transition active:ring-4 select-none bg-white text-gray-800`}>
+                            <h2 className={`m-7 cursor-pointer leading-normal rtl font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center hover:bg-white/40 duration-500 transition active:ring-4 select-none bg-white text-gray-800`}>
                                 {enrolquiz?.question && enrolquiz?.question[activeIndex] ? enrolquiz?.question[activeIndex]?.qus : 'No question available'}
                             </h2>
                             <div className='grid max-md:grid-cols-1 grid-cols-2'>
