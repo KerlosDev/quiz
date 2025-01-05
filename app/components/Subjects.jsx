@@ -25,16 +25,11 @@ const Subjects = () => {
             books: ["ميرسي"],
             link: "/french"
         },
-        {
-            name: "جيولوجيا",
-            img: "/geo.png",
-            books: ["التفوق", "الامتحان"],
-            link: "/geo"
-        },
+
         {
             name: "كيمياء",
             img: "/chem.jpg",
-            books: ["التفوق", "الامتحان", "افوجادرو", "مندليف"],
+            books: [ "الامتحان", "افوجادرو", "مندليف"],
             link: "/chem"
         },
         {
@@ -49,6 +44,12 @@ const Subjects = () => {
             books: ["التفوق", "الامتحان",],
             link: "/bio"
         },
+        {
+            name: "جيولوجيا",
+            img: "/geo.png",
+            books: ["التفوق", "الامتحان"],
+            link: "/geo"
+        },
     ];
 
     return (
@@ -60,7 +61,7 @@ const Subjects = () => {
             </h3>
 
             {/* Subjects Grid */}
-            <div    className="p-3 m-3 mt-7 rtl grid grid-cols-1   sm:grid-cols-3 lg:grid-cols-4 gap-14">
+            <div className="p-3 m-3 mt-7 rtl grid grid-cols-1   sm:grid-cols-3 lg:grid-cols-4 gap-14">
                 {subjects.map((item, index) => (
                     <Link key={index} href={item.link}>
                         <div

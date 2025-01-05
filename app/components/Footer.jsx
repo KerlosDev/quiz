@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const Footer = () => {
@@ -15,15 +16,18 @@ const Footer = () => {
                             Kerlos Hany
                             &nbsp;
                         </span>
-                        <span className=' bg-paton text-slate-900  px-2 rounded-xl bg-cover font-arabicUI2 '>
-                            كويزاتك
-                        </span>
+                        <Link href='/'>
+
+                            <span className=' bg-paton text-slate-900  px-2 rounded-xl bg-cover font-arabicUI2 '>
+                                كويزاتك
+                            </span>
+                        </Link>
 
 
                     </p>
                 </div>
-              
-                
+
+
             </div>
         </footer>
 
