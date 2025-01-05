@@ -70,12 +70,12 @@ const getQuizDataWithEnroll = async (userEmail) => {
 
 }
 
-const SaveGradesOfQuiz = async (userEmail, uerName, userGrade, quizname, numofqus) => {
+const SaveGradesOfQuiz = async (subname, bookname , userEmail, uerName, userGrade, quizname, numofqus ) => {
   const query6 = gql`
   
   mutation MyMutation {
   createQuizresult(
-    data: {userEmail: "`+ userEmail + `", userName: "` + uerName + `", quizGrade: ` + userGrade + `,nameofquiz: "` + quizname + `",numofqus:` + numofqus + `}
+    data: { nameofsub: `+ subname + `, nameofBook: ` + bookname + `, userEmail: "` + userEmail + `", userName: "` + uerName + `", quizGrade: ` + userGrade + `,nameofquiz: "` + quizname + `",numofqus:` + numofqus + `}
   ) {
     id
   }
@@ -191,6 +191,10 @@ const dataofChem = async (quizid) => {
           trueChoisevip
           qus
         }
+
+         chooseBook
+         subjectName
+    
       }
 }
 

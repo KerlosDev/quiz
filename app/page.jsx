@@ -2,6 +2,7 @@ import Image from "next/image";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Subjects from "./components/Subjects";
+import Footer from "./components/Footer";
 
 
 export default function Home() {
@@ -12,6 +13,7 @@ export default function Home() {
       
       <Hero></Hero>
       <Subjects></Subjects>
+      <Footer></Footer>
       
     </div>
   );

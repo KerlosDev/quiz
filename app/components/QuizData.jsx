@@ -30,6 +30,7 @@ const QuizData = ({ params }) => {
         GlobalApi.dataofChem(quizid)
             .then((req) => {
                 console.log("Response: ", req.quiz);
+                console.log("Response 2 : ", req);
                 setEnrolQuiz(req.quiz)
                 
                 
@@ -121,6 +122,8 @@ const QuizData = ({ params }) => {
     const trueChoices = enrolquiz?.question?.map((item) => item.trueChoisevip.toUpperCase()) || [];
 
 
+    console.log(enrolquiz?.subjectName)
+    console.log(enrolquiz?.chooseBook)
 
     const handleSumbit = () => {
         Swal.fire({
@@ -133,28 +136,30 @@ const QuizData = ({ params }) => {
             confirmButtonText: "تسليم الامتحان",
         }).then((result) => {
             if (result.isConfirmed) {
-                const finalScore = calculateScore(); // Calculate the score immediately
-
-                // Save the grade to the server
+                const finalScore = calculateScore(); // حساب الدرجات فوراً
+    
+                // حفظ الدرجة على السيرفر
                 const saveGrade = async () => {
                     try {
                         const response = await GlobalApi.SaveGradesOfQuiz(
-                            email, user?.fullName, finalScore, enrolquiz?.quiztitle, enrolquiz?.question?.length
-
+                            enrolquiz?.subjectName, enrolquiz?.chooseBook, email, user?.fullName, finalScore, enrolquiz?.quiztitle, enrolquiz?.question?.length
                         );
-
-
+    
                         // Notify the user of successful submission
                         Swal.fire({
                             title: "تم التسليم بنجاح!",
                             text: "انا فخور بيك انك حاولت مهما كانت النتيجة",
                             icon: "success",
                         });
-
+    
                         setShowResults(true); // Show results page
+    
+                        // مسح الإجابات المخزنة في الذاكرة بعد التسليم
+                        localStorage.removeItem(`quizAnswers_${quizid}`);
+    
                     } catch (error) {
                         console.error("Failed to save grades:", error);
-
+    
                         Swal.fire({
                             title: "خطأ!",
                             text: "حدث خطأ أثناء حفظ النتائج. حاول مرة أخرى لاحقًا.",
@@ -162,11 +167,12 @@ const QuizData = ({ params }) => {
                         });
                     }
                 };
-
-                saveGrade(); // Call the save grade function
+    
+                saveGrade(); // استدعاء دالة حفظ الدرجة
             }
         });
     };
+    
 
 
 

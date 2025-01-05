@@ -22,10 +22,19 @@ export default {
         rakkas: ['Rakkas', 'sans-serif'], // Add Rakkas font to Tailwind theme
 
       },
+      dropShadow: {
+        white: '0 4px 6px rgba(255, 255, 255, 0.5)',
+        slate: '0 5px 20px rgba(255, 255, 255, 0.5)',
+        yellow2: '0 5px 20px rgba(250,204,21,1)',
+        red: '0 2px 50px rgba(245, 86, 85, 0.6)',
+        blue: '0 0px 90px rgba(47, 75, 255, 0.6)',
+        yellow: '0 10px 70px rgba(250,204,21,1)',
+      },
       backgroundImage: {
         'quiz': "url('/brain.jpeg')",
         'quiz2': "url('/brain.jpeg')",
         'paton': "url('/pato.jpg')",
+        'daark': "url('/darkpat.jpg')",
         'bio': "url('/bio.jpg')",
         'bio': "url('/bio2.jpg')",
         'noise': "url('/noise.jpg')",

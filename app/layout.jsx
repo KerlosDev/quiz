@@ -51,9 +51,11 @@ export default function RootLayout({ children }) {
 
       <html lang="en">
         <body
-          className={` dark:bg-slate-950 relative  antialiased`}
+          className={`bg-slate-950 relative  antialiased`}
         >
+          
 
+          
           <Header></Header>
           {children}
         </body>

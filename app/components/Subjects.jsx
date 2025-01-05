@@ -52,7 +52,7 @@ const Subjects = () => {
     ];
 
     return (
-        <div className="px-4 sm:px-6 lg:px-8">
+        <div className="px-4 mt-14 sm:px-6 lg:px-8">
             {/* Header */}
             <h3 className="flex justify-center items-center m-auto font-arabicUI2 gap-2 text-4xl sm:text-6xl lg:text-7xl text-white text-center">
                 <FaFireAlt className="text-3xl sm:text-5xl lg:text-6xl text-red-500 animate-pulse" />
@@ -60,12 +60,12 @@ const Subjects = () => {
             </h3>
 
             {/* Subjects Grid */}
-            <div className="p-3 m-3 mt-7 rtl grid grid-cols-2   sm:grid-cols-3 lg:grid-cols-4 gap-14">
+            <div className="p-3 m-3 mt-7 rtl grid grid-cols-1   sm:grid-cols-3 lg:grid-cols-4 gap-14">
                 {subjects.map((item, index) => (
                     <Link key={index} href={item.link}>
                         <div
                             key={index}
-                            className="relative h-fit group bg-paton hover:outline-none cursor-pointer  hover:brightness-75 bg-repeat bg-center bg-cover hover:scale-105 transition-transform duration-500 w-full m-3 mt-8 p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl shadow-yellow-400/70 outline-dashed outline-offset-2 outline-yellow-300 bg-yellow-400"
+                            className="relative h-fit group bg-paton hover:outline-none cursor-pointer  hover:brightness-75 bg-repeat bg-center bg-cover hover:scale-105 transition-transform duration-500 w-full  p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl  outline-dashed outline-offset-2 outline-yellow-300 bg-yellow-400"
                         >
                             <div>
                                 {/* Subject Image */}

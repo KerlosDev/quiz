@@ -44,7 +44,7 @@ const QuizV = () => {
                                     <FaAtom className="inline-block text-yellow-400 mr-2" /> // Icon for 'ph'
                                 ) : null}
                             </h4>
-                            <p className=' font-arabicUI3 text-white/80 my-4 flex justify-center mx-auto text-4xl'>{(item?.quizGrade / item?.numofqus) * 100}%</p>
+                            <p className=' font-arabicUI3 text-white/80 my-4 flex justify-center mx-auto text-4xl'>{(item?.quizGrade / item?.numofqus).toFixed(2) * 100}%</p>
                             <ProgCircle hight={10} nsaba={(item?.quizGrade / item?.numofqus) * 100
                             }></ProgCircle>
                         </div>
