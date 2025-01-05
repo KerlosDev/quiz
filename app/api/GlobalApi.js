@@ -228,19 +228,15 @@ const dataofChem = async (quizid) => {
   return shitosd
 }
 
-const subchem = async () => {
+const subchem = async (sub) => {
   const shite = gql`
   query MyQuery {
-  chems {
-    emthanch {
-      quiz {
-        quiztitle
-        id
-      }
-    }
+  quizzes(where: {subjectName: `+sub+`}) {
+    quiztitle
+    id
+    chooseBook
   }
 }
-
   `
 
   const shitosd = await request(MASTER_URL, shite)
