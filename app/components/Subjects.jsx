@@ -52,7 +52,7 @@ const Subjects = () => {
     ];
 
     return (
-        <div className="px-4 mt-14 sm:px-6 lg:px-8">
+        <div id="subs" className="px-4 mt-14 sm:px-6 lg:px-8">
             {/* Header */}
             <h3 className="flex justify-center items-center m-auto font-arabicUI2 gap-2 text-4xl sm:text-6xl lg:text-7xl text-white text-center">
                 <FaFireAlt className="text-3xl sm:text-5xl lg:text-6xl text-red-500 animate-pulse" />
@@ -60,7 +60,7 @@ const Subjects = () => {
             </h3>
 
             {/* Subjects Grid */}
-            <div className="p-3 m-3 mt-7 rtl grid grid-cols-1   sm:grid-cols-3 lg:grid-cols-4 gap-14">
+            <div    className="p-3 m-3 mt-7 rtl grid grid-cols-1   sm:grid-cols-3 lg:grid-cols-4 gap-14">
                 {subjects.map((item, index) => (
                     <Link key={index} href={item.link}>
                         <div

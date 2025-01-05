@@ -107,7 +107,7 @@ const Hero = () => {
                 </div>
 
                 {/* Right Section */}
-                <div className="shadow-2xl mt-6  bg-paton bg-cover  lg:mx-8 outline-dashed outline-offset-2 outline-yellow-300 bg-yellow-400 p-6 rounded-xl">
+                <div  className="shadow-2xl mt-6  bg-paton bg-cover  lg:mx-8 outline-dashed outline-offset-2 outline-yellow-300 bg-yellow-400 p-6 rounded-xl">
 
 
                     <h1 className="font-arabicUI2 m-auto flex justify-center text-yellow-800 text-3xl md:text-5xl">

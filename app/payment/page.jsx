@@ -49,14 +49,14 @@ const Page = () => {
         <div className='text-white max-sm:text-2xl text-5xl m-3 font-abril mt-7'>
 
             {user ? (
-                <div className='w-1/2 max-md:w-full max-sm:w-full m-auto bg-quiz  p-6  rounded-xl shadow-2xl shadow-red-900/30'>
+                <div className='w-1/2 max-md:w-full max-sm:w-full m-auto bg-quiz   p-6  rounded-xl shadow-2xl shadow-red-900/30'>
                     <h1 className='m-auto flex justify-center font-arabicUI3'>
                         مرحبا بك فبوابه الدفع
                     </h1>
 
                     <div className='mt-6 rounded-tr-2xl grid grid-cols-2'>
                         <div className='border backdrop-blur-xl rounded-tl-xl'>
-                            <h1 className='text-4xl place-items-center mr-0 flex justify-center font-arabicUI3 mt-4'>
+                            <h1 className='text-3xl place-items-center  mr-0 flex justify-center font-arabicUI3 mt-4'>
                                 {user.firstName}
                             </h1>
                         </div>
