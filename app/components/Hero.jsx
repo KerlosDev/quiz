@@ -51,7 +51,7 @@ const Hero = () => {
             <div className="absolute pointer-events-none  h-full w-full opacity-5 bg-noise z-50"></div>
 
                 <h3 className="flex flex-col md:flex-row font-arabicUI3 items-center justify-center gap-3 text-2xl md:text-4xl text-center text-yellow-800">
-                    <GiTrophyCup className="text-4xl transition hover:scale-150 flex hover:cursor-pointer md:text-8xl" />
+                    <GiTrophyCup className=" text-8xl   transition hover:scale-150 flex hover:cursor-pointer " />
                     موقع كويزاتك اكبر بنك اسئلة للمراجعة النهائية من جميع الكتب الخارجيه
                 </h3>
             </div>

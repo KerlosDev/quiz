@@ -3,36 +3,6 @@ import request, { gql } from "graphql-request"
 const MASTER_URL = "https://ap-south-1.cdn.hygraph.com/content/cm5gvtuid03st08o0hz1fdxtm/master"
 
 
-
-const sendEnrollData = async (courseid, userEmail, phonenumber) => {
-  const query3 = gql`
-  
-  mutation MyMutation {
-  createUserEnroll(
-    data: {course: {connect: {nicknameforcourse: "`+ courseid + `"}}, isHePaid: false, userEmail: "` + userEmail + `", courseid: "` + courseid + `", phonenumber: "` + phonenumber + `"}
-  ) {
-    id
-    course {
-      nameofcourse
-    }
-    stage
-  }
-     publishManyUserEnrollsConnection(where: {}) {
-    edges {
-      node {
-        id
-      }
-    }
-  }
-}
-  
-  `
-
-
-  const result3 = await request(MASTER_URL, query3)
-  return result3
-}
-
 const EnrollmentUsers = async (userEmail) => {
   const query4 = gql`
   query MyQuery {
@@ -222,7 +192,6 @@ const subchem = async (sub) => {
 export default {
 
 
-  sendEnrollData,
   EnrollmentUsers,
   getQuizDataWithEnroll,
   SaveGradesOfQuiz,
