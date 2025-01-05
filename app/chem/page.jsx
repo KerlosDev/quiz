@@ -10,7 +10,7 @@ const page = () => {
     return (
 
 
-        <div>
+        <div className=' '>
 
             <Chem></Chem>
 

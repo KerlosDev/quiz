@@ -53,7 +53,6 @@ export default function RootLayout({ children }) {
         <body
           className={` dark:bg-slate-950 relative  antialiased`}
         >
-          <div className="absolute pointer-events-none  h-full w-full opacity-5 bg-noise z-50"></div>
 
           <Header></Header>
           {children}
