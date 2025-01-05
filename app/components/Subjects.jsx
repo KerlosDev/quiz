@@ -22,7 +22,7 @@ const Subjects = () => {
         {
             name: "فرنساوي",
             img: "/fr.png",
-            books: ["ميرسي", "المعاصر"],
+            books: ["ميرسي"],
             link: "/french"
         },
         {

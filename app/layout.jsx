@@ -31,6 +31,7 @@ const rakkas = Rakkas({
 });
 import { Abril_Fatface } from 'next/font/google';
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 
 
@@ -53,11 +54,13 @@ export default function RootLayout({ children }) {
         <body
           className={`bg-slate-950 relative  antialiased`}
         >
-          
 
-          
+
+
           <Header></Header>
+          
           {children}
+          <Footer></Footer>
         </body>
       </html>
     </ClerkProvider>

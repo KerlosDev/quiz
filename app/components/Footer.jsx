@@ -3,14 +3,27 @@ import React from 'react'
 const Footer = () => {
     return (
 
-        <footer className="bg-gray-900 text-gray-300">
+        <footer className="bg-gray-900 cursor-default text-gray-300">
             <div className="container mx-auto ">
-      
-                <div className="mt-10 px-6 py-10  border-t-2 border-gray-700 pt-6 text-center">
-                    <p className="text-sm">
-                          <span className=' font-arabicUI2 text-2xl'>كويزاتك</span>
+
+                <div className="mt-10 px-6  border-t-2 border-gray-700 py-3 text-center">
+                    <p className=" font-anton  text-xl md:text-2xl">
+
+
+                        Devloped By &nbsp;
+                        <span className=' hover:scale-105  bg-paton bg-clip-text text-transparent'>
+                            Kerlos Hany
+                            &nbsp;
+                        </span>
+                        <span className=' bg-paton text-slate-900  px-2 rounded-xl bg-cover font-arabicUI2 '>
+                            كويزاتك
+                        </span>
+
+
                     </p>
                 </div>
+              
+                
             </div>
         </footer>
 

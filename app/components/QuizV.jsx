@@ -38,11 +38,24 @@ const QuizV = () => {
                         <div className=''>
                             <h4 className=' font-arabicUI2 text-center text-white text-2xl mb-4'>{item?.nameofquiz}</h4>
                             <h4 className=' font-arabicUI2 text-center text-white text-2xl mb-4'>
-                                {item?.nameofsub === 'chem' ? (
+                                {item?.nameofsub === 'chem' && (
                                     <img src="/chem.jpg" className='m-auto justify-center flex items-center' width={100} height={100} alt="كيمياء" />// Icon for 'chem'
-                                ) : item?.nameofsub === 'ph' ? (
-                                    <FaAtom className="inline-block text-yellow-400 mr-2" /> // Icon for 'ph'
-                                ) : null}
+                                )}
+                                {item?.nameofsub === 'ar' && (
+                                    <img src="/ar.png" className='m-auto justify-center flex items-center' width={100} height={100} alt="كيمياء" />// Icon for 'chem'
+                                )}
+                                {item?.nameofsub === 'ph' && (
+                                    <img src="/ph.png" className='m-auto justify-center flex items-center' width={100} height={100} alt="كيمياء" />// Icon for 'chem'
+                                )}
+                                {item?.nameofsub === 'bio' && (
+                                    <img src="/bio2.jpg" className='m-auto justify-center flex items-center' width={100} height={100} alt="كيمياء" />// Icon for 'chem'
+                                )}
+                                {item?.nameofsub === 'en' && (
+                                    <img src="/en.png" className='m-auto justify-center flex items-center' width={100} height={100} alt="كيمياء" />// Icon for 'chem'
+                                )}
+                                {item?.nameofsub === 'fr' && (
+                                    <img src="/fr.png" className='m-auto justify-center flex items-center' width={100} height={100} alt="كيمياء" />// Icon for 'chem'
+                                )}
                             </h4>
                             <p className=' font-arabicUI3 text-white/80 my-4 flex justify-center mx-auto text-4xl'>{(item?.quizGrade / item?.numofqus).toFixed(2) * 100}%</p>
                             <ProgCircle hight={10} nsaba={(item?.quizGrade / item?.numofqus) * 100
