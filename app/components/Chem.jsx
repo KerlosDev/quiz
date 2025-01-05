@@ -3,13 +3,20 @@ import Image from 'next/image';
 import GlobalApi from '../api/GlobalApi';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { BsPatchCheckFill } from "react-icons/bs";
+import { useUser } from '@clerk/nextjs';
 
 const Chem = () => {
     const [activeBook, setActiveBook] = useState(false);
     const [title, setTitle] = useState('كيمياء');
     const [dataBook, setDataBook] = useState([]);
     const [numbook, setNumBook] = useState(0);
+    const [numberofquiz, setNumberQuiz] = useState(0)
 
+    const { user } = useUser();
+
+
+    
     // Handle click dynamically
     const handleClick = (namebook, index) => {
         setActiveBook(true);
@@ -27,12 +34,18 @@ const Chem = () => {
             .then((res) => {
                 console.log("Response: ", res);
                 setDataBook(res);
+
+                setNumberQuiz(res?.quizzes?.length)
+
             })
             .catch((err) => {
                 console.error("Error: ", err);
             });
     };
 
+
+
+    console.log("Number of quizzes:", numberofquiz);
     // Function to filter and render quizzes based on numbook
     const renderQuizzes = () => {
         let filterKey = '';
@@ -42,14 +55,17 @@ const Chem = () => {
 
         return dataBook?.quizzes
             ?.filter((item) => item.chooseBook === filterKey)
-            ?.map((item) => (
-                <Link key={item.id} href={`/quiz/${item.id}`}>
-                    <h4
-                        className='hover:scale-105 text-center cursor-pointer transition w-11/12 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-2 rounded-xl m-3 mx-auto justify-center flex'>
-                        {item?.quiztitle || 'No Title Available'}
-                    </h4>
-                </Link>
-            ));
+            ?.map((item) => {
+                const quizLink = !user ? "/sign-up" : `/quiz/${item.id}`;  // Set the link based on the user condition
+
+                return (
+                    <Link key={item.id} href={quizLink}>
+                        <h4 className='hover:scale-105 bg-paton bg-cover text-center cursor-pointer transition w-11/12 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-2 rounded-xl m-3 mx-auto justify-center flex'>
+                            {item?.quiztitle || 'No Title Available'}
+                        </h4>
+                    </Link>
+                );
+            });
     };
 
     return (
@@ -71,9 +87,20 @@ const Chem = () => {
                 </h3>
 
                 <div className='bg-yellow-800 shadow-xl shadow-yellow-800/50 rounded-xl m-4 p-4'>
-                    <h4 className='text-3xl sm:text-4xl md:text-5xl font-arabicUI2 text-yellow-400 m-auto justify-center flex'>
+                    <h4 className='text-3xl sm:text-4xl md:text-5xl font-arabicUI2 bg-paton  text-transparent bg-clip-text m-auto justify-center flex'>
                         {title === 'كيمياء' ? 'يلا اختار كتاب تحله' : 'امتحانات الكتاب'}
                     </h4>
+
+                    {title === 'كيمياء' && <div>
+                        <h4 className='  font-arabicUI3 rtl mx-auto mt-4 mb-2 justify-center text-center flex text-4xl text-yellow-800 bg-paton bg-cover p-4 rounded-xl '
+                        >
+                            عدد الامتحانات المتاحة
+
+                            &nbsp;
+                            <span>{numberofquiz}</span>
+                            &nbsp;
+                            <BsPatchCheckFill></BsPatchCheckFill></h4>
+                    </div>}
 
                     {/* Render quizzes dynamically */}
                     {renderQuizzes()}

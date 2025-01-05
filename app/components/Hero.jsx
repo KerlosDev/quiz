@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import { HiBadgeCheck } from "react-icons/hi";
 import { GiTrophyCup } from "react-icons/gi";
@@ -59,7 +60,7 @@ const Hero = () => {
             {Features.map((item, index) => (
               <div
                 key={index}
-                className="bg-yellow-500 hover:shadow-2xl shadow-black p-4 rounded-xl hover:scale-105 cursor-default transition"
+                className="bg-yellow-500 hover:shadow-2xl shadow-black p-4 rounded-xl hover:scale-105 cursor-pointer transition-all ease-in-out duration-300"
               >
                 <h2 className="font-arabicUI3 text-center text-xl md:text-2xl">
                   {item.name}

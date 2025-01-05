@@ -2,27 +2,6 @@ import request, { gql } from "graphql-request"
 
 const MASTER_URL = "https://ap-south-1.cdn.hygraph.com/content/cm5gvtuid03st08o0hz1fdxtm/master"
 
-const getquizdata = async (quizid) => {
-  const quiz = gql`
-  query MyQuery {
-  quiz(where: {id: "cm5h9cmjf0art07pm4cgkugfj"}) {
-    quiztitle
-    question {
-      opationA
-      opationC
-      opationB
-      opationD
-      id
-      qus
-      trueChoisevip
-    }
-  }
-}
-  `
-
-  const result3 = await request(MASTER_URL, quiz)
-  return result3
-}
 
 
 const sendEnrollData = async (courseid, userEmail, phonenumber) => {
@@ -61,18 +40,9 @@ const EnrollmentUsers = async (userEmail) => {
     isHePaid
     phonenumber
     id
-    courseid
+    
     userEmail
-    course {
-      nameofcourse
-      nicknameforcourse
-      price
-      color
-      dataofcourse
-      description
-      isfree
-      
-    }
+    
   }
 }
   `
@@ -137,6 +107,8 @@ query MyQuery {
     userName
     nameofquiz
     numofqus
+     nameofsub
+    nameofBook
   }
 }
 
@@ -209,7 +181,7 @@ const dataofChem = async (quizid) => {
   const shite = gql`
   
   query MyQuery {
-  quiz(where: {id: "`+quizid+`"}) {
+  quiz(where: {id: "`+ quizid + `"}) {
         quiztitle
         question {
           opationA
@@ -231,7 +203,7 @@ const dataofChem = async (quizid) => {
 const subchem = async (sub) => {
   const shite = gql`
   query MyQuery {
-  quizzes(where: {subjectName: `+sub+`}) {
+  quizzes(where: {subjectName: `+ sub + `}) {
     quiztitle
     id
     chooseBook
@@ -254,7 +226,7 @@ export default {
   data4admin,
   editStateSub,
   publishEnrolls,
-  getquizdata,
+
   dataofChem,
   subchem
 
