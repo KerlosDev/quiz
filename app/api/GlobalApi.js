@@ -189,9 +189,58 @@ const subchem = async (sub) => {
   return shitosd
 }
 
+
+const sendEnrollData = async ( userEmail, phonenumber) => {
+  const query3 = gql`
+  
+  mutation MyMutation {
+
+   createUserEnroll(
+    data: {phonenumber: "`+phonenumber+`", isHePaid: false, userEmail: "`+userEmail+`"}
+  ) {
+    id
+    userEmail
+  }
+
+ 
+     publishManyUserEnrollsConnection(where: {}) {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}
+  
+  `
+
+
+  const result3 = await request(MASTER_URL, query3)
+  return result3
+}
+
+const premUsers = async (useremail) => {
+  const query3 = gql`
+  query MyQuery {
+  userEnrolls(where: {isHePaid: true, userEmail: "`+useremail+`"}) {
+    id
+    userEmail
+    isHePaid
+  }
+}
+  `
+
+
+  const result3 = await request(MASTER_URL, query3)
+  return result3
+}
+
+
+
+
 export default {
 
-
+  premUsers,
   EnrollmentUsers,
   getQuizDataWithEnroll,
   SaveGradesOfQuiz,
@@ -199,7 +248,7 @@ export default {
   data4admin,
   editStateSub,
   publishEnrolls,
-
+  sendEnrollData,
   dataofChem,
   subchem
 

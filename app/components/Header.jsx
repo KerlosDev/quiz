@@ -1,15 +1,19 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import ThemeToggle from './ThemeToggle';
-import { UserButton, useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
+import { UserButton, useUser } from '@clerk/nextjs';
 
 const Header = () => {
-    
-    const { user } = useUser(); // Clerk hook to get the current user
+    const { user, isLoaded } = useUser(); // Clerk hook to get the current user
     const router = useRouter();
+    const [isClient, setIsClient] = useState(false);
+
+    // Ensure client-side rendering
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
 
     const handleSignUp = () => {
         router.push('/sign-up');
@@ -17,6 +21,11 @@ const Header = () => {
     const handleSignIn = () => {
         router.push('/sign-in');
     };
+
+    if (!isClient || !isLoaded) {
+        // Render nothing or a loading state until hydration is complete
+        return null;
+    }
 
     return (
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-4 relative">
@@ -38,7 +47,7 @@ const Header = () => {
                 {/* Profile Icon */}
                 <Link href="/subscriptions" className="flex items-center">
                     <img
-                        className="h-16  w-16 object-cover" // Ensure consistent size
+                        className="h-16 w-16 object-cover" // Ensure consistent size
                         src="/profile.png"
                         alt="Profile Logo"
                     />
@@ -49,13 +58,12 @@ const Header = () => {
                     <div className="flex items-center scale-150 ml-3 mt-6 gap-4">
                         <div className="scale-150">
                             <UserButton />
-
                         </div>
                     </div>
                 ) : (
                     <div className="flex items-center gap-5">
                         {/* Sign In Button */}
-                        <div className="flex items-center bg-red-500 text-xl md:text-2xl  p-2 h-16 rounded-xl text-white font-arabicUI shadow-xl shadow-red-600/40 outline-dashed outline-red-500 outline-offset-4">
+                        <div className="flex items-center bg-red-500 text-xl md:text-2xl p-2 h-16 rounded-xl text-white font-arabicUI shadow-xl shadow-red-600/40 outline-dashed outline-red-500 outline-offset-4">
                             <button onClick={handleSignIn}>تسجيل الدخول</button>
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 448 512">
                                 <path
@@ -65,7 +73,7 @@ const Header = () => {
                             </svg>
                         </div>
                         {/* Sign Up Button */}
-                        <div className="flex items-center bg-blue-500  text-xl md:text-2xl px-4 py-2 h-16 rounded-xl text-white font-arabicUI shadow-xl shadow-blue-600/40 outline-dashed outline-blue-400 outline-offset-4">
+                        <div className="flex items-center bg-blue-500 text-xl md:text-2xl px-4 py-2 h-16 rounded-xl text-white font-arabicUI shadow-xl shadow-blue-600/40 outline-dashed outline-blue-400 outline-offset-4">
                             <button onClick={handleSignUp}>انشاء حساب</button>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

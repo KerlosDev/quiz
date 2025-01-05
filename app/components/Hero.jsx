@@ -4,7 +4,7 @@ import { HiBadgeCheck } from "react-icons/hi";
 import { GiTrophyCup } from "react-icons/gi";
 import { FaClipboardList } from "react-icons/fa";
 import { TbMessageFilled } from "react-icons/tb";
-import { FaExclamationTriangle } from "react-icons/fa";
+import ActiveSqu from "./ActiveSqu";
 
 const Hero = () => {
     const Features = [
@@ -63,16 +63,7 @@ const Hero = () => {
                     </h3>
                 </div>
                 
-                <div className="relative   col-span-1  bg-yellow-400  shadow-2xl bg-non2 bg-cover outline-dashed outline-offset-2 outline-green-500 w-fit p-4 md:p-9 rounded-xl flex items-center">
-                    {/* Noise Effect */}
-                    <div className="absolute pointer-events-none h-full w-full opacity-5 bg-noise z-50"></div>
-
-                    {/* Content */}
-                    <h3 className="flex flex-col md:flex-row font-arabicUI3 items-center  justify-center  text-xl md:text-3xl lg:text-4xl text-center text-white">
-                        <FaExclamationTriangle className="text-6xl md:text-8xl transition  hover:scale-150 hover:cursor-pointer" />
-                         تفعيل الحساب
-                    </h3>
-                </div>
+               <ActiveSqu></ActiveSqu>
                 <div className="relative   col-span-2   md:col-span-3 bg-yellow-400 shadow-2xl bg-paton bg-cover outline-dashed outline-offset-2 outline-yellow-300 w-full p-6 md:p-9 rounded-xl flex items-center">
                     {/* Noise Effect */}
                     <div className="absolute pointer-events-none h-full w-full opacity-5 bg-noise z-50"></div>
