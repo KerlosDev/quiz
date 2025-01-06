@@ -1,6 +1,7 @@
 import request, { gql } from "graphql-request"
 
 const MASTER_URL = "https://ap-south-1.cdn.hygraph.com/content/cm5gvtuid03st08o0hz1fdxtm/master"
+const MASTER_URL_QUIZ = "https://ap-south-1.cdn.hygraph.com/content/cm5l2g44u00k407w74jiusgtu/master"
 
 
 const EnrollmentUsers = async (userEmail) => {
@@ -62,7 +63,7 @@ const SaveGradesOfQuiz = async (subname, bookname , userEmail, uerName, userGrad
 }
   `
 
-  const reslut6 = await request(MASTER_URL, query6)
+  const reslut6 = await request(MASTER_URL_QUIZ, query6)
   return reslut6
 }
 

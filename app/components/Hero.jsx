@@ -102,7 +102,7 @@ const Hero = () => {
     }, []);
 
     return (
-        <div className="relative cursor-default  selection:text-yellow-400 mt-5 selection:bg-yellow-800 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8">
+        <div className="relative select-none cursor-default  selection:text-yellow-400 mt-5 selection:bg-yellow-800 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8">
             {/* Main Hero Section */}
             <div className=' absolute w-80 h-80 bg-slate-900 left-0 -bottom-48 rounded-full blur-2xl -z-20'></div>
             <div className=' absolute w-80 h-80 bg-slate-900 right-0  -bottom-48 rounded-full blur-2xl -z-20'></div>
@@ -115,7 +115,7 @@ const Hero = () => {
                     <div className="absolute pointer-events-none h-full w-fit opacity-5 bg-noise z-50"></div>
 
                     {/* Content */}
-                    <h3 onClick={openDialog} className="flex flex-col md:flex-row font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-white">
+                    <h3 onClick={openDialog} className="flex select-none flex-col md:flex-row font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-white">
                         <TbMessageFilled className="text-6xl md:text-8xl transition hover:scale-150 hover:cursor-pointer" />
                         رسالة اليوم
                     </h3>
@@ -174,7 +174,7 @@ const Hero = () => {
                 </div>
 
                 {/* Right Section */}
-                <div className="shadow-2xl mt-6 bg-non3 selection:bg-blue-600 selection:text-white bg-cover lg:mx-8 outline-dashed outline-offset-2 outline-blue-500 bg-yellow-400 p-6 rounded-xl">
+                <div className="shadow-2xl mt-6 bg-non3 bg-blue-700 selection:bg-blue-600 selection:text-white bg-cover lg:mx-8 outline-dashed outline-offset-2 outline-blue-500  p-6 rounded-xl">
                     <h1 className="font-arabicUI2 m-auto flex justify-center text-white text-3xl md:text-5xl">
                         <FaClipboardList />
                         لوحة الشرف
