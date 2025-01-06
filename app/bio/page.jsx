@@ -1,4 +1,5 @@
 import React from 'react'
+import Bio from '../components/Bio'
 
 const page = () => {
     return (
@@ -6,16 +7,8 @@ const page = () => {
 
         <div>
 
-            <div className=' m-8 grid grid-cols-3'>
-
-                <div className=' p-7 bg-paton bg-cover rounded-xl shadow-2xl shadow-yellow-400 bg-yellow-400'>
-
-                    <h3 className=' font-arabicUI2 text-right text-3xl'>  بايو : اسم المادة </h3>
-                </div>
-
-            </div>
-
-
+       
+            <Bio></Bio>
 
         </div>
 
