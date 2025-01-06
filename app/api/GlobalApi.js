@@ -71,7 +71,7 @@ const vquiz = async (userEmail) => {
   
   
 query MyQuery {
-  quizresults(where: {userEmail: "`+ userEmail + `"}) {
+  quizresults(where: {userEmail: "`+ userEmail + `"}, last: 20) {
     id
     quizGrade
     userName
