@@ -174,8 +174,8 @@ const Hero = () => {
                 </div>
 
                 {/* Right Section */}
-                <div className="shadow-2xl mt-6 bg-paton bg-cover lg:mx-8 outline-dashed outline-offset-2 outline-yellow-300 bg-yellow-400 p-6 rounded-xl">
-                    <h1 className="font-arabicUI2 m-auto flex justify-center text-yellow-800 text-3xl md:text-5xl">
+                <div className="shadow-2xl mt-6 bg-non3 selection:bg-blue-600 selection:text-white bg-cover lg:mx-8 outline-dashed outline-offset-2 outline-blue-500 bg-yellow-400 p-6 rounded-xl">
+                    <h1 className="font-arabicUI2 m-auto flex justify-center text-white text-3xl md:text-5xl">
                         <FaClipboardList />
                         لوحة الشرف
                     </h1>
@@ -183,7 +183,7 @@ const Hero = () => {
                         {names.map((item, index) => (
                             <div
                                 key={index}
-                                className="bg-daark bg-cover outline-dashed outline-2 outline-offset-2 outline-amber-950 p-3 flex justify-between mt-4 font-arabicUI2 rounded-xl text-xl md:text-2xl text-white"
+                                className=" bg-white  bg-cover outline-dashed outline-2 outline-offset-2 outline-white p-3 flex justify-between mt-4 font-arabicUI2 rounded-xl text-xl md:text-2xl text-blue-800"
                             >
                                 <h3>
                                     نقطة <span>{item.points}</span>

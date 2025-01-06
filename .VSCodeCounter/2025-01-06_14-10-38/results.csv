@@ -1,0 +1,35 @@
+"filename", "language", "JavaScript JSX", "CSS", "JavaScript", "comment", "blank", "total"
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\api\GlobalApi.js", "JavaScript", 0, 0, 193, 0, 63, 256
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\arabic\page.jsx", "JavaScript JSX", 10, 0, 0, 0, 8, 18
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\bio\page.jsx", "JavaScript JSX", 10, 0, 0, 0, 8, 18
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\chem\page.jsx", "JavaScript JSX", 10, 0, 0, 0, 12, 22
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\components\ActiveSqu.jsx", "JavaScript JSX", 76, 0, 0, 6, 16, 98
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\components\Arabic.jsx", "JavaScript JSX", 145, 0, 0, 10, 29, 184
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\components\Bio.jsx", "JavaScript JSX", 133, 0, 0, 10, 28, 171
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\components\Chem.jsx", "JavaScript JSX", 101, 0, 0, 7, 20, 128
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\components\English.jsx", "JavaScript JSX", 139, 0, 0, 10, 27, 176
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\components\Footer.jsx", "JavaScript JSX", 25, 0, 0, 0, 13, 38
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\components\French.jsx", "JavaScript JSX", 127, 0, 0, 10, 27, 164
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\components\Geo.jsx", "JavaScript JSX", 133, 0, 0, 10, 29, 172
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\components\Header.jsx", "JavaScript JSX", 78, 0, 0, 9, 11, 98
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\components\Hero.jsx", "JavaScript JSX", 167, 0, 0, 13, 22, 202
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\components\Physics.jsx", "JavaScript JSX", 135, 0, 0, 10, 24, 169
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\components\ProgCircle.jsx", "JavaScript JSX", 33, 0, 0, 0, 14, 47
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\components\QuizData.jsx", "JavaScript JSX", 239, 0, 0, 13, 66, 318
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\components\QuizV.jsx", "JavaScript JSX", 143, 0, 0, 2, 30, 175
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\components\Subjects.jsx", "JavaScript JSX", 101, 0, 0, 5, 12, 118
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\components\Subs.jsx", "JavaScript JSX", 20, 0, 0, 0, 7, 27
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\components\ThemeToggle.jsx", "JavaScript JSX", 33, 0, 0, 2, 12, 47
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\english\page.jsx", "JavaScript JSX", 10, 0, 0, 0, 9, 19
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\french\page.jsx", "JavaScript JSX", 10, 0, 0, 0, 8, 18
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\geo\page.jsx", "JavaScript JSX", 10, 0, 0, 0, 7, 17
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\globals.css", "CSS", 0, 6, 0, 0, 3, 9
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\layout.jsx", "JavaScript JSX", 50, 0, 0, 2, 17, 69
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\page.jsx", "JavaScript JSX", 13, 0, 0, 0, 8, 21
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\payment\page.jsx", "JavaScript JSX", 131, 0, 0, 0, 28, 159
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\phys\page.jsx", "JavaScript JSX", 10, 0, 0, 0, 9, 19
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\quiz\[quizid]\page.jsx", "JavaScript JSX", 8, 0, 0, 0, 5, 13
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\sign-in\[[...sign-in]]\page.jsx", "JavaScript JSX", 80, 0, 0, 0, 15, 95
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\sign-up\[[...sign-up]]\page.jsx", "JavaScript JSX", 82, 0, 0, 0, 20, 102
+"c:\Users\Kerlos\Desktop\Quiz Project\quiz\app\subscriptions\page.jsx", "JavaScript JSX", 10, 0, 0, 0, 6, 16
+"Total", "-", 2272, 6, 193, 119, 613, 3203
