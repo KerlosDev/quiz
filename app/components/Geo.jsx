@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { BsPatchCheckFill } from "react-icons/bs";
 import { useUser } from '@clerk/nextjs';
 import { FaLock, FaPlay } from 'react-icons/fa';
-const [premuserorNot, setPremUser] = useState(false);
 
 const Geo = () => {
     const [activeBook, setActiveBook] = useState(false);
@@ -14,10 +13,11 @@ const Geo = () => {
     const [dataBook, setDataBook] = useState([]);
     const [numbook, setNumBook] = useState(0);
     const [numberofquiz, setNumberQuiz] = useState(0);
+    const [premuserorNot, setPremUser] = useState(false);
 
     const { user } = useUser();
 
-
+    
     useEffect(() => {
         // Check if the premium status is already stored
         const storedPremStatus = localStorage.getItem("premuserorNot");
@@ -29,7 +29,7 @@ const Geo = () => {
         }
     }, [user]);
 
-
+    
     const premiumusers = async (email) => {
         try {
             const res = await GlobalApi.premUsers(email);
@@ -54,7 +54,7 @@ const Geo = () => {
         setActiveBook(true);
         setTitle(namebook);
         setNumBook(index);
-
+        
         // Scroll to top when the button is clicked
         window.scroll({ top: 0, behavior: 'smooth' });
     };
@@ -139,8 +139,8 @@ const Geo = () => {
                     {title === 'جيولوجيا' && <div>
                         <h4 className='font-arabicUI3 my-3 gap-2 rtl mx-auto mt-4 mb-2 justify-center text-center flex text-4xl text-yellow-800 bg-paton bg-cover p-4 rounded-xl'>
                             عافر حلمك يستاهل
-
-
+                          
+                        
                         </h4>
                     </div>}
 
@@ -161,8 +161,8 @@ const Geo = () => {
                     className='hover:scale-110 transition cursor-pointer'>
                     <Image src='/geotf.png' width={400} height={300} alt='chem' className='w-full h-auto' />
                 </div>
-
-
+                
+                
             </div>
         </div>
     );
