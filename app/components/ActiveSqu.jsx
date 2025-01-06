@@ -9,16 +9,18 @@ import Link from 'next/link';
 const ActiveSqu = () => {
     const { user } = useUser();
     const [premuserorNot, setPremUser] = useState(false);
+    const [isClient, setIsClient] = useState(false); // Ensure client-side rendering
 
-    
     useEffect(() => {
-        // Check if the premium status is already stored
-        const storedPremStatus = localStorage.getItem("premuserorNot");
-        if (storedPremStatus) {
-            setPremUser(JSON.parse(storedPremStatus));
-        } else if (user?.primaryEmailAddress?.emailAddress) {
-            // Fetch premium status if not stored
-            premiumusers(user?.primaryEmailAddress?.emailAddress);
+        // Mark that we're running on the client side
+        setIsClient(true);
+
+        if (user?.primaryEmailAddress?.emailAddress) {
+            // Fetch premium status if the user is logged in
+            premiumusers(user.primaryEmailAddress.emailAddress);
+        } else {
+            // Reset premium status if the user is not logged in
+            setPremUser(false);
         }
     }, [user]);
 
@@ -41,7 +43,6 @@ const ActiveSqu = () => {
         }
     };
 
-
     const handleScrollToSub = () => {
         const targetElement = document.getElementById('subs');
         if (targetElement) {
@@ -54,42 +55,47 @@ const ActiveSqu = () => {
         }
     };
 
+    // Render only on the client side
+    if (!isClient) {
+        return null; // Prevent server-side mismatch
+    }
+
     return (
-        <div className="relative col-span-1 hover:brightness-90 transition bg-green-500 shadow-2xl bg-non2 bg-cover outline-dashed outline-offset-2 outline-green-500 w-fit p-4 md:p-9 rounded-xl flex items-center">
-            {/* Noise Effect */}
-            <div className="absolute pointer-events-none h-full w-full opacity-5 bg-noise z-50"></div>
+        <div>
+            <div className="relative col-span-1 hover:brightness-90 transition bg-green-500 shadow-2xl bg-non2 bg-cover outline-dashed outline-offset-2 outline-green-500 w-fit p-4 md:p-9 rounded-xl flex items-center">
+                {/* Noise Effect */}
+                <div className="absolute pointer-events-none h-full w-full opacity-5 bg-noise z-50"></div>
 
-            {!premuserorNot || !user ? (
-                !user ? (
-
-                    <Link href='/sign-up'>
-                        <h3
-                            className="flex flex-col md:flex-row font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-white cursor-pointer"
-                        // Trigger scroll when clicked
-                        >
-                            <FaExclamationTriangle className="text-6xl md:text-8xl transition hover:scale-150" />
-                            تفعيل الحساب
-                        </h3>
-                    </Link>
-
+                {!premuserorNot || !user ? (
+                    !user ? (
+                        <Link href='/sign-up'>
+                            <h3
+                                className="flex flex-col md:flex-row font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-white cursor-pointer"
+                            >
+                                <FaExclamationTriangle className="text-6xl md:text-8xl transition hover:scale-150" />
+                                تفعيل الحساب
+                            </h3>
+                        </Link>
+                    ) : (
+                        <Link href='/payment'>
+                            <h3
+                                className="flex flex-col md:flex-row font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-white cursor-pointer"
+                            >
+                                <FaExclamationTriangle className="text-6xl md:text-8xl transition hover:scale-150" />
+                                تفعيل الحساب
+                            </h3>
+                        </Link>
+                    )
                 ) : (
-
-                    <Link href='/payment'>
-                        <h3
-                            className="flex flex-col md:flex-row font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-white cursor-pointer"
-                        // Trigger scroll when clicked
-                        >
-                            <FaExclamationTriangle className="text-6xl md:text-8xl transition hover:scale-150" />
-                            تفعيل الحساب
-                        </h3>
-                    </Link>)
-
-            ) : (
-                <h3 onClick={handleScrollToSub} className="flex flex-col md:flex-row font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-white cursor-pointer">
-                    <PiHeartFill className="text-6xl md:text-8xl transition hover:scale-150 hover:cursor-pointer" />
-                    الحساب اتفعل
-                </h3>
-            )}
+                    <h3
+                        onClick={handleScrollToSub}
+                        className="flex flex-col md:flex-row font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-white cursor-pointer"
+                    >
+                        <PiHeartFill className="text-6xl md:text-8xl transition hover:scale-150 hover:cursor-pointer" />
+                        الحساب اتفعل
+                    </h3>
+                )}
+            </div>
         </div>
     );
 };

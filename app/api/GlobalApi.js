@@ -1,8 +1,9 @@
 import request, { gql } from "graphql-request"
 
-const MASTER_URL = "https://ap-south-1.cdn.hygraph.com/content/cm5gvtuid03st08o0hz1fdxtm/master"
-const MASTER_URL_QUIZ = "https://ap-south-1.cdn.hygraph.com/content/cm5l2g44u00k407w74jiusgtu/master"
 
+
+const apiQuiz = process.env.NEXT_PUBLIC_MASTER_URL_QUIZ
+const MAINAPI = process.env.NEXT_PUBLIC_MASTER_URL_MAIN_API
 const apiph = process.env.NEXT_PUBLIC_MASTER_URL_PHYSICS
 const apich = process.env.NEXT_PUBLIC_MASTER_URL_CHEM
 const apibio = process.env.NEXT_PUBLIC_MASTER_URL_BIOLOGY
@@ -11,42 +12,7 @@ const apien = process.env.NEXT_PUBLIC_MASTER_URL_ENGLISH
 const apifr = process.env.NEXT_PUBLIC_MASTER_URL_FRENCH
 const apigeo = process.env.NEXT_PUBLIC_MASTER_URL_GEO
 
-const EnrollmentUsers = async (userEmail) => {
-  const query4 = gql`
-  query MyQuery {
-  userEnrolls(where: {userEmail: "`+ userEmail + `", isHePaid: true}) {
-    isHePaid
-    phonenumber
-    id
-    
-    userEmail
-    
-  }
-}
-  `
 
-
-
-  const result4 = await request(MASTER_URL, query4)
-  return result4;
-}
-
-const getQuizDataWithEnroll = async (userEmail) => {
-
-  const query5 = gql`
-  
-  query MyQuery {
-  userEnrolls(where: {userEmail: "kerlos778@gmail.com"}) {
-    id
-    isHePaid
-  }
-}
-  
-  `
-  const result5 = await request(MASTER_URL, query5)
-  return result5
-
-}
 
 const SaveGradesOfQuiz = async (subname, bookname , userEmail, uerName, userGrade, quizname, numofqus ) => {
   const query6 = gql`
@@ -70,7 +36,7 @@ const SaveGradesOfQuiz = async (subname, bookname , userEmail, uerName, userGrad
 }
   `
 
-  const reslut6 = await request(MASTER_URL_QUIZ, query6)
+  const reslut6 = await request(apiQuiz, query6)
   return reslut6
 }
 
@@ -92,66 +58,8 @@ query MyQuery {
 
   `
 
-  const quizres = await request(MASTER_URL_QUIZ, qmon)
+  const quizres = await request(apiQuiz, qmon)
   return quizres;
-}
-
-const data4admin = async () => {
-  const dataa4admin = gql`
-  
-  query MyQuery {
-  userEnrolls {
-    userEmail
-    courseid
-    course {
-      price
-      updatedAt
-    }
-    isHePaid
-    id
-  }
-}
-  `
-
-  const admindata = await request(MASTER_URL, dataa4admin)
-  return admindata
-}
-
-const editStateSub = async (idofEnroll, ActiveOrDeactive) => {
-  const query9 = gql`
-  mutation MyMutation {
-  updateUserEnroll(
-    data: {isHePaid: `+ ActiveOrDeactive + `}
-    where: {id: "`+ idofEnroll + `"}
-  ) {
-    id
-  }
-}
-  
-
-`
-
-  const state4 = await request(MASTER_URL, query9)
-  return state4;
-
-
-}
-
-const publishEnrolls = async () => {
-  const wie = gql`
-   mutation MyMutation {
-  publishManyUserEnrollsConnection {
-    edges {
-      node {
-        id
-      }
-    }
-  }
-}
-    `
-
-  const back = await request(MASTER_URL, wie)
-  return back
 }
 
 
@@ -178,7 +86,7 @@ const dataofChem = async (quizid) => {
 
   `
 
-  const shitosd = await request(MASTER_URL, shite)
+  const shitosd = await request(MAINAPI, shite)
   return shitosd
 }
 
@@ -193,7 +101,7 @@ const subchem = async (sub) => {
 }
   `
 
-  const shitosd = await request(MASTER_URL, shite)
+  const shitosd = await request(MAINAPI, shite)
   return shitosd
 }
 const sendEnrollData = async ( userEmail, phonenumber) => {
@@ -221,7 +129,7 @@ const sendEnrollData = async ( userEmail, phonenumber) => {
   `
 
 
-  const result3 = await request(MASTER_URL, query3)
+  const result3 = await request(MAINAPI, query3)
   return result3
 }
 
@@ -237,7 +145,7 @@ const premUsers = async (useremail) => {
   `
 
 
-  const result3 = await request(MASTER_URL, query3)
+  const result3 = await request(MAINAPI, query3)
   return result3
 }
 
@@ -525,7 +433,24 @@ const quizgeo = async (quizid) => {
   return shitosd
 }
 
+const greatDay = async () => {
+  const shite = gql`
+  
+  query MyQuery {
+  quizresults(first: 1000) {
+    quizGrade
+    userName
+    userEmail
+  }
+}
+
+  `
+
+  const shitosd = await request(apiQuiz, shite)
+  return shitosd
+}
 export default {
+  greatDay,
   arabicData,
   geoData,
   englishData,
@@ -541,13 +466,9 @@ export default {
   physicsData,
   chemstryDAta,
   premUsers,
-  EnrollmentUsers,
-  getQuizDataWithEnroll,
   SaveGradesOfQuiz,
   vquiz,
-  data4admin,
-  editStateSub,
-  publishEnrolls,
+  
   sendEnrollData,
   dataofChem,
   subchem

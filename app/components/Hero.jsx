@@ -5,6 +5,7 @@ import { GiTrophyCup } from "react-icons/gi";
 import { FaClipboardList } from "react-icons/fa";
 import { TbMessageFilled } from "react-icons/tb";
 import ActiveSqu from "./ActiveSqu";
+import GreatToday from "./GreatToday";
 
 const Hero = () => {
     const Features = [
@@ -22,12 +23,7 @@ const Hero = () => {
         },
     ];
 
-    const names = [
-        { name: "احمد علي ", points: 50 },
-        { name: "محمد سعيد ", points: 40 },
-        { name: "علي محمود ", points: 30 },
-    ];
-
+   
     const [isOpen, setIsOpen] = useState(false);
     const [message, setMessage] = useState(null); // Initially set to null
 
@@ -174,25 +170,7 @@ const Hero = () => {
                 </div>
 
                 {/* Right Section */}
-                <div className="shadow-2xl mt-6 bg-non3 bg-blue-700 selection:bg-blue-600 selection:text-white bg-cover lg:mx-8 outline-dashed outline-offset-2 outline-blue-500  p-6 rounded-xl">
-                    <h1 className="font-arabicUI2 m-auto flex justify-center text-white text-3xl md:text-5xl">
-                        <FaClipboardList />
-                        عظماء اليوم
-                    </h1>
-                    <div className="mt-6">
-                        {names.map((item, index) => (
-                            <div
-                                key={index}
-                                className=" bg-white  bg-cover outline-dashed outline-2 outline-offset-2 outline-white p-3 flex justify-between mt-4 font-arabicUI2 rounded-xl text-xl md:text-2xl text-blue-800"
-                            >
-                                <h3>
-                                    نقطة <span>{item.points}</span>
-                                </h3>
-                                <h3>{item.name}</h3>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+              <GreatToday></GreatToday>
             </div>
         </div>
     );
