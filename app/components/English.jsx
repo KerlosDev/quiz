@@ -62,7 +62,7 @@ const English = () => {
     }, []);
 
     const chemData = () => {
-        GlobalApi.subchem("en")
+        GlobalApi.englishData("en")
             .then((res) => {
                 console.log("Response: ", res);
                 setDataBook(res);
@@ -89,7 +89,7 @@ const English = () => {
                 const quizLink = !user
                     ? "/sign-up" // If no user is logged in, redirect to the sign-up page
                     : (premuserorNot || index < 2
-                        ? `/quiz/${item.id}` // If the user is premium or it's one of the first two exams, allow access
+                        ? `/english/${item.id}` // If the user is premium or it's one of the first two exams, allow access
                         : `/payment`);
                 return (
                     <Link key={item.id} href={quizLink}>

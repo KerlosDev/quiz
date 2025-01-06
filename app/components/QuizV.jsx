@@ -54,7 +54,7 @@ const QuizV = () => {
                     <div className='cursor-default backdrop-blur-xl rounded-xl w-fit m-auto outline-dashed mb-8 outline-2 bg-black/20 outline-white p-5'>
                         <h4 className='m-auto flex justify-center place-items-center font-arabicUI2 max-sm:text-3xl text-center gap-4 text-white text-5xl'>
                             <BsPatchCheckFill className='text-4xl'></BsPatchCheckFill>
-                            الكويزات اللي انت امتحنتها
+                             الكويزات اللي انت امتحنتها النهاردة
                         </h4>
                     </div>
         
@@ -85,6 +85,9 @@ const QuizV = () => {
                                             {item?.nameofsub === 'fr' && (
                                                 <img src="/fr.png" className='m-auto justify-center flex items-center' width={100} height={100} alt="فرنسي" />
                                             )}
+                                            {item?.nameofsub === 'geo' && (
+                                                <img src="/geo.png" className='m-auto justify-center flex items-center' width={100} height={100} alt="فرنسي" />
+                                            )}
                                         </h4>
                                         <p className=' font-arabicUI3 text-white/80  text-xl md:text-5xl my-4 flex justify-center mx-auto '>{(item?.quizGrade / item?.numofqus).toFixed(2) * 100}%</p>
                                         <ProgCircle hight={10} nsaba={(item?.quizGrade / item?.numofqus) * 100}></ProgCircle>
@@ -101,7 +104,7 @@ const QuizV = () => {
         
                     <div className='cursor-default mt-8 backdrop-blur-xl rounded-xl w-fit m-auto outline-dashed mb-8 outline-2 bg-black/20 outline-white p-5'>
                         <h4 className='m-auto flex gap-4 rtl place-items-center justify-center font-arabicUI2 text-xl md:text-5xl text-center text-white'>
-                            مستواك فكل مادة
+                            مستواك فكل مادة النهاردة
                             <IoBarChart />
                         </h4>
                     </div>
@@ -138,6 +141,9 @@ const QuizV = () => {
                                 )}
                                 {subject === 'fr' && (
                                     <img src="/fr.png" className='m-auto justify-center flex items-center' width={100} height={100} alt="فرنسي" />
+                                )}
+                                {subject === 'geo' && (
+                                    <img src="/geo.png" className='m-auto justify-center flex items-center' width={100} height={100} alt="فرنسي" />
                                 )}
         
                                 <p className='font-arabicUI3  text-center text-lg text-white/80  md:text-3xl my-4 flex justify-center mx-auto'>

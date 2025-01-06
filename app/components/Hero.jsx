@@ -177,7 +177,7 @@ const Hero = () => {
                 <div className="shadow-2xl mt-6 bg-non3 bg-blue-700 selection:bg-blue-600 selection:text-white bg-cover lg:mx-8 outline-dashed outline-offset-2 outline-blue-500  p-6 rounded-xl">
                     <h1 className="font-arabicUI2 m-auto flex justify-center text-white text-3xl md:text-5xl">
                         <FaClipboardList />
-                        لوحة الشرف
+                        عظماء اليوم
                     </h1>
                     <div className="mt-6">
                         {names.map((item, index) => (

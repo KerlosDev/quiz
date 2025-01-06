@@ -62,11 +62,11 @@ const Physics = () => {
 
     // Fetch data on component mount
     useEffect(() => {
-        chemData("ph");
+        physics_Data("ph");
     }, []);
 
-    const chemData = () => {
-        GlobalApi.subchem("ph")
+    const physics_Data = () => {
+        GlobalApi.physicsData("ph")
             .then((res) => {
                 console.log("Response: ", res);
                 setDataBook(res);
@@ -91,7 +91,7 @@ const Physics = () => {
                 const quizLink = !user
                     ? "/sign-up" // If no user is logged in, redirect to the sign-up page
                     : (premuserorNot || index < 2
-                        ? `/quiz/${item.id}` // If the user is premium or it's one of the first two exams, allow access
+                        ? `/phys/${item.id}` // If the user is premium or it's one of the first two exams, allow access
                         : `/payment`);
                 return (
                     <Link key={item.id} href={quizLink}>

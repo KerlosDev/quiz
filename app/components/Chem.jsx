@@ -31,7 +31,7 @@ const Chem = () => {
     }, []);
 
     const chemData = () => {
-        GlobalApi.subchem("chem")
+        GlobalApi.chemstryDAta("chem")
             .then((res) => {
                 console.log("Response: ", res);
                 setDataBook(res);
@@ -54,7 +54,7 @@ const Chem = () => {
         return dataBook?.quizzes
             ?.filter((item) => item.chooseBook === filterKey)
             ?.map((item) => {
-                const quizLink = !user ? "/sign-up" : `/quiz/${item.id}`;  // Set the link based on the user condition
+                const quizLink = !user ? "/sign-up" : `/chem/${item.id}`;  // Set the link based on the user condition
 
                 return (
                     <Link key={item.id} href={quizLink}>

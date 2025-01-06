@@ -3,6 +3,13 @@ import request, { gql } from "graphql-request"
 const MASTER_URL = "https://ap-south-1.cdn.hygraph.com/content/cm5gvtuid03st08o0hz1fdxtm/master"
 const MASTER_URL_QUIZ = "https://ap-south-1.cdn.hygraph.com/content/cm5l2g44u00k407w74jiusgtu/master"
 
+const apiph = process.env.NEXT_PUBLIC_MASTER_URL_PHYSICS
+const apich = process.env.NEXT_PUBLIC_MASTER_URL_CHEM
+const apibio = process.env.NEXT_PUBLIC_MASTER_URL_BIOLOGY
+const apiar = process.env.NEXT_PUBLIC_MASTER_URL_ARABIC
+const apien = process.env.NEXT_PUBLIC_MASTER_URL_ENGLISH
+const apifr = process.env.NEXT_PUBLIC_MASTER_URL_FRENCH
+const apigeo = process.env.NEXT_PUBLIC_MASTER_URL_GEO
 
 const EnrollmentUsers = async (userEmail) => {
   const query4 = gql`
@@ -85,7 +92,7 @@ query MyQuery {
 
   `
 
-  const quizres = await request(MASTER_URL, qmon)
+  const quizres = await request(MASTER_URL_QUIZ, qmon)
   return quizres;
 }
 
@@ -189,8 +196,6 @@ const subchem = async (sub) => {
   const shitosd = await request(MASTER_URL, shite)
   return shitosd
 }
-
-
 const sendEnrollData = async ( userEmail, phonenumber) => {
   const query3 = gql`
   
@@ -237,10 +242,304 @@ const premUsers = async (useremail) => {
 }
 
 
+const physicsData = async () => {
+  const shite = gql`
+  query MyQuery {
+  quizzes(where: {subjectName: ph}) {
+    quiztitle
+    id
+    chooseBook
+  }
+}
+  `
 
+  const shitosd = await request(apiph, shite)
+  return shitosd
+}
+const chemstryDAta = async () => {
+  const shite = gql`
+  query MyQuery {
+  quizzes(where: {subjectName: chem}) {
+    quiztitle
+    id
+    chooseBook
+  }
+}
+  `
+
+  const shitosd = await request(apich, shite)
+  return shitosd
+}
+const biologyDAta = async () => {
+  const shite = gql`
+  query MyQuery {
+  quizzes(where: {subjectName: bio}) {
+    quiztitle
+    id
+    chooseBook
+  }
+}
+  `
+
+  const shitosd = await request(apibio, shite)
+  return shitosd
+}
+const arabicData = async () => {
+  const shite = gql`
+  query MyQuery {
+  quizzes(where: {subjectName: ar}) {
+    quiztitle
+    id
+    chooseBook
+  }
+}
+  `
+
+  const shitosd = await request(apiar, shite)
+  return shitosd
+}
+const englishData = async () => {
+  const shite = gql`
+  query MyQuery {
+  quizzes(where: {subjectName: en}) {
+    quiztitle
+    id
+    chooseBook
+  }
+}
+  `
+
+  const shitosd = await request(apien, shite)
+  return shitosd
+}
+const frenchData = async () => {
+  const shite = gql`
+  query MyQuery {
+  quizzes(where: {subjectName: fr}) {
+    quiztitle
+    id
+    chooseBook
+  }
+}
+  `
+
+  const shitosd = await request(apifr, shite)
+  return shitosd
+}
+const geoData = async () => {
+  const shite = gql`
+  query MyQuery {
+  quizzes(where: {subjectName: geo}) {
+    quiztitle
+    id
+    chooseBook
+  }
+}
+  `
+
+  const shitosd = await request(apigeo, shite)
+  return shitosd
+}
+
+
+const quizPh = async (quizid) => {
+  const shite = gql`
+  
+  query MyQuery {
+  quiz(where: {id: "`+ quizid + `"}) {
+        quiztitle
+        question {
+          opationA
+          opationC
+          opationB
+          opationD
+          trueChoisevip
+          qus
+        }
+
+         chooseBook
+         subjectName
+    
+      }
+}
+
+  `
+
+  const shitosd = await request(apiph, shite)
+  return shitosd
+}
+const quizCh = async (quizid) => {
+  const shite = gql`
+  
+  query MyQuery {
+  quiz(where: {id: "`+ quizid + `"}) {
+        quiztitle
+        question {
+          opationA
+          opationC
+          opationB
+          opationD
+          trueChoisevip
+          qus
+        }
+
+         chooseBook
+         subjectName
+    
+      }
+}
+
+  `
+
+  const shitosd = await request(apich, shite)
+  return shitosd
+}
+const quizbio = async (quizid) => {
+  const shite = gql`
+  
+  query MyQuery {
+  quiz(where: {id: "`+ quizid + `"}) {
+        quiztitle
+        question {
+          opationA
+          opationC
+          opationB
+          opationD
+          trueChoisevip
+          qus
+        }
+
+         chooseBook
+         subjectName
+    
+      }
+}
+
+  `
+
+  const shitosd = await request(apibio, shite)
+  return shitosd
+}
+const quizAr = async (quizid) => {
+  const shite = gql`
+  
+  query MyQuery {
+  quiz(where: {id: "`+ quizid + `"}) {
+        quiztitle
+        question {
+          opationA
+          opationC
+          opationB
+          opationD
+          trueChoisevip
+          qus
+        }
+
+         chooseBook
+         subjectName
+    
+      }
+}
+
+  `
+
+  const shitosd = await request(apiar, shite)
+  return shitosd
+}
+const quizEn = async (quizid) => {
+  const shite = gql`
+  
+  query MyQuery {
+  quiz(where: {id: "`+ quizid + `"}) {
+        quiztitle
+        question {
+          opationA
+          opationC
+          opationB
+          opationD
+          trueChoisevip
+          qus
+        }
+
+         chooseBook
+         subjectName
+    
+      }
+}
+
+  `
+
+  const shitosd = await request(apien, shite)
+  return shitosd
+}
+const quizFr = async (quizid) => {
+  const shite = gql`
+  
+  query MyQuery {
+  quiz(where: {id: "`+ quizid + `"}) {
+        quiztitle
+        question {
+          opationA
+          opationC
+          opationB
+          opationD
+          trueChoisevip
+          qus
+        }
+
+         chooseBook
+         subjectName
+    
+      }
+}
+
+  `
+
+  const shitosd = await request(apifr, shite)
+  return shitosd
+}
+const quizgeo = async (quizid) => {
+  const shite = gql`
+  
+  query MyQuery {
+  quiz(where: {id: "`+ quizid + `"}) {
+        quiztitle
+        question {
+          opationA
+          opationC
+          opationB
+          opationD
+          trueChoisevip
+          qus
+        }
+
+         chooseBook
+         subjectName
+    
+      }
+}
+
+  `
+
+  const shitosd = await request(apigeo, shite)
+  return shitosd
+}
 
 export default {
-
+  arabicData,
+  geoData,
+  englishData,
+  frenchData,
+  biologyDAta,
+  quizEn,
+  quizgeo,
+  quizFr,
+  quizAr,
+  quizbio,
+  quizCh,
+  quizPh,
+  physicsData,
+  chemstryDAta,
   premUsers,
   EnrollmentUsers,
   getQuizDataWithEnroll,
