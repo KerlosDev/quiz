@@ -143,7 +143,11 @@ const Page = () => {
                     </div>
                 </div>
             ) : (
-                <h1>Loading...</h1>
+           
+                    <div className=' text-center text-4xl flex justify-center m-auto font-arabicUI2 bg-white/20 w-fit p-2 rounded-xl outline-1 outline-white outline-dashed'>
+                        <h1>جاري التحميل</h1>
+                    </div>
+            
             )}
         </div>
     );

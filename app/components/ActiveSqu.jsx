@@ -10,8 +10,14 @@ const ActiveSqu = () => {
     const { user } = useUser();
     const [premuserorNot, setPremUser] = useState(false);
 
+    
     useEffect(() => {
-        if (user?.primaryEmailAddress?.emailAddress) {
+        // Check if the premium status is already stored
+        const storedPremStatus = localStorage.getItem("premuserorNot");
+        if (storedPremStatus) {
+            setPremUser(JSON.parse(storedPremStatus));
+        } else if (user?.primaryEmailAddress?.emailAddress) {
+            // Fetch premium status if not stored
             premiumusers(user?.primaryEmailAddress?.emailAddress);
         }
     }, [user]);
@@ -19,21 +25,22 @@ const ActiveSqu = () => {
     const premiumusers = async (email) => {
         try {
             const res = await GlobalApi.premUsers(email);
-            // Log the full response for debugging purposes
-            console.log(res);
 
-            // Check if response contains valid data
-            if (res && res.userEnrolls && res.userEnrolls[0]) {
-                setPremUser(res.userEnrolls[0].isHePaid);
+            if (res && res.userEnrolls && res.userEnrolls.length > 0 && res.userEnrolls[0]) {
+                const isPremium = res.userEnrolls[0].isHePaid;
+                setPremUser(isPremium);
+
+                // Store the premium status in localStorage
+                localStorage.setItem("premuserorNot", JSON.stringify(isPremium));
             } else {
-
-                setPremUser(false); // Mark as not paid
+                console.warn("No enrollment data found for the user.");
+                setPremUser(false); // Default to not premium if no data
             }
         } catch (error) {
-
-            setPremUser(false); // Mark as not paid
+            console.error("Error fetching premium user status:", error);
         }
     };
+
 
     const handleScrollToSub = () => {
         const targetElement = document.getElementById('subs');
@@ -53,15 +60,30 @@ const ActiveSqu = () => {
             <div className="absolute pointer-events-none h-full w-full opacity-5 bg-noise z-50"></div>
 
             {!premuserorNot || !user ? (
-                <Link href='/payment'>
-                    <h3
-                        className="flex flex-col md:flex-row font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-white cursor-pointer"
-                    // Trigger scroll when clicked
-                    >
-                        <FaExclamationTriangle className="text-6xl md:text-8xl transition hover:scale-150" />
-                        تفعيل الحساب
-                    </h3>
-                </Link>
+                !user ? (
+
+                    <Link href='/sign-up'>
+                        <h3
+                            className="flex flex-col md:flex-row font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-white cursor-pointer"
+                        // Trigger scroll when clicked
+                        >
+                            <FaExclamationTriangle className="text-6xl md:text-8xl transition hover:scale-150" />
+                            تفعيل الحساب
+                        </h3>
+                    </Link>
+
+                ) : (
+
+                    <Link href='/payment'>
+                        <h3
+                            className="flex flex-col md:flex-row font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-white cursor-pointer"
+                        // Trigger scroll when clicked
+                        >
+                            <FaExclamationTriangle className="text-6xl md:text-8xl transition hover:scale-150" />
+                            تفعيل الحساب
+                        </h3>
+                    </Link>)
+
             ) : (
                 <h3 onClick={handleScrollToSub} className="flex flex-col md:flex-row font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-white cursor-pointer">
                     <PiHeartFill className="text-6xl md:text-8xl transition hover:scale-150 hover:cursor-pointer" />

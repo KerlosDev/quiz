@@ -102,7 +102,7 @@ const Hero = () => {
     }, []);
 
     return (
-        <div className="relative cursor-default selection:text-yellow-400 mt-5 selection:bg-yellow-800 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8">
+        <div className="relative cursor-default  selection:text-yellow-400 mt-5 selection:bg-yellow-800 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8">
             {/* Main Hero Section */}
             <div className=' absolute w-80 h-80 bg-slate-900 left-0 -bottom-48 rounded-full blur-2xl -z-20'></div>
             <div className=' absolute w-80 h-80 bg-slate-900 right-0  -bottom-48 rounded-full blur-2xl -z-20'></div>
@@ -125,8 +125,8 @@ const Hero = () => {
 
                 <div className="relative col-span-2 md:col-span-3 bg-yellow-400 shadow-2xl bg-paton bg-cover outline-dashed outline-offset-2 outline-yellow-300 w-full p-6 md:p-9 rounded-xl flex items-center">
                     {/* Noise Effect */}
-                    <div className="absolute pointer-events-none h-full w-full opacity-5 bg-noise z-50"></div>
 
+                    
                     {/* Content */}
                     <h3 className="flex flex-col md:flex-row font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-yellow-800">
                         <GiTrophyCup className="text-6xl md:text-8xl transition hover:scale-150 hover:cursor-pointer" />
@@ -136,7 +136,7 @@ const Hero = () => {
 
                 <dialog
                     open={isOpen} // This will control the visibility of the dialog
-                    className="rounded-xl font-arabicUI2 transition mt-24 backdrop-blur-lg p-3 bg-black/20 z-50 mr-auto ml-auto"
+                    className="rounded-xl max-w-[90%] font-arabicUI2 transition mt-24 backdrop-blur-lg p-3 bg-black/20 z-50 mr-auto ml-auto"
                 >
                     <h1 className="bg-paton rtl bg-cover p-3 rounded-xl text-black text-center text-3xl">
                         {message ? message : 'Loading message...'}

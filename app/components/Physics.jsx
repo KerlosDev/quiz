@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { BsPatchCheckFill } from "react-icons/bs";
 import { useUser } from '@clerk/nextjs';
+import { FaLock } from "react-icons/fa";
+import { FaPlay } from "react-icons/fa";
 
 const Physics = () => {
     const [activeBook, setActiveBook] = useState(false);
@@ -14,13 +16,46 @@ const Physics = () => {
     const [numberofquiz, setNumberQuiz] = useState(0);
 
     const { user } = useUser();
+    const [premuserorNot, setPremUser] = useState(false);
+
+    useEffect(() => {
+        // Check if the premium status is already stored
+        const storedPremStatus = localStorage.getItem("premuserorNot");
+        if (storedPremStatus) {
+            setPremUser(JSON.parse(storedPremStatus));
+        } else if (user?.primaryEmailAddress?.emailAddress) {
+            // Fetch premium status if not stored
+            premiumusers(user?.primaryEmailAddress?.emailAddress);
+        }
+    }, [user]);
+
+    const premiumusers = async (email) => {
+        try {
+            const res = await GlobalApi.premUsers(email);
+
+            if (res && res.userEnrolls && res.userEnrolls.length > 0 && res.userEnrolls[0]) {
+                const isPremium = res.userEnrolls[0].isHePaid;
+                setPremUser(isPremium);
+
+                // Store the premium status in localStorage
+                localStorage.setItem("premuserorNot", JSON.stringify(isPremium));
+            } else {
+                console.warn("No enrollment data found for the user.");
+                setPremUser(false); // Default to not premium if no data
+            }
+        } catch (error) {
+            console.error("Error fetching premium user status:", error);
+        }
+    };
+
+    console.log("prem", premuserorNot);
 
     // Handle click dynamically
     const handleClick = (namebook, index) => {
         setActiveBook(true);
         setTitle(namebook);
         setNumBook(index);
-        
+
         // Scroll to top when the button is clicked
         window.scroll({ top: 0, behavior: 'smooth' });
     };
@@ -49,17 +84,30 @@ const Physics = () => {
         let filterKey = '';
         if (numbook === 1) filterKey = 'emthan';
         if (numbook === 2) filterKey = 'newotn';
-        
 
         return dataBook?.quizzes
             ?.filter((item) => item.chooseBook === filterKey)
-            ?.map((item) => {
-                const quizLink = !user ? "/sign-up" : `/quiz/${item.id}`;  // Set the link based on the user condition
-
+            ?.map((item, index) => {
+                const quizLink = !user
+                    ? "/sign-up" // If no user is logged in, redirect to the sign-up page
+                    : (premuserorNot || index < 2
+                        ? `/quiz/${item.id}` // If the user is premium or it's one of the first two exams, allow access
+                        : `/payment`);
                 return (
                     <Link key={item.id} href={quizLink}>
-                        <h4 className='hover:scale-105 bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-2 rounded-xl m-3 mx-auto justify-center flex'>
+                        <h4 className='hover:scale-105   justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto  flex'>
                             {item?.quiztitle || 'No Title Available'}
+
+                            {index > 1 ? (
+                                premuserorNot ? (
+                                    <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
+                                ) : (
+                                    <FaLock className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
+                                )
+                            ) : (
+                                <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
+                            )}
+
                         </h4>
                     </Link>
                 );
@@ -92,8 +140,6 @@ const Physics = () => {
                     {title === 'فيزياء' && <div>
                         <h4 className='font-arabicUI3 my-3 gap-2 rtl mx-auto mt-4 mb-2 justify-center text-center flex text-4xl text-yellow-800 bg-paton bg-cover p-4 rounded-xl'>
                             عافر حلمك يستاهل
-                          
-                        
                         </h4>
                     </div>}
 
@@ -114,8 +160,6 @@ const Physics = () => {
                     className='hover:scale-110 transition cursor-pointer'>
                     <Image src='/neo.png' width={400} height={300} alt='chem' className='w-full h-auto' />
                 </div>
-             
-                
             </div>
         </div>
     );
