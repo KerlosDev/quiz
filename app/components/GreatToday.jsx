@@ -58,9 +58,9 @@ const GreatToday = () => {
 
                         top3Users.map((user, index) => (
                             <li key={index}
-                                className=" bg-white  bg-cover outline-dashed outline-2 outline-offset-2 outline-white p-3 flex justify-between mt-4 font-arabicUI2 rounded-xl text-xl md:text-2xl text-blue-800">
+                                className="  bg-white hover:scale-110 transition  bg-cover outline-dashed outline-2 outline-offset-2 outline-white p-3 flex justify-between mt-4 font-arabicUI2 rounded-xl text-xl md:text-2xl text-blue-800">
 
-                                <h3 className=' rtl'>
+                                <h3 className='  rtl'>
                                     {user.totalQuizGrade}&nbsp; نقطة
                                 </h3>
                                 <h3 className=' font-arabicUI3'>{user.userName}</h3>

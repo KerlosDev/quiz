@@ -33,21 +33,21 @@ const QuizBio = ({ params }) => {
                 console.log("Response: ", req.quiz);
                 console.log("Response 2 : ", req);
                 setEnrolQuiz(req.quiz)
-                
-                
+
+
             })
             .catch((err) => {
                 console.error("Error: ", err);
             });
     };
 
-    
+
 
 
     // Load answers from localStorage when component mounts
     useEffect(() => {
         if (email && quizid) {
-           
+
             chemdata(quizid)
         }
 
@@ -58,7 +58,7 @@ const QuizBio = ({ params }) => {
         }
     }, [user, quizid]);
 
-   
+
     const handleClickNumber = (index) => {
         setActiveINdex(index);
         setActive4quiz(0);
@@ -126,54 +126,68 @@ const QuizBio = ({ params }) => {
     console.log(enrolquiz?.subjectName)
     console.log(enrolquiz?.chooseBook)
 
-    const handleSumbit = () => {
-        Swal.fire({
-            title: "متاكد انك عاوز تسلم الامتحان ؟",
-            text: "! مش هتقدر تعدل الاجابات تاني",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "تسليم الامتحان",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const finalScore = calculateScore(); // حساب الدرجات فوراً
-    
-                // حفظ الدرجة على السيرفر
-                const saveGrade = async () => {
-                    try {
-                        const response = await GlobalApi.SaveGradesOfQuiz(
-                            enrolquiz?.subjectName, enrolquiz?.chooseBook, email, user?.fullName, finalScore, enrolquiz?.quiztitle, enrolquiz?.question?.length
-                        );
-    
-                        // Notify the user of successful submission
-                        Swal.fire({
-                            title: "تم التسليم بنجاح!",
-                            text: "انا فخور بيك انك حاولت مهما كانت النتيجة",
-                            icon: "success",
-                        });
-    
-                        setShowResults(true); // Show results page
-    
-                        // مسح الإجابات المخزنة في الذاكرة بعد التسليم
-                        localStorage.removeItem(`quizAnswers_${quizid}`);
-    
-                    } catch (error) {
-                        console.error("Failed to save grades:", error);
-    
-                        Swal.fire({
-                            title: "خطأ!",
-                            text: "حدث خطأ أثناء حفظ النتائج. حاول مرة أخرى لاحقًا.",
-                            icon: "error",
-                        });
-                    }
-                };
-    
-                saveGrade(); // استدعاء دالة حفظ الدرجة
-            }
-        });
+    const areAllQuestionsAnswered = () => {
+        return enrolquiz?.question?.every((_, index) => answersofQuiz[index]);
     };
-    
+
+    // Submit button logic
+    const handleSumbit = () => {
+        if (areAllQuestionsAnswered()) {
+            Swal.fire({
+                title: "متاكد انك عاوز تسلم الامتحان ؟",
+                text: "! مش هتقدر تعدل الاجابات تاني",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "تسليم الامتحان",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const finalScore = calculateScore(); // حساب الدرجات فوراً
+
+                    // حفظ الدرجة على السيرفر
+                    const saveGrade = async () => {
+                        try {
+                            const response = await GlobalApi.SaveGradesOfQuiz(
+                                enrolquiz?.subjectName, enrolquiz?.chooseBook, email, user?.fullName, finalScore, enrolquiz?.quiztitle, enrolquiz?.question?.length
+                            );
+
+                            // Notify the user of successful submission
+                            Swal.fire({
+                                title: "تم التسليم بنجاح!",
+                                text: "انا فخور بيك انك حاولت مهما كانت النتيجة",
+                                icon: "success",
+                            });
+
+                            setShowResults(true); // Show results page
+
+                            // مسح الإجابات المخزنة في الذاكرة بعد التسليم
+                            localStorage.removeItem(`quizAnswers_${quizid}`);
+                        } catch (error) {
+                            console.error("Failed to save grades:", error);
+
+                            Swal.fire({
+                                title: "خطأ!",
+                                text: "حدث خطأ أثناء حفظ النتائج. حاول مرة أخرى لاحقًا.",
+                                icon: "error",
+                            });
+                        }
+                    };
+
+                    saveGrade(); // استدعاء دالة حفظ الدرجة
+                }
+            });
+        } else {
+            Swal.fire({
+                title: "لم تجب على جميع الأسئلة",
+                text: "يرجى الإجابة على جميع الأسئلة قبل التسليم.",
+                icon: "warning",
+            });
+        }
+    };
+
+
+
 
 
 
@@ -191,20 +205,20 @@ const QuizBio = ({ params }) => {
                         </div>
                         <div>
 
-                            <h2 className={`m-7 cursor-pointer leading-normal rtl font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center hover:bg-white/40 duration-500 transition active:ring-4 select-none bg-white text-gray-800`}>
+                            <h2 className={`m-7 cursor-pointer leading-normal rtl font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center    duration-500 transition active:ring-4 select-none bg-white text-gray-800`}>
                                 {enrolquiz?.question && enrolquiz?.question[activeIndex] ? enrolquiz?.question[activeIndex]?.qus : 'No question available'}
                             </h2>
                             <div className='grid max-md:grid-cols-1 grid-cols-2'>
-                                <h2 onClick={() => handleChooseAnserw(1)} className={`mb-7 cursor-pointer max-sm:text-2xl font-arabicUI3 text-4xl m-3 p-4 rounded-lg text-center hover:bg-white/40 duration-500 transition active:ring-4 select-none bg-gray-800 ${actind4quiz === 1 || isAnswerSelected(activeIndex) === "A" ? "bg-green-400 text-gray-800" : ""} text-white`}>
+                                <h2 onClick={() => handleChooseAnserw(1)} className={`mb-7 cursor-pointer max-sm:text-2xl font-arabicUI3 text-4xl m-3 p-4 rounded-lg text-center    duration-500 transition active:ring-4 select-none bg-gray-800 ${actind4quiz === 1 || isAnswerSelected(activeIndex) === "A" ? "bg-green-400 text-gray-800" : ""} text-white`}>
                                     {enrolquiz?.question && enrolquiz?.question[activeIndex] ? enrolquiz?.question[activeIndex]?.opationA : 'No question available'}
                                 </h2>
-                                <h2 onClick={() => handleChooseAnserw(2)} className={`mb-7 cursor-pointer  max-sm:text-2xl font-arabicUI3 text-4xl m-3 p-4 rounded-lg text-center hover:bg-white/40 duration-500 transition active:ring-4 select-none bg-gray-800 ${actind4quiz === 2 || isAnswerSelected(activeIndex) === "B" ? "bg-green-400 text-gray-800" : ""} text-white`}>
+                                <h2 onClick={() => handleChooseAnserw(2)} className={`mb-7 cursor-pointer  max-sm:text-2xl font-arabicUI3 text-4xl m-3 p-4 rounded-lg text-center    duration-500 transition active:ring-4 select-none bg-gray-800 ${actind4quiz === 2 || isAnswerSelected(activeIndex) === "B" ? "bg-green-400 text-gray-800" : ""} text-white`}>
                                     {enrolquiz?.question && enrolquiz?.question[activeIndex] ? enrolquiz?.question[activeIndex]?.opationB : 'No question available'}
                                 </h2>
-                                <h2 onClick={() => handleChooseAnserw(3)} className={`mb-7 cursor-pointer max-sm:text-2xl  font-arabicUI3 text-4xl m-3 p-4 rounded-lg text-center hover:bg-white/40 duration-500 transition active:ring-4 select-none bg-gray-800 ${actind4quiz === 3 || isAnswerSelected(activeIndex) === "C" ? "bg-green-400 text-gray-800" : ""} text-white`}>
+                                <h2 onClick={() => handleChooseAnserw(3)} className={`mb-7 cursor-pointer max-sm:text-2xl  font-arabicUI3 text-4xl m-3 p-4 rounded-lg text-center    duration-500 transition active:ring-4 select-none bg-gray-800 ${actind4quiz === 3 || isAnswerSelected(activeIndex) === "C" ? "bg-green-400 text-gray-800" : ""} text-white`}>
                                     {enrolquiz?.question && enrolquiz?.question[activeIndex] ? enrolquiz?.question[activeIndex]?.opationC : 'No question available'}
                                 </h2>
-                                <h2 onClick={() => handleChooseAnserw(4)} className={`mb-7 cursor-pointer max-sm:text-2xl font-arabicUI3 text-4xl m-3 p-4 rounded-lg text-center hover:bg-white/40 duration-500 transition active:ring-4 select-none bg-gray-800 ${actind4quiz === 4 || isAnswerSelected(activeIndex) === "D" ? "bg-green-400 text-gray-800" : ""} text-white`}>
+                                <h2 onClick={() => handleChooseAnserw(4)} className={`mb-7 cursor-pointer max-sm:text-2xl font-arabicUI3 text-4xl m-3 p-4 rounded-lg text-center    duration-500 transition active:ring-4 select-none bg-gray-800 ${actind4quiz === 4 || isAnswerSelected(activeIndex) === "D" ? "bg-green-400 text-gray-800" : ""} text-white`}>
                                     {enrolquiz?.question && enrolquiz?.question[activeIndex] ? enrolquiz?.question[activeIndex]?.opationD : 'No question available'}
                                 </h2>
 
@@ -214,7 +228,7 @@ const QuizBio = ({ params }) => {
                                 {enrolquiz?.question?.map((item, index) => (
                                     <h2
                                         onClick={() => handleClickNumber(index)}
-                                        className={`mb-7 max-sm:text-2xl cursor-pointer font-arabicUI3 text-4xl p-4 rounded-lg text-center hover:bg-white/40 duration-500 transition active:ring-4 select-none ${activeIndex === index ? "bg-gray-800 text-white scale-125 max-sm:m-0 h-fit mx-4" : "bg-white text-gray-800"}`}
+                                        className={`mb-7 max-sm:text-2xl cursor-pointer font-arabicUI3 text-4xl p-4 rounded-lg text-center  duration-500 transition active:ring-4 select-none ${activeIndex === index ? "bg-gray-800 text-white scale-125 max-sm:m-0 h-fit mx-4" : "bg-white text-gray-800"}`}
                                         key={index}>
                                         {index + 1}
                                     </h2>
@@ -229,12 +243,12 @@ const QuizBio = ({ params }) => {
                                     } else {
                                         setNext(true);
                                     }
-                                }} className={`mb-7 cursor-pointer max-sm:text-2xl max-sm:p-4 w-fit font-arabicUI3 text-5xl m-3 p-8 mx-auto rounded-lg text-center hover:bg-white/40 duration-500 transition active:ring-4 select-none bg-white text-gray-800`}>
+                                }} className={`mb-7 cursor-pointer max-sm:text-2xl max-sm:p-4 w-fit font-arabicUI3 text-5xl m-3 p-8 mx-auto rounded-lg text-center    duration-500 transition active:ring-4 select-none bg-white text-gray-800`}>
                                     {!next ? "السوال التالي" : "الأسئلة خلصت"}
                                 </h2>
 
                                 {next && (
-                                    <h4 onClick={() => handleSumbit()} className={`mb-7 max-sm:p-2  max-sm:text-2xl cursor-pointer w-fit font-arabicUI3 text-5xl m-3 p-8 mx-auto rounded-lg text-center hover:bg-white/40 duration-500 transition active:ring-4 select-none bg-green-400 text-gray-800`}>
+                                    <h4 onClick={() => handleSumbit()} className={`mb-7 max-sm:p-2  max-sm:text-2xl cursor-pointer w-fit font-arabicUI3 text-5xl m-3 p-8 mx-auto rounded-lg text-center    duration-500 transition active:ring-4 select-none bg-green-400 text-gray-800`}>
                                         تسليم الامتحان
                                     </h4>
                                 )}
@@ -258,14 +272,14 @@ const QuizBio = ({ params }) => {
                                 <div key={index}>
                                     <h2
                                         onClick={() => handleClickNumber(index)}
-                                        className={` cursor-pointer max-sm:text-lg font-arabicUI3 m-5 text-4xl p-4 rounded-lg text-center hover:bg-white/40 duration-500 transition h-fit active:ring-4 select-none  bg-white text-gray-800 `}
+                                        className={` cursor-pointer max-sm:text-lg font-arabicUI3 m-5 text-4xl p-4 rounded-lg text-center    duration-500 transition h-fit active:ring-4 select-none  bg-white text-gray-800 `}
                                     >
                                         {item.qus}
                                     </h2>
                                     {(trueChoices[index] === "A" || answersofQuiz[index] === "A") && (
                                         <h2
                                             onClick={() => handleClickNumber(index)}
-                                            className={` cursor-pointer font-arabicUI3 m-5 text-xl p-4 rounded-lg text-center hover:bg-white/40 duration-500 transition h-fit active:ring-4 select-none ${trueChoices[index] === "A" ? "bg-green-500 text-white " : "bg-red-500 text-white"}`}
+                                            className={` cursor-pointer font-arabicUI3 m-5 text-xl p-4 rounded-lg text-center    duration-500 transition h-fit active:ring-4 select-none ${trueChoices[index] === "A" ? "bg-green-500 text-white " : "bg-red-500 text-white"}`}
                                         >
                                             {item.opationA}
                                         </h2>
@@ -273,7 +287,7 @@ const QuizBio = ({ params }) => {
                                     {(trueChoices[index] === "B" || answersofQuiz[index] === "B") && (
                                         <h2
                                             onClick={() => handleClickNumber(index)}
-                                            className={` cursor-pointer font-arabicUI3 m-5 text-xl p-4 rounded-lg text-center hover:bg-white/40 duration-500 transition h-fit active:ring-4 select-none ${trueChoices[index] === "B" ? "bg-green-500 text-white " : "bg-red-500 text-white"}`}
+                                            className={` cursor-pointer font-arabicUI3 m-5 text-xl p-4 rounded-lg text-center    duration-500 transition h-fit active:ring-4 select-none ${trueChoices[index] === "B" ? "bg-green-500 text-white " : "bg-red-500 text-white"}`}
                                         >
                                             {item.opationB}
                                         </h2>
@@ -281,7 +295,7 @@ const QuizBio = ({ params }) => {
                                     {(trueChoices[index] === "C" || answersofQuiz[index] === "C") && (
                                         <h2
                                             onClick={() => handleClickNumber(index)}
-                                            className={` cursor-pointer font-arabicUI3 m-5 text-xl p-4 rounded-lg text-center hover:bg-white/40 duration-500 transition h-fit active:ring-4 select-none ${trueChoices[index] === "C" ? "bg-green-500 text-white " : " bg-red-500 text-white"}`}
+                                            className={` cursor-pointer font-arabicUI3 m-5 text-xl p-4 rounded-lg text-center    duration-500 transition h-fit active:ring-4 select-none ${trueChoices[index] === "C" ? "bg-green-500 text-white " : " bg-red-500 text-white"}`}
                                         >
                                             {item.opationC}
                                         </h2>
@@ -289,7 +303,7 @@ const QuizBio = ({ params }) => {
                                     {(trueChoices[index] === "D" || answersofQuiz[index] === "D") && (
                                         <h2
                                             onClick={() => handleClickNumber(index)}
-                                            className={` cursor-pointer font-arabicUI3 m-5 text-xl p-4 rounded-lg text-center hover:bg-white/40 duration-500 transition h-fit active:ring-4 select-none ${trueChoices[index] === "D" ? "bg-green-500 text-white " : " bg-red-500 text-white"}`}
+                                            className={` cursor-pointer font-arabicUI3 m-5 text-xl p-4 rounded-lg text-center    duration-500 transition h-fit active:ring-4 select-none ${trueChoices[index] === "D" ? "bg-green-500 text-white " : " bg-red-500 text-white"}`}
                                         >
                                             {item.opationD}
                                         </h2>)}
