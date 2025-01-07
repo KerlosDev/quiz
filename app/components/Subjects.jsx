@@ -9,45 +9,45 @@ const Subjects = () => {
         {
             name: "عربي",
             img: "/ar.png",
-            books: ["الامتحان", "بيان", "كيان", "الابداع"],
+            books: ["سهل", "متوسط", "صعب"],
             link: "/arabic"
 
         },
         {
             name: "انجليزي",
             img: "/en.png",
-            books: ["المعاصر", "العمالقة", "A1"],
+            books: ["سهل", "متوسط", "صعب"],
             link: "/english"
         },
         {
             name: "فرنساوي",
             img: "/fr.png",
-            books: ["ميرسي"],
+            books: ["صعب"],
             link: "/french"
         },
 
         {
             name: "كيمياء",
             img: "/chem.jpg",
-            books: [ "الامتحان", "افوجادرو", "مندليف"],
+            books: ["سهل", "متوسط", "صعب"],
             link: "/chem"
         },
         {
             name: "فيزياء",
             img: "/ph.png",
-            books: ["نيوتن", "الامتحان"],
+            books: ["متوسط", "صعب"],
             link: "/phys"
         },
         {
             name: "احياء",
             img: "/bio2.jpg",
-            books: ["التفوق", "الامتحان",],
+            books: ["متوسط", "صعب"],
             link: "/bio"
         },
         {
             name: "جيولوجيا",
             img: "/geo.png",
-            books: ["التفوق", "الامتحان"],
+            books: ["متوسط", "صعب"],
             link: "/geo"
         },
     ];

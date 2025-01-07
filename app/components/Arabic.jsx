@@ -17,45 +17,45 @@ const Arabic = () => {
 
     const { user } = useUser();
 
-    
-        useEffect(() => {
-            // Check if the premium status is already stored
-            const storedPremStatus = localStorage.getItem("premuserorNot");
-            if (storedPremStatus) {
-                setPremUser(JSON.parse(storedPremStatus));
-            } else if (user?.primaryEmailAddress?.emailAddress) {
-                // Fetch premium status if not stored
-                premiumusers(user?.primaryEmailAddress?.emailAddress);
+
+    useEffect(() => {
+        // Check if the premium status is already stored
+        const storedPremStatus = localStorage.getItem("premuserorNot");
+        if (storedPremStatus) {
+            setPremUser(JSON.parse(storedPremStatus));
+        } else if (user?.primaryEmailAddress?.emailAddress) {
+            // Fetch premium status if not stored
+            premiumusers(user?.primaryEmailAddress?.emailAddress);
+        }
+    }, [user]);
+
+
+    const premiumusers = async (email) => {
+        try {
+            const res = await GlobalApi.premUsers(email);
+
+            if (res && res.userEnrolls && res.userEnrolls.length > 0 && res.userEnrolls[0]) {
+                const isPremium = res.userEnrolls[0].isHePaid;
+                setPremUser(isPremium);
+
+                // Store the premium status in localStorage
+                localStorage.setItem("premuserorNot", JSON.stringify(isPremium));
+            } else {
+                console.warn("No enrollment data found for the user.");
+                setPremUser(false); // Default to not premium if no data
             }
-        }, [user]);
-    
-        
-        const premiumusers = async (email) => {
-            try {
-                const res = await GlobalApi.premUsers(email);
-    
-                if (res && res.userEnrolls && res.userEnrolls.length > 0 && res.userEnrolls[0]) {
-                    const isPremium = res.userEnrolls[0].isHePaid;
-                    setPremUser(isPremium);
-    
-                    // Store the premium status in localStorage
-                    localStorage.setItem("premuserorNot", JSON.stringify(isPremium));
-                } else {
-                    console.warn("No enrollment data found for the user.");
-                    setPremUser(false); // Default to not premium if no data
-                }
-            } catch (error) {
-                console.error("Error fetching premium user status:", error);
-            }
-        };
-    
-        
+        } catch (error) {
+            console.error("Error fetching premium user status:", error);
+        }
+    };
+
+
     // Handle click dynamically
     const handleClick = (namebook, index) => {
         setActiveBook(true);
         setTitle(namebook);
         setNumBook(index);
-        
+
         // Scroll to top when the button is clicked
         window.scroll({ top: 0, behavior: 'smooth' });
     };
@@ -101,7 +101,7 @@ const Arabic = () => {
                             {item?.quiztitle || 'No Title Available'}
 
                             {index > 1 ? (
-                                
+
                                 premuserorNot ? (
                                     <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
                                 ) : (
@@ -137,14 +137,12 @@ const Arabic = () => {
 
                 <div className='bg-yellow-800 cursor-default shadow-xl shadow-yellow-800/50 rounded-xl m-4 p-4'>
                     <h4 className='text-2xl sm:text-4xl md:text-5xl text-center  font-arabicUI2 bg-paton text-transparent bg-clip-text m-auto justify-center flex'>
-                        {title === 'كيمياء' ? 'يلا اختار كتاب تحله' : 'امتحانات الكتاب'}
+                        {title === 'لغة عربية' ? 'يلا اختار كتاب تحله' : 'امتحانات الكتاب'}
                     </h4>
 
                     {title === 'لغة عربية' && <div>
                         <h4 className='font-arabicUI3 my-3 gap-2 rtl mx-auto mt-4 mb-2 justify-center text-center flex text-4xl text-yellow-800 bg-paton bg-cover p-4 rounded-xl'>
                             عافر حلمك يستاهل
-                          
-                        
                         </h4>
                     </div>}
 
@@ -153,29 +151,107 @@ const Arabic = () => {
                 </div>
             </div>
 
-            {/* Books Grid Section */}
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 lg:col-span-2'>
+             {/* Books Grid Section */}
+          
+            
+             <div className="grid grid-cols-1 p-5 sm:grid-cols-2 lg:grid-cols-2 h-fit gap-6 lg:col-span-2">
                 <div
-                    onClick={() => handleClick('كتاب كيان', 1)}
-                    className='hover:scale-110 transition cursor-pointer'>
-                    <Image src='/kayan.png' width={400} height={300} alt='chem' className='w-full h-auto' />
+                    onClick={() => handleClick(' اسئلة صعبة', 1)}
+                    className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition-opacity duration-300 bg-non bg-cover gap-2 p-5 rounded-xl cursor-pointer"
+                >
+                    <span className="m-auto flex justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24">
+                            <mask id="lineMdSpeedTwotoneLoop0">
+                                <path
+                                    fill="#fff"
+                                    fillOpacity={0}
+                                    stroke="#fff"
+                                    strokeDasharray={56}
+                                    strokeDashoffset={56}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M5 19v0c-0.3 0 -0.59 -0.15 -0.74 -0.41c-0.8 -1.34 -1.26 -2.91 -1.26 -4.59c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 1.68 -0.46 3.25 -1.26 4.59c-0.15 0.26 -0.44 0.41 -0.74 0.41Z">
+                                    <animate fill="freeze" attributeName="fill-opacity" begin="0.3s" dur="0.15s" values="0;0.3"></animate>
+                                    <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="56;0"></animate>
+                                </path>
+                                <g transform="rotate(-100 12 14)">
+                                    <path d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
+                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M16 14C16 16.21 14.21 18 12 18C9.79 18 8 16.21 8 14C8 11.79 12 0 12 0C12 0 16 11.79 16 14Z"></animate>
+                                    </path>
+                                    <path fill="#fff" d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
+                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M14 14C14 15.1 13.1 16 12 16C10.9 16 10 15.1 10 14C10 12.9 12 4 12 4C12 4 14 12.9 14 14Z"></animate>
+                                    </path>
+                                    <animateTransform attributeName="transform" begin="0.4s" dur="6s" repeatCount="indefinite" type="rotate" values="-100 12 14;45 12 14;45 12 14;45 12 14;20 12 14;10 12 14;0 12 14;35 12 14;45 12 14;55 12 14;50 12 14;15 12 14;-20 12 14;-100 12 14"></animateTransform>
+                                </g>
+                            </mask>
+                            <rect width={24} height={24} fill="#fff" mask="url(#lineMdSpeedTwotoneLoop0)"></rect>
+                        </svg>        </span>
+                    <span className="text-5xl">صعب</span>
                 </div>
+
                 <div
-                    onClick={() => handleClick('كتاب الامتحان', 2)}
-                    className='hover:scale-110 transition cursor-pointer'>
-                    <Image src='/emthan.png' width={400} height={300} alt='chem' className='w-full h-auto' />
+                    onClick={() => handleClick(' اسئلة متوسطة', 2)}
+                    className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition-opacity duration-300 bg-non5 bg-cover gap-2 p-5 rounded-xl cursor-pointer"
+                >
+                    <span className="m-auto flex justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24">
+                            <mask id="lineMdSpeedTwotoneLoop0">
+                                <path fill="#fff" fillOpacity={0} stroke="#fff" strokeDasharray={56} strokeDashoffset={56} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 19v0c-0.3 0 -0.59 -0.15 -0.74 -0.41c-0.8 -1.34 -1.26 -2.91 -1.26 -4.59c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 1.68 -0.46 3.25 -1.26 4.59c-0.15 0.26 -0.44 0.41 -0.74 0.41Z">
+                                    <animate fill="freeze" attributeName="fill-opacity" begin="0.3s" dur="0.15s" values="0;0.3"></animate>
+                                    <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="56;0"></animate>
+                                </path>
+                                <g transform="rotate(-100 12 14)">
+                                    <path d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
+                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M16 14C16 16.21 14.21 18 12 18C9.79 18 8 16.21 8 14C8 11.79 12 0 12 0C12 0 16 11.79 16 14Z"></animate>
+                                    </path>
+                                    <path fill="#fff" d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
+                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M14 14C14 15.1 13.1 16 12 16C10.9 16 10 15.1 10 14C10 12.9 12 4 12 4C12 4 14 12.9 14 14Z"></animate>
+                                    </path>
+                                    <animateTransform attributeName="transform" begin="0.4s" dur="6s" repeatCount="indefinite" type="rotate" values="-100 12 14;45 12 14;45 12 14;45 12 14;20 12 14;10 12 14;0 12 14;35 12 14;45 12 14;55 12 14;50 12 14;15 12 14;-20 12 14;-100 12 14"></animateTransform>
+                                </g>
+                            </mask>
+                            <rect width={24} height={24} fill="#000" mask="url(#lineMdSpeedTwotoneLoop0)"></rect>
+                        </svg>       </span>
+                    <span className="text-black text-5xl">متوسط</span>
                 </div>
+
                 <div
-                    onClick={() => handleClick('كتاب بيان', 3)}
-                    className='hover:scale-110 transition cursor-pointer'>
-                    <Image src='/bayan.png' width={400} height={300} alt='chem' className='w-full h-auto' />
-                </div>
-                <div
-                    onClick={() => handleClick('كتاب الابداع', 4)}
-                    className='hover:scale-110 transition cursor-pointer'>
-                    <Image src='/ebda.png' width={400} height={300} alt='chem' className='w-full h-auto' />
+                    onClick={() => handleClick(' اسئلة سهله', 3)}
+                    className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition-opacity duration-300 bg-non2 bg-cover gap-2 p-5 rounded-xl cursor-pointer"
+                >
+                    <span className="m-auto flex justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24">
+                            <mask id="lineMdSpeedTwotoneLoop0">
+                                <path
+                                    fill="#fff"
+                                    fillOpacity={0}
+                                    stroke="#fff"
+                                    strokeDasharray={56}
+                                    strokeDashoffset={56}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M5 19v0c-0.3 0 -0.59 -0.15 -0.74 -0.41c-0.8 -1.34 -1.26 -2.91 -1.26 -4.59c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 1.68 -0.46 3.25 -1.26 4.59c-0.15 0.26 -0.44 0.41 -0.74 0.41Z">
+                                    <animate fill="freeze" attributeName="fill-opacity" begin="0.3s" dur="0.15s" values="0;0.3"></animate>
+                                    <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="56;0"></animate>
+                                </path>
+                                <g transform="rotate(-100 12 14)">
+                                    <path d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
+                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M16 14C16 16.21 14.21 18 12 18C9.79 18 8 16.21 8 14C8 11.79 12 0 12 0C12 0 16 11.79 16 14Z"></animate>
+                                    </path>
+                                    <path fill="#fff" d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
+                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M14 14C14 15.1 13.1 16 12 16C10.9 16 10 15.1 10 14C10 12.9 12 4 12 4C12 4 14 12.9 14 14Z"></animate>
+                                    </path>
+                                    <animateTransform attributeName="transform" begin="0.4s" dur="6s" repeatCount="indefinite" type="rotate" values="-100 12 14;45 12 14;45 12 14;45 12 14;20 12 14;10 12 14;0 12 14;35 12 14;45 12 14;55 12 14;50 12 14;15 12 14;-20 12 14;-100 12 14"></animateTransform>
+                                </g>
+                            </mask>
+                            <rect width={24} height={24} fill="#fff" mask="url(#lineMdSpeedTwotoneLoop0)"></rect>
+                        </svg>        </span>
+                    <span className="text-5xl">سهل</span>
                 </div>
             </div>
+
         </div>
     );
 };

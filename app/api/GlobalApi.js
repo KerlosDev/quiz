@@ -14,7 +14,7 @@ const apigeo = process.env.NEXT_PUBLIC_MASTER_URL_GEO
 
 
 
-const SaveGradesOfQuiz = async (subname, bookname , userEmail, uerName, userGrade, quizname, numofqus ) => {
+const SaveGradesOfQuiz = async (subname, bookname, userEmail, uerName, userGrade, quizname, numofqus) => {
   const query6 = gql`
   
   mutation MyMutation {
@@ -76,6 +76,7 @@ const dataofChem = async (quizid) => {
           opationD
           trueChoisevip
           qus
+          imageOfQus
         }
 
          chooseBook
@@ -104,13 +105,13 @@ const subchem = async (sub) => {
   const shitosd = await request(MAINAPI, shite)
   return shitosd
 }
-const sendEnrollData = async ( userEmail, phonenumber) => {
+const sendEnrollData = async (userEmail, phonenumber) => {
   const query3 = gql`
   
   mutation MyMutation {
 
    createUserEnroll(
-    data: {phonenumber: "`+phonenumber+`", isHePaid: false, userEmail: "`+userEmail+`"}
+    data: {phonenumber: "`+ phonenumber + `", isHePaid: false, userEmail: "` + userEmail + `"}
   ) {
     id
     userEmail
@@ -136,7 +137,7 @@ const sendEnrollData = async ( userEmail, phonenumber) => {
 const premUsers = async (useremail) => {
   const query3 = gql`
   query MyQuery {
-  userEnrolls(where: {isHePaid: true, userEmail: "`+useremail+`"}) {
+  userEnrolls(where: {isHePaid: true, userEmail: "`+ useremail + `"}) {
     id
     userEmail
     isHePaid
@@ -260,6 +261,7 @@ const quizPh = async (quizid) => {
           opationA
           opationC
           opationB
+          imageOfQus
           opationD
           trueChoisevip
           qus
@@ -287,6 +289,7 @@ const quizCh = async (quizid) => {
           opationC
           opationB
           opationD
+          imageOfQus
           trueChoisevip
           qus
         }
@@ -308,14 +311,15 @@ const quizbio = async (quizid) => {
   query MyQuery {
   quiz(where: {id: "`+ quizid + `"}) {
         quiztitle
-        question {
-          opationA
-          opationC
-          opationB
-          opationD
-          trueChoisevip
-          qus
-        }
+         question {
+      opationA
+      opationC
+      opationB
+      opationD
+      trueChoisevip
+      qus
+      imageOfQus
+    }
 
          chooseBook
          subjectName
@@ -339,6 +343,7 @@ const quizAr = async (quizid) => {
           opationC
           opationB
           opationD
+          imageOfQus
           trueChoisevip
           qus
         }
@@ -364,6 +369,7 @@ const quizEn = async (quizid) => {
           opationA
           opationC
           opationB
+          imageOfQus
           opationD
           trueChoisevip
           qus
@@ -389,6 +395,7 @@ const quizFr = async (quizid) => {
         question {
           opationA
           opationC
+          imageOfQus
           opationB
           opationD
           trueChoisevip
@@ -415,6 +422,7 @@ const quizgeo = async (quizid) => {
         question {
           opationA
           opationC
+          imageOfQus
           opationB
           opationD
           trueChoisevip
@@ -468,7 +476,7 @@ export default {
   premUsers,
   SaveGradesOfQuiz,
   vquiz,
-  
+
   sendEnrollData,
   dataofChem,
   subchem

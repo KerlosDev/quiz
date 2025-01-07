@@ -205,9 +205,33 @@ const QuizGeo = ({ params }) => {
                         </div>
                         <div>
 
-                            <h2 className={`m-7 cursor-pointer leading-normal rtl font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center    duration-500 transition active:ring-4 select-none bg-white text-gray-800`}>
-                                {enrolquiz?.question && enrolquiz?.question[activeIndex] ? enrolquiz?.question[activeIndex]?.qus : 'No question available'}
-                            </h2>
+                            {enrolquiz?.question && enrolquiz?.question[activeIndex]?.imageOfQus ? (
+                                <div className="grid max-lg:grid-cols-1 items-center grid-cols-3">
+                                    <h2
+                                        className={`m-7 col-span-2 order-1 h-fit  cursor-pointer leading-normal rtl font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
+                                    >
+                                        {enrolquiz?.question && enrolquiz?.question[activeIndex]
+                                            ? enrolquiz?.question[activeIndex]?.qus
+                                            : "No question available"}
+                                    </h2>
+
+                                    <img
+                                        className="col-span-1 max-sm:w-full rounded-xl"
+                                        src={enrolquiz?.question[activeIndex]?.imageOfQus} // Use fallback image if linkImage is empty
+                                        alt="Quiz Image"
+                                        width={400}
+                                        height={400}
+                                    />
+                                </div>
+                            ) : (
+                                <h2
+                                    className={`m-7 cursor-pointer leading-normal rtl font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
+                                >
+                                    {enrolquiz?.question && enrolquiz?.question[activeIndex]
+                                        ? enrolquiz?.question[activeIndex]?.qus
+                                        : "No question available"}
+                                </h2>
+                            )}
                             <div className='grid max-md:grid-cols-1 grid-cols-2'>
                                 <h2 onClick={() => handleChooseAnserw(1)} className={`mb-7 cursor-pointer max-sm:text-2xl font-arabicUI3 text-4xl m-3 p-4 rounded-lg text-center    duration-500 transition active:ring-4 select-none bg-gray-800 ${actind4quiz === 1 || isAnswerSelected(activeIndex) === "A" ? "bg-green-400 text-gray-800" : ""} text-white`}>
                                     {enrolquiz?.question && enrolquiz?.question[activeIndex] ? enrolquiz?.question[activeIndex]?.opationA : 'No question available'}
@@ -236,14 +260,29 @@ const QuizGeo = ({ params }) => {
                             </div>
 
                             <div className='flex gap-3'>
-                                <h2 onClick={() => {
-                                    if (activeIndex < enrolquiz?.question?.length - 1) {
-                                        setActiveINdex(activeIndex + 1);
-                                        setActive4quiz(0);
-                                    } else {
-                                        setNext(true);
-                                    }
-                                }} className={`mb-7 cursor-pointer max-sm:text-2xl max-sm:p-4 w-fit font-arabicUI3 text-5xl m-3 p-8 mx-auto rounded-lg text-center    duration-500 transition active:ring-4 select-none bg-white text-gray-800`}>
+                                <h2
+                                    onClick={() => {
+                                        if (activeIndex < enrolquiz?.question?.length - 1) {
+                                            setActiveINdex(activeIndex + 1);
+                                            setActive4quiz(0);
+
+                                            // Scroll to the top of the page
+                                            window.scrollTo({
+                                                top: 0,
+                                                behavior: "smooth", // Smooth scrolling
+                                            });
+                                        } else {
+                                            setNext(true);
+
+                                            // Scroll to the top of the page
+                                            window.scrollTo({
+                                                top: 0,
+                                                behavior: "smooth", // Smooth scrolling
+                                            });
+                                        }
+                                    }}
+                                    className={`mb-7 cursor-pointer max-sm:text-2xl max-sm:p-4 w-fit font-arabicUI3 text-5xl m-3 p-8 mx-auto rounded-lg text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
+                                >
                                     {!next ? "السوال التالي" : "الأسئلة خلصت"}
                                 </h2>
 
