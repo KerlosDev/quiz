@@ -51,7 +51,7 @@ const French = () => {
         setActiveBook(true);
         setTitle(namebook);
         setNumBook(index);
-        
+
         // Scroll to top when the button is clicked
         window.scroll({ top: 0, behavior: 'smooth' });
     };
@@ -79,37 +79,37 @@ const French = () => {
     const renderQuizzes = () => {
         let filterKey = '';
         if (numbook === 1) filterKey = 'merci';
-       
+
 
         return dataBook?.quizzes
-        ?.filter((item) => item.chooseBook === filterKey)
-        ?.map((item, index) => {
-            const quizLink = !user
-                ? "/sign-up" // If no user is logged in, redirect to the sign-up page
-                : (premuserorNot || index < 2
-                    ? `/french/${item.id}` // If the user is premium or it's one of the first two exams, allow access
-                    : `/payment`);
-            return (
-                <Link key={item.id} href={quizLink}>
-                    <h4 className='hover:scale-105   justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto  flex'>
-                        {item?.quiztitle || 'No Title Available'}
+            ?.filter((item) => item.chooseBook === filterKey)
+            ?.map((item, index) => {
+                const quizLink = !user
+                    ? "/sign-up" // If no user is logged in, redirect to the sign-up page
+                    : (premuserorNot || index < 2
+                        ? `/french/${item.id}` // If the user is premium or it's one of the first two exams, allow access
+                        : `/payment`);
+                return (
+                    <Link key={item.id} href={quizLink}>
+                        <h4 className='hover:scale-105   justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto  flex'>
+                            {item?.quiztitle || 'No Title Available'}
 
-                        {index > 1 ? (
-                            premuserorNot ? (
-                                <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
+                            {index > 1 ? (
+                                premuserorNot ? (
+                                    <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
+                                ) : (
+                                    <FaLock className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
+                                )
                             ) : (
-                                <FaLock className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-                            )
-                        ) : (
-                            <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-                        )}
+                                <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
+                            )}
 
-                    </h4>
-                    
-                </Link>
-            );
-        });
-};
+                        </h4>
+
+                    </Link>
+                );
+            });
+    };
 
     return (
         <div className='mx-4 sm:mx-8 lg:mx-20 grid grid-cols-1 lg:grid-cols-4 gap-6'>
@@ -137,8 +137,8 @@ const French = () => {
                     {title === 'لغة فرنسية' && <div>
                         <h4 className='font-arabicUI3 my-3 gap-2 rtl mx-auto mt-4 mb-2 justify-center text-center flex text-4xl text-yellow-800 bg-paton bg-cover p-4 rounded-xl'>
                             عافر حلمك يستاهل
-                          
-                        
+
+
                         </h4>
                     </div>}
 
@@ -147,13 +147,13 @@ const French = () => {
                 </div>
             </div>
 
-              {/* Books Grid Section */}
-          
-            
-              <div className="grid grid-cols-1 p-5 sm:grid-cols-2 lg:grid-cols-2 h-fit gap-6 lg:col-span-2">
+            {/* Books Grid Section */}
+
+
+            <div className="grid grid-cols-1 p-5 sm:grid-cols-2 lg:grid-cols-2 h-fit gap-6 lg:col-span-2">
                 <div
                     onClick={() => handleClick(' اسئلة صعبة', 1)}
-                    className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition-opacity duration-300 bg-non bg-cover gap-2 p-5 rounded-xl cursor-pointer"
+                    className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition duration-300 bg-non bg-cover gap-2 p-5 rounded-xl cursor-pointer"
                 >
                     <span className="m-auto flex justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24">
@@ -186,10 +186,10 @@ const French = () => {
                     <span className="text-5xl">صعب</span>
                 </div>
 
-                
+
             </div>
 
-            
+
         </div>
     );
 };

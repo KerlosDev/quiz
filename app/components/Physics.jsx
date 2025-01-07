@@ -148,13 +148,13 @@ const Physics = () => {
                 </div>
             </div>
 
-             {/* Books Grid Section */}
-          
-            
-             <div className="grid grid-cols-1 p-5 sm:grid-cols-2 lg:grid-cols-2 h-fit gap-6 lg:col-span-2">
+            {/* Books Grid Section */}
+
+
+            <div className="grid grid-cols-1 p-5 sm:grid-cols-2 lg:grid-cols-2 h-fit gap-6 lg:col-span-2">
                 <div
                     onClick={() => handleClick(' اسئلة صعبة', 1)}
-                    className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition-opacity duration-300 bg-non bg-cover gap-2 p-5 rounded-xl cursor-pointer"
+                    className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition duration-300 bg-non bg-cover gap-2 p-5 rounded-xl cursor-pointer"
                 >
                     <span className="m-auto flex justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24">
@@ -189,7 +189,7 @@ const Physics = () => {
 
                 <div
                     onClick={() => handleClick(' اسئلة متوسطة', 2)}
-                    className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition-opacity duration-300 bg-non5 bg-cover gap-2 p-5 rounded-xl cursor-pointer"
+                    className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition duration-300 bg-non5 bg-cover gap-2 p-5 rounded-xl cursor-pointer"
                 >
                     <span className="m-auto flex justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24">
@@ -213,7 +213,7 @@ const Physics = () => {
                     <span className="text-black text-5xl">متوسط</span>
                 </div>
 
-               
+
             </div>
 
         </div>

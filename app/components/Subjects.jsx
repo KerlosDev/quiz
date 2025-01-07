@@ -96,7 +96,7 @@ const Subjects = () => {
                                 </div>
 
                                 {/* Hover Overlay */}
-                                <div className="absolute font-arabicUI2 inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div className="absolute font-arabicUI2 inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold opacity-0 group-hover:opacity-100 transition duration-300">
                                     <div className="grid grid-cols-1">
                                         فتح الامتحانات
                                         <span className="m-auto flex justify-center">
