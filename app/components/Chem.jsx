@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { BsPatchCheckFill } from "react-icons/bs";
 import { useUser } from '@clerk/nextjs';
+import { FaTelegram } from "react-icons/fa6";
 
 const Chem = () => {
     const [activeBook, setActiveBook] = useState(false);
@@ -50,6 +51,7 @@ const Chem = () => {
         if (numbook === 1) filterKey = 'avogadro';
         if (numbook === 2) filterKey = 'mandlef';
         if (numbook === 3) filterKey = 'emthan';
+        if (numbook === 4) filterKey = 'telegram';
 
         return dataBook?.quizzes
             ?.filter((item) => item.chooseBook === filterKey)
@@ -57,6 +59,7 @@ const Chem = () => {
                 const quizLink = !user ? "/sign-up" : `/chem/${item.id}`;  // Set the link based on the user condition
 
                 return (
+
                     <Link key={item.id} href={quizLink}>
                         <h4 className='hover:scale-105 bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-2 rounded-xl m-3 mx-auto justify-center flex'>
                             {item?.quiztitle || 'No Title Available'}
@@ -80,7 +83,7 @@ const Chem = () => {
                     alt='chem'
                     src='/chem.jpg'
                 />
-                <h3 className='font-arabicUI3 text-center drop-shadow-2xl text-yellow-900 text-4xl sm:text-5xl md:text-6xl lg:text-7xl'>
+                <h3 className='font-arabicUI3 text-center drop-shadow-2xl leading-relaxed text-yellow-900 text-4xl sm:text-5xl md:text-6xl lg:text-7xl'>
                     {title}
                 </h3>
 
@@ -99,6 +102,17 @@ const Chem = () => {
 
                     {/* Render quizzes dynamically */}
                     {renderQuizzes()}
+
+                    {numbook == 4 && (
+
+                        <Link href='https://t.me/CHFullMark/2348'>
+                            <h4 className='hover:scale-105 bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-2 rounded-xl m-3 mx-auto justify-center flex'>
+                                لينك قناة التلي
+                            </h4>
+                        </Link>
+
+                    )}
+
                 </div>
             </div>
 
@@ -200,6 +214,15 @@ const Chem = () => {
                             <rect width={24} height={24} fill="#fff" mask="url(#lineMdSpeedTwotoneLoop0)"></rect>
                         </svg>        </span>
                     <span className="text-5xl">سهل</span>
+                </div>
+                <div
+                    onClick={() => handleClick('قناة تيليجرام لطيفه هتساعدك', 4)}
+                    className="hover:scale-110  items-center m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition duration-300 bg-non3 bg-cover gap-2 p-5 rounded-xl cursor-pointer"
+                >
+                    <span className="m-auto flex mb-2 justify-center">
+                        <FaTelegram className=' text-5xl' />
+                    </span>
+                    <span className="text-4xl">تقفيل الكيمياء</span>
                 </div>
             </div>
 
