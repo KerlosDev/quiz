@@ -23,7 +23,7 @@ const Hero = () => {
         },
     ];
 
-   
+
     const [isOpen, setIsOpen] = useState(false);
     const [message, setMessage] = useState(null); // Initially set to null
 
@@ -83,7 +83,7 @@ const Hero = () => {
         "افعل ما تحب، وبالتأكيد هتحقق نجاح كبير.",
         "في الحياة كلها، الأمل هو السلاح الأقوى.",
         "خليك دايمًا إيجابي، التغيير بيبدأ منك."
-        
+
     ];
 
     // Get a random message from the array
@@ -106,29 +106,8 @@ const Hero = () => {
 
             <div className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-60  md:mx-8">
                 {/* Main Section */}
-                <div className="relative cursor-pointer hover:brightness-90 transition  col-span-1 bg-red-500 shadow-2xl bg-non bg-cover outline-dashed outline-offset-2 outline-red-500 w-fit p-6 md:p-9 rounded-xl flex items-center">
-                    {/* Noise Effect */}
-                    <div className="absolute pointer-events-none h-full w-fit opacity-5 bg-noise z-50"></div>
 
-                    {/* Content */}
-                    <h3 onClick={openDialog} className="flex select-none flex-col md:flex-row font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-white">
-                        <TbMessageFilled className="text-6xl md:text-8xl transition hover:scale-150 hover:cursor-pointer" />
-                        رسالة اليوم
-                    </h3>
-                </div>
 
-                <ActiveSqu />
-
-                <div className="relative col-span-2 md:col-span-3 bg-yellow-400 shadow-2xl bg-paton bg-cover outline-dashed outline-offset-2 outline-yellow-300 w-full p-6 md:p-9 rounded-xl flex items-center">
-                    {/* Noise Effect */}
-
-                    
-                    {/* Content */}
-                    <h3 className="flex flex-col md:flex-row font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-yellow-800">
-                        <GiTrophyCup className="text-6xl md:text-8xl transition hover:scale-150 hover:cursor-pointer" />
-                        موقع كويزاتك اكبر بنك اسئلة للمراجعة النهائية من جميع الكتب الخارجيه
-                    </h3>
-                </div>
 
                 <dialog
                     open={isOpen} // This will control the visibility of the dialog
@@ -143,8 +122,34 @@ const Hero = () => {
                 </dialog>
             </div>
 
+
+            <div className=" grid gap-5  grid-cols-2 p-3 lg:px-10 lg:grid-cols-5">
+
+
+
+                <div className=" mt-2  cursor-pointer hover:brightness-90 transition  justify-center  col-span-1 h-full bg-red-500 shadow-2xl bg-non bg-cover outline-dashed outline-offset-2 outline-red-500  p-6 md:p-9 rounded-xl flex items-center ">
+
+                    <h3 onClick={openDialog} className="flex flex-col  md:text-5xl select-none  font-arabicUI3 items-center justify-center text-3xl  lg:text-4xl text-center text-white">
+                        <TbMessageFilled className="text-7xl lg:text-8xl transition hover:scale-150 hover:cursor-pointer" />
+                        رسالة اليوم
+                    </h3>                </div>
+
+
+                <ActiveSqu />
+
+
+                <div className="col-span-2 lg:col-span-3  h-full  bg-yellow-400 shadow-2xl bg-paton bg-cover outline-dashed outline-offset-2 outline-yellow-300  p-6 mt-2 rounded-xl flex items-center">
+
+                    <h3 className="flex  font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-yellow-800">
+                        <GiTrophyCup className="text-6xl  md:text-8xl transition hover:scale-150 hover:cursor-pointer" />
+                        موقع كويزاتك اكبر بنك اسئلة للمراجعة النهائية من جميع الكتب الخارجيه
+                    </h3>
+                </div>
+
+            </div>
+
             {/* Features Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 mt-8 mb-6">
+            <div className="grid j grid-cols-1 lg:grid-cols-3 px-2 mb-6">
                 {/* Left Section */}
                 <div className="rtl relative mt-6 bg-paton bg-cover shadow-2xl col-span-2 h-fit bg-yellow-400 outline-dashed outline-offset-2 outline-yellow-300 md:mx-9 p-6 rounded-xl">
                     <h1 className="font-arabicUI2 m-auto flex justify-center text-yellow-800 text-3xl md:text-5xl">
@@ -152,7 +157,7 @@ const Hero = () => {
                         <HiBadgeCheck />
                     </h1>
 
-                    <div className="relative mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="relative mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ">
                         {Features.map((item, index) => (
                             <div
                                 key={index}
@@ -170,7 +175,7 @@ const Hero = () => {
                 </div>
 
                 {/* Right Section */}
-              <GreatToday></GreatToday>
+                <GreatToday></GreatToday>
             </div>
         </div>
     );
