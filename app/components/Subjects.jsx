@@ -53,7 +53,7 @@ const Subjects = () => {
     ];
 
     return (
-        <div id="subs" className="px-4 mt-14 sm:px-6 lg:px-8">
+        <div id="subs" className="px-4 mt-1 sm:px-6 lg:px-8">
             {/* Header */}
             <h3 className="flex justify-center items-center m-auto font-arabicUI2 gap-2 text-4xl sm:text-6xl lg:text-7xl text-white text-center">
                 <FaFireAlt className="text-3xl sm:text-5xl lg:text-6xl text-red-500 animate-pulse" />
