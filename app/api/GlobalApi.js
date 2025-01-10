@@ -14,6 +14,7 @@ const apigeo = process.env.NEXT_PUBLIC_MASTER_URL_GEO
 
 
 
+
 const SaveGradesOfQuiz = async (subname, bookname, userEmail, uerName, userGrade, quizname, numofqus) => {
   const query6 = gql`
   
@@ -90,6 +91,7 @@ const dataofChem = async (quizid) => {
   const shitosd = await request(MAINAPI, shite)
   return shitosd
 }
+
 
 const subchem = async (sub) => {
   const shite = gql`
@@ -476,7 +478,6 @@ export default {
   premUsers,
   SaveGradesOfQuiz,
   vquiz,
-
   sendEnrollData,
   dataofChem,
   subchem
