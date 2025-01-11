@@ -259,7 +259,7 @@ const quizPh = async (quizid) => {
   query MyQuery {
   quiz(where: {id: "`+ quizid + `"}) {
         quiztitle
-        question {
+        question (first: 100) {
           opationA
           opationC
           opationB
@@ -286,7 +286,7 @@ const quizCh = async (quizid) => {
   query MyQuery {
   quiz(where: {id: "`+ quizid + `"}) {
         quiztitle
-        question {
+        question (first: 100) {
           opationA
           opationC
           opationB
@@ -313,7 +313,7 @@ const quizbio = async (quizid) => {
   query MyQuery {
   quiz(where: {id: "`+ quizid + `"}) {
         quiztitle
-         question {
+         question (first: 100) {
       opationA
       opationC
       opationB
@@ -340,7 +340,7 @@ const quizAr = async (quizid) => {
   query MyQuery {
   quiz(where: {id: "`+ quizid + `"}) {
         quiztitle
-        question {
+        question (first: 100) {
           opationA
           opationC
           opationB
@@ -367,7 +367,7 @@ const quizEn = async (quizid) => {
   query MyQuery {
   quiz(where: {id: "`+ quizid + `"}) {
         quiztitle
-        question {
+        question (first: 100) {
           opationA
           opationC
           opationB
@@ -394,7 +394,7 @@ const quizFr = async (quizid) => {
   query MyQuery {
   quiz(where: {id: "`+ quizid + `"}) {
         quiztitle
-        question {
+        question (first: 100) {
           opationA
           opationC
           imageOfQus
@@ -421,7 +421,7 @@ const quizgeo = async (quizid) => {
   query MyQuery {
   quiz(where: {id: "`+ quizid + `"}) {
         quiztitle
-        question {
+        question (first: 100) {
           opationA
           opationC
           imageOfQus
