@@ -266,12 +266,14 @@ const QuizBio = ({ params }) => {
 
                             <div className='mt-10 grid grid-cols-11 max-md:grid-cols-4 max-sm:grid-cols-3 max-lg:grid-cols-5 max-xl:grid-cols-7 gap-3'>
                                 {enrolquiz?.question?.map((item, index) => (
-                                    <h2
-                                        onClick={() => handleClickNumber(index)}
-                                        className={`mb-7 max-sm:text-2xl cursor-pointer font-arabicUI3 text-4xl p-4 rounded-lg text-center    duration-500 transition active:ring-4 select-none ${activeIndex === index ? "bg-gray-800 text-white scale-125 max-sm:m-0 h-fit mx-4" : "bg-white text-gray-800"}`}
-                                        key={index}>
-                                        {index + 1}
-                                    </h2>
+                                  <h2
+                                  onClick={() => handleClickNumber(index)}
+                                  className={`mb-7 max-sm:text-2xl cursor-pointer font-arabicUI3 text-4xl p-4 rounded-lg text-center duration-500 transition active:ring-4 select-none 
+                                    ${answersofQuiz[index] ? "bg-green-400 text-gray-800" : activeIndex === index ? "bg-gray-800 text-white scale-125 max-sm:m-0 h-fit mx-4" : "bg-white text-gray-800"}`}
+                                  key={index}
+                                >
+                                  {index + 1}
+                                </h2>
                                 ))}
                             </div>
 
