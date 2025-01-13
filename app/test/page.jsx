@@ -6,6 +6,7 @@ import { BsPatchCheckFill } from "react-icons/bs";
 import ProgCircle from "../components/ProgCircle";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Quiz() {
     const [questions, setQuestions] = useState([]); // Store the parsed quiz questions
@@ -99,14 +100,17 @@ export default function Quiz() {
 
     const handleNextQuestion = () => {
         if (!selectedAnswer) {
-            Swal.fire({
-                title: "فكر فالسوال علي مهلك",
-                text: "هل ترغب في تسليم الامتحان؟",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "نعم، تسليم الامتحان",
-                cancelButtonText: "لا، العودة",
-            })
+            toast.success(' ❤️ فكر فالسوال وجاوب علي مهلك', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                className: 'font-arabicUI3 w-fit m-7 text-lg p-4 rounded-lg shadow-lg',
+                });
 
             return;
         }
@@ -331,6 +335,7 @@ export default function Quiz() {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
 
             <div className="mt-10 grid grid-cols-11 max-md:grid-cols-4 max-sm:grid-cols-3 max-lg:grid-cols-5 max-xl:grid-cols-7 gap-3">
                 {questions.map((item, index) => (
