@@ -459,7 +459,26 @@ const greatDay = async () => {
   const shitosd = await request(apiQuiz, shite)
   return shitosd
 }
+
+const testdata = async () => {
+  const shite = gql`
+  query MyQuery {
+  testnames {
+    namequiz
+    fileOfQus {
+      url
+    }
+  }
+}
+  `
+
+  const shitosd = await request(MAINAPI, shite)
+  return shitosd
+}
+
+
 export default {
+  testdata,
   greatDay,
   arabicData,
   geoData,

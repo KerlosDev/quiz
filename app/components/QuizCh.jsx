@@ -205,6 +205,8 @@ const QuizCh = ({ params }) => {
                         </div>
                         <div>
 
+                            
+                            
                             {enrolquiz?.question && enrolquiz?.question[activeIndex]?.imageOfQus ? (
                                 <div className="grid max-lg:grid-cols-1 items-center grid-cols-3">
                                     <h2
@@ -306,7 +308,6 @@ const QuizCh = ({ params }) => {
 
                         <div className=' m-6'>
                             <ProgCircle nsaba={(score / enrolquiz?.question?.length) * 100}></ProgCircle>
-
                         </div>
 
                         <div className=' grid max-sm:grid-cols-1 grid-cols-3'>
