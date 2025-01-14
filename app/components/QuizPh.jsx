@@ -11,6 +11,19 @@ import { useUser } from "@clerk/nextjs";
 
 export default function QuizCh({ params }) {
     const { quizid } = React.use(params);
+    const { user } = useUser();
+    const email = user?.primaryEmailAddress?.emailAddress;
+
+    if (!user) {
+        return (
+            <div className="flex justify-center items-center h-screen bg-gray-800">
+                <h1 className="font-arabicUI3 text-4xl text-white">
+                    من فضلك سجل الدخول لبدء الامتحان
+                </h1>
+            </div>
+        );
+    }
+
     const [questions, setQuestions] = useState([]); // Store the parsed quiz questions
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Index of the current question
     const [selectedAnswer, setSelectedAnswer] = useState(null); // Track the user's selected answer
@@ -18,9 +31,10 @@ export default function QuizCh({ params }) {
     const [score, setScore] = useState(0); // Track the user's score
     const [loading, setLoading] = useState(false);
     const [quizComplete, setQuizComplete] = useState(false);
-    const { user } = useUser()
-    const email = user?.primaryEmailAddress?.emailAddress;
-    const [quizDetails, setQuizDetalis] = useState([])
+    const [quizDetails, setQuizDetalis] = useState([]);
+
+
+
 
     useEffect(() => {
         getdata()
@@ -144,7 +158,7 @@ export default function QuizCh({ params }) {
     const handleAnswerSelect = (option) => {
         setSelectedAnswer(option);
     };
-    
+
 
     console.log(questions.length)
     console.log()
@@ -166,13 +180,13 @@ export default function QuizCh({ params }) {
             });
             return;
         }
-    
+
         // Update answers array
         const updatedAnswers = [...answers];
         const existingAnswerIndex = updatedAnswers.findIndex(
             (ans) => ans.question === questions[currentQuestionIndex]?.question
         );
-    
+
         if (existingAnswerIndex > -1) {
             updatedAnswers[existingAnswerIndex].answer = selectedAnswer;
         } else {
@@ -181,17 +195,17 @@ export default function QuizCh({ params }) {
                 answer: selectedAnswer,
             });
         }
-    
+
         setAnswers(updatedAnswers);
-    
+
         // Update score based on new answer
         const updatedScore = updatedAnswers.filter((ans) => {
             const question = questions.find(q => q.question === ans.question);
             return question && ans.answer.text === question.correctAnswer;
         }).length;
-    
+
         setScore(updatedScore);
-    
+
         // Check if it's the last question
         if (currentQuestionIndex + 1 === questions.length) {
             // Ensure no undefined in answeredQuestionTexts
@@ -199,11 +213,11 @@ export default function QuizCh({ params }) {
                 .map(ans => ans.question?.trim())
                 .filter(Boolean); // Remove undefined/null values
             const allQuestionTexts = questions.map(q => q.question?.trim());
-    
+
             const unansweredQuestions = allQuestionTexts.filter(
                 q => !answeredQuestionTexts.includes(q)
             );
-    
+
             if (unansweredQuestions.length > 0) {
                 Swal.fire({
                     title: "لم يتم الإجابة على جميع الأسئلة",
@@ -213,7 +227,7 @@ export default function QuizCh({ params }) {
                 });
                 return;
             }
-    
+
             Swal.fire({
                 title: "هل أنت متأكد؟",
                 text: "هل ترغب في تسليم الامتحان؟",
@@ -234,7 +248,7 @@ export default function QuizCh({ params }) {
                                 quizDetails.namequiz,
                                 questions.length
                             );
-    
+
                             Swal.fire({
                                 title: "تم التسليم بنجاح!",
                                 text: "انا فخور بيك انك حاولت مهما كانت النتيجة",
@@ -262,11 +276,11 @@ export default function QuizCh({ params }) {
         } else {
             setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
         }
-    
+
         setSelectedAnswer(null);
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
-    
+
 
 
 
@@ -287,7 +301,7 @@ export default function QuizCh({ params }) {
             const existingAnswerIndex = updatedAnswers.findIndex(
                 (ans) => ans.question === questions[currentQuestionIndex]?.question
             );
-    
+
             if (existingAnswerIndex > -1) {
                 updatedAnswers[existingAnswerIndex].answer = selectedAnswer;
             } else {
@@ -296,22 +310,22 @@ export default function QuizCh({ params }) {
                     answer: selectedAnswer,
                 });
             }
-    
+
             setAnswers(updatedAnswers);
             localStorage.setItem("answers", JSON.stringify(updatedAnswers));
         }
-    
+
         // تحديث الإجابة المختارة عند الضغط على رقم السؤال
         const selectedSavedAnswer = answers.find(
             (ans) => ans.question === questions[index]?.question
         )?.answer || null;
         setSelectedAnswer(selectedSavedAnswer);
         setCurrentQuestionIndex(index);
-    
+
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    
+
 
     const displayResult = () => {
         return (

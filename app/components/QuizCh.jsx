@@ -10,17 +10,31 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useUser } from "@clerk/nextjs";
 
 export default function QuizCh({ params }) {
-    const { quizid } = React.use(params);
-    const [questions, setQuestions] = useState([]); // Store the parsed quiz questions
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Index of the current question
-    const [selectedAnswer, setSelectedAnswer] = useState(null); // Track the user's selected answer
-    const [answers, setAnswers] = useState([]); // Store the answers
-    const [score, setScore] = useState(0); // Track the user's score
-    const [loading, setLoading] = useState(false);
-    const [quizComplete, setQuizComplete] = useState(false);
-    const { user } = useUser()
-    const email = user?.primaryEmailAddress?.emailAddress;
-    const [quizDetails, setQuizDetalis] = useState([])
+       const { quizid } = React.use(params);
+        const { user } = useUser();
+        const email = user?.primaryEmailAddress?.emailAddress;
+    
+        if (!user) {
+            return (
+                <div className="flex justify-center items-center h-screen bg-gray-800">
+                    <h1 className="font-arabicUI3 text-4xl text-white">
+                        من فضلك سجل الدخول لبدء الامتحان
+                    </h1>
+                </div>
+            );
+        }
+    
+        const [questions, setQuestions] = useState([]); // Store the parsed quiz questions
+        const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Index of the current question
+        const [selectedAnswer, setSelectedAnswer] = useState(null); // Track the user's selected answer
+        const [answers, setAnswers] = useState([]); // Store the answers
+        const [score, setScore] = useState(0); // Track the user's score
+        const [loading, setLoading] = useState(false);
+        const [quizComplete, setQuizComplete] = useState(false);
+        const [quizDetails, setQuizDetalis] = useState([]);
+    
+    
+    
 
     useEffect(() => {
         getdata()
