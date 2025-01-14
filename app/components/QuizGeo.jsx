@@ -280,33 +280,38 @@ export default function QuizCh({ params }) {
         setSelectedAnswer(savedAnswer);
     }, [currentQuestionIndex, answers]);
 
+    
     const handleClickNumber = (index) => {
+        // تحديث الإجابة المحددة قبل التبديل إلى السؤال الجديد
         if (selectedAnswer) {
             const updatedAnswers = [...answers];
             const existingAnswerIndex = updatedAnswers.findIndex(
-                (ans) => ans.questionId === questions[currentQuestionIndex].id
+                (ans) => ans.question === questions[currentQuestionIndex]?.question
             );
     
             if (existingAnswerIndex > -1) {
                 updatedAnswers[existingAnswerIndex].answer = selectedAnswer;
             } else {
                 updatedAnswers.push({
-                    questionId: questions[currentQuestionIndex].id,
+                    question: questions[currentQuestionIndex]?.question || "", // إضافة القيمة الافتراضية للسؤال
                     answer: selectedAnswer,
                 });
             }
+    
             setAnswers(updatedAnswers);
             localStorage.setItem("answers", JSON.stringify(updatedAnswers));
         }
     
+        // تحديث الإجابة المختارة عند الضغط على رقم السؤال
         const selectedSavedAnswer = answers.find(
-            (ans) => ans.questionId === questions[index].id
+            (ans) => ans.question === questions[index]?.question
         )?.answer || null;
         setSelectedAnswer(selectedSavedAnswer);
         setCurrentQuestionIndex(index);
     
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
+
     
 
     const displayResult = () => {
