@@ -438,7 +438,7 @@ export default function QuizCh({ params }) {
                     {questions[currentQuestionIndex] && questions[currentQuestionIndex]?.imageUrl ? (
                         <div className="grid max-lg:grid-cols-1 items-center grid-cols-3">
                             <h2
-                                className={`m-7 col-span-2 order-1 h-fit  cursor-pointer leading-normal rtl font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
+                                className={`m-7 col-span-2 order-1 h-fit  cursor-pointer leading-normal  font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
                             >
                                 {questions[currentQuestionIndex]?.question}
                             </h2>
@@ -453,7 +453,7 @@ export default function QuizCh({ params }) {
                         </div>
                     ) : (
                         <h2
-                            className={`m-7 cursor-pointer leading-normal rtl font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
+                            className={`m-7 cursor-pointer leading-normal  font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
                         >
                             {questions[currentQuestionIndex]?.question}
                         </h2>

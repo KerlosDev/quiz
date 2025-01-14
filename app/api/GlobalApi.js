@@ -372,7 +372,7 @@ const testapi = async () => {
   const shite = gql`
   
   query MyQuery {
-  quiz(where: {id: "cm5jy5z5s1h6c07pmd237ifzy"}) {
+  quiz(where: {id: "cm5vg6hnv03im07oa01gzgyhz"}) {
         quiztitle
          question (first: 100) {
       opationA

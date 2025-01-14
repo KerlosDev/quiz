@@ -1,0 +1,52 @@
+"filename", "language", "JavaScript JSX", "XML", "CSS", "JavaScript", "comment", "blank", "total"
+"d:\quiz\app\api\GlobalApi.js", "JavaScript", 0, 0, 0, 340, 0, 84, 424
+"d:\quiz\app\arabic\[quizid]\page.jsx", "JavaScript JSX", 12, 0, 0, 0, 0, 8, 20
+"d:\quiz\app\arabic\page.jsx", "JavaScript JSX", 14, 0, 0, 0, 0, 12, 26
+"d:\quiz\app\bio\[quizid]\page.jsx", "JavaScript JSX", 11, 0, 0, 0, 0, 8, 19
+"d:\quiz\app\bio\page.jsx", "JavaScript JSX", 14, 0, 0, 0, 0, 12, 26
+"d:\quiz\app\chem\[quizid]\page.jsx", "JavaScript JSX", 10, 0, 0, 0, 0, 8, 18
+"d:\quiz\app\chem\page.jsx", "JavaScript JSX", 14, 0, 0, 0, 0, 16, 30
+"d:\quiz\app\components\ActiveSqu.jsx", "JavaScript JSX", 85, 0, 0, 0, 6, 13, 104
+"d:\quiz\app\components\Arabic.jsx", "JavaScript JSX", 252, 0, 0, 0, 10, 35, 297
+"d:\quiz\app\components\Bio.jsx", "JavaScript JSX", 182, 0, 0, 0, 10, 33, 225
+"d:\quiz\app\components\Chem.jsx", "JavaScript JSX", 217, 0, 0, 0, 10, 33, 260
+"d:\quiz\app\components\English.jsx", "JavaScript JSX", 217, 0, 0, 0, 10, 33, 260
+"d:\quiz\app\components\Footer.jsx", "JavaScript JSX", 25, 0, 0, 0, 0, 13, 38
+"d:\quiz\app\components\French.jsx", "JavaScript JSX", 156, 0, 0, 0, 10, 32, 198
+"d:\quiz\app\components\Geo.jsx", "JavaScript JSX", 182, 0, 0, 0, 10, 32, 224
+"d:\quiz\app\components\GreatToday.jsx", "JavaScript JSX", 64, 0, 0, 0, 2, 17, 83
+"d:\quiz\app\components\Header.jsx", "JavaScript JSX", 78, 0, 0, 0, 9, 11, 98
+"d:\quiz\app\components\Hero.jsx", "JavaScript JSX", 145, 0, 0, 0, 9, 31, 185
+"d:\quiz\app\components\Physics.jsx", "JavaScript JSX", 184, 0, 0, 0, 10, 30, 224
+"d:\quiz\app\components\ProgCircle.jsx", "JavaScript JSX", 33, 0, 0, 0, 0, 14, 47
+"d:\quiz\app\components\QuizAr.jsx", "JavaScript JSX", 412, 0, 0, 0, 10, 90, 512
+"d:\quiz\app\components\QuizBio.jsx", "JavaScript JSX", 412, 0, 0, 0, 10, 95, 517
+"d:\quiz\app\components\QuizCh.jsx", "JavaScript JSX", 412, 0, 0, 0, 10, 91, 513
+"d:\quiz\app\components\QuizData.jsx", "JavaScript JSX", 239, 0, 0, 0, 13, 66, 318
+"d:\quiz\app\components\QuizEn.jsx", "JavaScript JSX", 412, 0, 0, 0, 10, 91, 513
+"d:\quiz\app\components\QuizFr.jsx", "JavaScript JSX", 412, 0, 0, 0, 10, 91, 513
+"d:\quiz\app\components\QuizGeo.jsx", "JavaScript JSX", 412, 0, 0, 0, 10, 92, 514
+"d:\quiz\app\components\QuizPh.jsx", "JavaScript JSX", 412, 0, 0, 0, 10, 91, 513
+"d:\quiz\app\components\QuizV.jsx", "JavaScript JSX", 149, 0, 0, 0, 2, 30, 181
+"d:\quiz\app\components\Subjects.jsx", "JavaScript JSX", 101, 0, 0, 0, 5, 12, 118
+"d:\quiz\app\components\Subs.jsx", "JavaScript JSX", 20, 0, 0, 0, 0, 7, 27
+"d:\quiz\app\components\ThemeToggle.jsx", "JavaScript JSX", 33, 0, 0, 0, 2, 12, 47
+"d:\quiz\app\english\[quizid]\page.jsx", "JavaScript JSX", 12, 0, 0, 0, 0, 8, 20
+"d:\quiz\app\english\page.jsx", "JavaScript JSX", 14, 0, 0, 0, 0, 12, 26
+"d:\quiz\app\french\[quizid]\page.jsx", "JavaScript JSX", 10, 0, 0, 0, 0, 7, 17
+"d:\quiz\app\french\page.jsx", "JavaScript JSX", 14, 0, 0, 0, 0, 11, 25
+"d:\quiz\app\geo\[quizid]\page.jsx", "JavaScript JSX", 10, 0, 0, 0, 0, 7, 17
+"d:\quiz\app\geo\page.jsx", "JavaScript JSX", 14, 0, 0, 0, 0, 10, 24
+"d:\quiz\app\globals.css", "CSS", 0, 0, 6, 0, 0, 2, 8
+"d:\quiz\app\layout.jsx", "JavaScript JSX", 50, 0, 0, 0, 2, 17, 69
+"d:\quiz\app\page.jsx", "JavaScript JSX", 13, 0, 0, 0, 0, 8, 21
+"d:\quiz\app\payment\page.jsx", "JavaScript JSX", 131, 0, 0, 0, 0, 28, 159
+"d:\quiz\app\phys\[quizid]\page.jsx", "JavaScript JSX", 9, 0, 0, 0, 0, 7, 16
+"d:\quiz\app\phys\page.jsx", "JavaScript JSX", 15, 0, 0, 0, 0, 10, 25
+"d:\quiz\app\quiz\page.jsx", "JavaScript JSX", 8, 0, 0, 0, 0, 5, 13
+"d:\quiz\app\sign-in\[[...sign-in]]\page.jsx", "JavaScript JSX", 80, 0, 0, 0, 0, 15, 95
+"d:\quiz\app\sign-up\[[...sign-up]]\page.jsx", "JavaScript JSX", 82, 0, 0, 0, 0, 20, 102
+"d:\quiz\app\sitemap.xml", "XML", 0, 50, 0, 0, 0, 1, 51
+"d:\quiz\app\subscriptions\page.jsx", "JavaScript JSX", 10, 0, 0, 0, 0, 6, 16
+"d:\quiz\app\test\page.jsx", "JavaScript JSX", 18, 0, 0, 0, 0, 7, 25
+"Total", "-", 5811, 50, 6, 340, 190, 1424, 7821
