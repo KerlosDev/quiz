@@ -135,7 +135,7 @@ const Arabic = () => {
                     {title}
                 </h3>
 
-                <div className='bg-yellow-800 cursor-default shadow-xl shadow-yellow-800/50 rounded-xl m-4 p-4'>
+                <div className='bg-yellow-800 bg-daark bg-cover cursor-default shadow-xl shadow-yellow-800/50 rounded-xl m-4 p-4'>
                     <h4 className='text-2xl sm:text-4xl md:text-5xl text-center  font-arabicUI2 bg-paton text-transparent bg-clip-text m-auto justify-center flex'>
                         {title === 'لغة عربية' ? 'يلا اختار كتاب تحله' : 'امتحانات الكتاب'}
                     </h4>
@@ -155,8 +155,8 @@ const Arabic = () => {
 
 
             <div className="grid grid-cols-1 p-5 sm:grid-cols-2 lg:grid-cols-2 h-fit gap-6 lg:col-span-2">
-            
-            <div
+
+                <div
                     onClick={() => handleClick('  اسئلة صعبة جدا', 4)}
                     className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition duration-300 bg-non bg-cover gap-2 p-5 rounded-xl cursor-pointer"
                 >
@@ -191,7 +191,7 @@ const Arabic = () => {
                     <span className="text-5xl"> صعب جدا</span>
                 </div>
 
-                
+
                 <div
                     onClick={() => handleClick(' اسئلة صعبة', 1)}
                     className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition duration-300 bg-non bg-cover gap-2 p-5 rounded-xl cursor-pointer"

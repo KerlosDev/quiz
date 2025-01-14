@@ -131,7 +131,7 @@ const Geo = () => {
                     {title}
                 </h3>
 
-                <div className='bg-yellow-800 cursor-default shadow-xl shadow-yellow-800/50 rounded-xl m-4 p-4'>
+                <div className='bg-yellow-800 bg-daark bg-cover cursor-default shadow-xl shadow-yellow-800/50 rounded-xl m-4 p-4'>
                     <h4 className='text-2xl sm:text-4xl md:text-5xl text-center  font-arabicUI2 bg-paton text-transparent bg-clip-text m-auto justify-center flex'>
                         {title === 'جيولوجيا' ? 'يلا اختار كتاب تحله' : 'امتحانات الكتاب'}
                     </h4>
