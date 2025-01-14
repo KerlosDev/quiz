@@ -15,12 +15,12 @@ const apigeo = process.env.NEXT_PUBLIC_MASTER_URL_GEO
 
 
 
-const SaveGradesOfQuiz = async (subname, bookname, userEmail, uerName, userGrade, quizname, numofqus) => {
+const SaveGradesOfQuiz = async (subname, level, userEmail, uerName, userGrade, quizname, numofqus) => {
   const query6 = gql`
   
   mutation MyMutation {
   createQuizresult(
-    data: { nameofsub: `+ subname + `, nameofBook: ` + bookname + `, userEmail: "` + userEmail + `", userName: "` + uerName + `", quizGrade: ` + userGrade + `,nameofquiz: "` + quizname + `",numofqus:` + numofqus + `}
+    data: { nameofsub: `+ subname + `, level: ` + level + `, userEmail: "` + userEmail + `", userName: "` + uerName + `", quizGrade: ` + userGrade + `,nameofquiz: "` + quizname + `",numofqus:` + numofqus + `}
   ) {
     id
   }
@@ -53,7 +53,7 @@ query MyQuery {
     nameofquiz
     numofqus
      nameofsub
-    nameofBook
+    level
   }
 }
 
@@ -284,22 +284,14 @@ const quizCh = async (quizid) => {
   const shite = gql`
   
   query MyQuery {
-  quiz(where: {id: "`+ quizid + `"}) {
-        quiztitle
-        question (first: 100) {
-          opationA
-          opationC
-          opationB
-          opationD
-          imageOfQus
-          trueChoisevip
-          qus
-        }
-
-         chooseBook
-         subjectName
-    
-      }
+  dataOfQuizs(where: {id: "`+ quizid + `"}) {
+    level
+    namequiz
+    fileOfQus {
+      url
+    }
+    subject
+  }
 }
 
   `
@@ -460,25 +452,9 @@ const greatDay = async () => {
   return shitosd
 }
 
-const testdata = async () => {
-  const shite = gql`
-  query MyQuery {
-  testnames {
-    namequiz
-    fileOfQus {
-      url
-    }
-  }
-}
-  `
-
-  const shitosd = await request(MAINAPI, shite)
-  return shitosd
-}
 
 
 export default {
-  testdata,
   greatDay,
   arabicData,
   geoData,

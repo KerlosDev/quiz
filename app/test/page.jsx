@@ -7,6 +7,7 @@ import ProgCircle from "../components/ProgCircle";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from 'react-toastify';
+import { useUser } from "@clerk/nextjs";
 
 export default function Quiz() {
     const [questions, setQuestions] = useState([]); // Store the parsed quiz questions
@@ -16,14 +17,33 @@ export default function Quiz() {
     const [score, setScore] = useState(0); // Track the user's score
     const [loading, setLoading] = useState(false);
     const [quizComplete, setQuizComplete] = useState(false);
+    const { user } = useUser()
+    const email = user?.primaryEmailAddress?.emailAddress;
+    const [quizDetails, setQuizDetalis] = useState([])
 
-    // Fetch quiz data
+    useEffect(() => {
+        getdata()
+    }, [])
+
+    const getdata = () => {
+
+        GlobalApi.testdata().then(res => {
+            setQuizDetalis(res.dataOfQuizs[0])
+
+        })
+
+    }
+    console.log(quizDetails.level)
+    console.log(score)
     useEffect(() => {
         const fetchQuizData = async () => {
             setLoading(true);
             try {
+
+
+
                 const data = await GlobalApi.testdata();
-                const fileUrl = data?.testnames[0]?.fileOfQus?.url;
+                const fileUrl = data?.dataOfQuizs[0]?.fileOfQus?.url;
 
                 if (!fileUrl) {
                     console.error("File URL not found in API response");
@@ -97,6 +117,8 @@ export default function Quiz() {
         setSelectedAnswer(option); // Allow changing the answer by updating the selected option
     };
 
+    console.log(questions.length)
+    console.log()
 
     const handleNextQuestion = () => {
         if (!selectedAnswer) {
@@ -110,17 +132,17 @@ export default function Quiz() {
                 progress: undefined,
                 theme: "colored",
                 className: 'font-arabicUI3 w-fit m-7 text-lg p-4 rounded-lg shadow-lg',
-                });
+            });
 
             return;
         }
-    
+
         // Update answers array
         const updatedAnswers = [...answers];
         const existingAnswerIndex = updatedAnswers.findIndex(
             (ans) => ans.question === questions[currentQuestionIndex].question
         );
-    
+
         if (existingAnswerIndex > -1) {
             updatedAnswers[existingAnswerIndex].answer = selectedAnswer;
         } else {
@@ -129,23 +151,23 @@ export default function Quiz() {
                 answer: selectedAnswer,
             });
         }
-    
+
         setAnswers(updatedAnswers); // Update answers state
-    
+
         // Update score only if the current answer is correct
         const updatedScore = selectedAnswer.text === questions[currentQuestionIndex].correctAnswer
             ? score + 1
             : score;
-    
+
         setScore(updatedScore);
-    
+
         // Save updated state in localStorage only if the quiz isn't completed
         if (currentQuestionIndex + 1 < questions.length) {
             localStorage.setItem("answers", JSON.stringify(updatedAnswers));
             localStorage.setItem("score", updatedScore);
             localStorage.setItem("currentQuestionIndex", currentQuestionIndex + 1);
         }
-    
+
         // Check if it's the last question
         if (currentQuestionIndex + 1 === questions.length) {
             Swal.fire({
@@ -157,6 +179,38 @@ export default function Quiz() {
                 cancelButtonText: "لا، العودة",
             }).then((result) => {
                 if (result.isConfirmed) {
+
+                    // حفظ الدرجة على السيرفر
+                    const saveGrade = async () => {
+                        try {
+
+
+                            const response = await GlobalApi.SaveGradesOfQuiz(
+
+                                quizDetails.subject, quizDetails.level, email, user?.fullName, score, quizDetails.namequiz, questions.length
+                            );
+
+                            // Notify the user of successful submission
+                            Swal.fire({
+                                title: "تم التسليم بنجاح!",
+                                text: "انا فخور بيك انك حاولت مهما كانت النتيجة",
+                                icon: "success",
+                            });
+
+                        } catch (error) {
+                            console.error("Failed to save grades:", error);
+
+                            Swal.fire({
+                                title: "خطأ!",
+                                text: "حدث خطأ أثناء حفظ النتائج. حاول مرة أخرى لاحقًا.",
+                                icon: "error",
+                            });
+                        }
+                    };
+
+                    saveGrade(); // استدعاء دالة حفظ الدرجة
+
+
                     setQuizComplete(true); // Finish the quiz
                     // Clear localStorage when quiz is completed
                     localStorage.removeItem("answers");
@@ -172,11 +226,11 @@ export default function Quiz() {
             // Move to the next question
             setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
         }
-    
+
         setSelectedAnswer(null); // Clear selection for the next question
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
-    
+
 
     useEffect(() => {
         // Restore selected answer for the current question
@@ -185,7 +239,7 @@ export default function Quiz() {
         )?.answer || null;
         setSelectedAnswer(savedAnswer);
     }, [currentQuestionIndex, answers]);
-    
+
     const handleClickNumber = (index) => {
         if (selectedAnswer) {
             // Save answer if it exists
@@ -193,7 +247,7 @@ export default function Quiz() {
             const existingAnswerIndex = updatedAnswers.findIndex(
                 (ans) => ans.question === questions[currentQuestionIndex].question
             );
-    
+
             if (existingAnswerIndex > -1) {
                 updatedAnswers[existingAnswerIndex].answer = selectedAnswer;
             } else {
@@ -205,29 +259,16 @@ export default function Quiz() {
             setAnswers(updatedAnswers);
             localStorage.setItem("answers", JSON.stringify(updatedAnswers));
         }
-    
+
         // Restore the selected answer for the selected question
         const selectedSavedAnswer = answers.find(
             (ans) => ans.question === questions[index].question
         )?.answer || null;
         setSelectedAnswer(selectedSavedAnswer);
         setCurrentQuestionIndex(index);
-    
+
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
-   
-    
-
-    const resetQuizData = () => {
-        // Clear answers, score, and current question index
-        setAnswers([]);
-        setScore(0);
-        setCurrentQuestionIndex(0);
-        localStorage.removeItem('answers');
-        localStorage.removeItem('score');
-        localStorage.removeItem('currentQuestionIndex');
-    };
-   
 
     const displayResult = () => {
         return (
@@ -236,11 +277,11 @@ export default function Quiz() {
                     <h1 className="font-arabicUI3 text-6xl max-sm:text-3xl text-center text-white">
                         نتيجتك: {score}/{questions.length}
                     </h1>
-    
+
                     <div className="m-6">
                         <ProgCircle nsaba={(score / questions.length) * 100}></ProgCircle>
                     </div>
-    
+
                     <div className="grid max-sm:grid-cols-1 grid-cols-3">
                         {questions.map((item, index) => (
                             <div key={index}>
@@ -250,28 +291,39 @@ export default function Quiz() {
                                 >
                                     {item.question}
                                 </h2>
-                                {item.options.map((option) => (
-                                    <h2
-                                        key={option.letter}
-                                        className={`cursor-pointer font-arabicUI3 m-5 text-xl p-4 rounded-lg text-center duration-500 transition h-fit active:ring-4 select-none ${
-                                            option.text === item.correctAnswer
-                                                ? "bg-green-500 text-white"
-                                                : answers.find(
-                                                      (ans) =>
-                                                          ans.question === item.question &&
-                                                          ans.answer.text === option.text
-                                                  )
-                                                ? "bg-red-500 text-white"
-                                                : "bg-gray-300 text-black"
-                                        }`}
-                                    >
-                                        {option.text}
-                                    </h2>
-                                ))}
+                                {item.options.map((option) => {
+                                    // Check if the option is correct or selected
+                                    const isCorrect = option.text === item.correctAnswer;
+                                    const isSelected = answers.find(
+                                        (ans) =>
+                                            ans.question === item.question &&
+                                            ans.answer.text === option.text
+                                    );
+
+                                    // Only show correct answers and the selected answers
+                                    if (isCorrect || isSelected) {
+                                        return (
+                                            <h2
+                                                key={option.letter}
+                                                className={`cursor-pointer font-arabicUI3 m-5 text-xl p-4 rounded-lg text-center duration-500 transition h-fit active:ring-4 select-none 
+                                                    ${isCorrect
+                                                        ? "bg-green-500 text-white"  // Correct answer styling
+                                                        : (isSelected
+                                                            ? "bg-red-500 text-white" // Selected wrong answer styling
+                                                            : "bg-gray-300 text-black") // Hide other incorrect answers
+                                                    }`}
+                                            >
+                                                {option.text}
+                                            </h2>
+                                        );
+                                    }
+
+                                    return null; // Do not render options that are neither correct nor selected
+                                })}
                             </div>
                         ))}
                     </div>
-    
+
                     <Link href="/">
                         <div className="text-7xl max-sm:text-2xl text-white p-5 flex justify-center mx-auto m-6 font-arabicUI2 bg-white/20 w-fit rounded-xl outline-1 outline-white outline-dashed">
                             <h1>الصفحة الرئيسية</h1>
@@ -289,7 +341,7 @@ export default function Quiz() {
                     <BsPatchCheckFill className='text-4xl'></BsPatchCheckFill>
                     جاري تحميل الاسئلة
                 </h4>
-                
+
             </div>
         );
     }
@@ -307,7 +359,7 @@ export default function Quiz() {
             <div className="backdrop-blur-xl p-3 px-8 rounded-xl outline-dashed outline-white outline-2">
                 <div className="flex justify-end">
                     <h4 className="text-right font-arabicUI3 text-5xl bg-white/10 p-4 w-fit rounded-md flex text-white">
-                        <BiSolidPencil /> Quiz
+                        <BiSolidPencil /> {quizDetails.namequiz}
                     </h4>
                 </div>
 
