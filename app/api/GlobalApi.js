@@ -40,7 +40,6 @@ const SaveGradesOfQuiz = async (subname, level, userEmail, uerName, userGrade, q
   const reslut6 = await request(apiQuiz, query6)
   return reslut6
 }
-
 const vquiz = async (userEmail) => {
   const qmon = gql`
   
@@ -64,49 +63,9 @@ query MyQuery {
 }
 
 
-const dataofChem = async (quizid) => {
-  const shite = gql`
-  
-  query MyQuery {
-  quiz(where: {id: "`+ quizid + `"}) {
-        quiztitle
-        question {
-          opationA
-          opationC
-          opationB
-          opationD
-          trueChoisevip
-          qus
-          imageOfQus
-        }
-
-         chooseBook
-         subjectName
-    
-      }
-}
-
-  `
-
-  const shitosd = await request(MAINAPI, shite)
-  return shitosd
-}
 
 
-const subchem = async (sub) => {
-  const shite = gql`
-  query MyQuery {
-  quizzes(where: {subjectName: `+ sub + `}) {
-    quiztitle
-    id
-    chooseBook
-  }
-}
-  `
 
-  const shitosd = await request(MAINAPI, shite)
-  return shitosd
-}
 const sendEnrollData = async (userEmail, phonenumber) => {
   const query3 = gql`
   
@@ -169,13 +128,16 @@ const physicsData = async () => {
 }
 const chemstryDAta = async () => {
   const shite = gql`
+  
+  
   query MyQuery {
-  quizzes(where: {subjectName: chem}) {
-    quiztitle
+  dataOfQuizs(where: {subject: chem}) {
+    level
+    namequiz
     id
-    chooseBook
   }
 }
+
   `
 
   const shitosd = await request(apich, shite)
@@ -474,8 +436,7 @@ export default {
   SaveGradesOfQuiz,
   vquiz,
   sendEnrollData,
-  dataofChem,
-  subchem
+  
 
 
 }
