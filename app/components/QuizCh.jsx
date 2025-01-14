@@ -88,20 +88,22 @@ export default function QuizCh({ params }) {
     };
 
 
+    let idCounter = 1;
     const convertTextToJson = (text) => {
         const questions = [];
-        const blocks = text.trim().split(/\n(?=\d+\.\s)/); // Split by questions (lines starting with "1.", "2.", etc.)
+        const blocks = text.trim().split(/\n(?=\d+\.\s)/);
 
         blocks.forEach((block) => {
-            const lines = block.split("\n").filter(Boolean); // Split into lines and remove empty ones
-            const questionMatch = lines[0]?.match(/^\s*\d+\.\s*(.*?)\s*==>\s*(\w)\s*$/);
+            const lines = block.split("\n").filter(Boolean);
+            const questionMatch = lines[0]?.match(/^\s*\d+\.\s*(.*?)\s*(==>\s*(\w))?\s*$/);
 
             if (!questionMatch) return;
 
             const questionText = questionMatch[1].trim();
-            const correctAnswerLetter = questionMatch[2];
+            const correctAnswerLetter = questionMatch[2]?.trim().replace("==>", "") || '';
             const options = [];
             let correctAnswer = null;
+            let imageUrl = null;
 
             lines.slice(1).forEach((line) => {
                 const cleanedLine = line.trim().replace(/\u00A0/g, " ");
@@ -116,25 +118,39 @@ export default function QuizCh({ params }) {
                         correctAnswer = optionText;
                     }
                 }
+
+                const imageMatch = cleanedLine.match(/https:\/\/i\.imgur\.com\/[a-zA-Z0-9]+\.png/);
+                if (imageMatch) {
+                    imageUrl = imageMatch[0];
+                }
             });
 
             if (questionText && options.length && correctAnswer) {
-                questions.push({ question: questionText, options, correctAnswer });
+                questions.push({
+                    id: idCounter++, // Add a unique ID for each question
+                    question: questionText,
+                    options,
+                    correctAnswer,
+                    imageUrl,
+                });
             }
         });
 
         return questions;
     };
 
+
+
     const handleAnswerSelect = (option) => {
-        setSelectedAnswer(option); // Allow changing the answer by updating the selected option
+        setSelectedAnswer(option);
     };
+    
 
     console.log(questions.length)
     console.log()
 
-   
-    
+
+
     const handleNextQuestion = () => {
         if (!selectedAnswer) {
             toast.success(' ❤️ فكر فالسوال وجاوب علي مهلك', {
@@ -154,50 +170,44 @@ export default function QuizCh({ params }) {
         // Update answers array
         const updatedAnswers = [...answers];
         const existingAnswerIndex = updatedAnswers.findIndex(
-            (ans) => ans.question === questions[currentQuestionIndex].question
+            (ans) => ans.question === questions[currentQuestionIndex]?.question
         );
     
         if (existingAnswerIndex > -1) {
             updatedAnswers[existingAnswerIndex].answer = selectedAnswer;
         } else {
             updatedAnswers.push({
-                question: questions[currentQuestionIndex].question,
+                question: questions[currentQuestionIndex]?.question || "", // Add default value
                 answer: selectedAnswer,
             });
         }
     
-        setAnswers(updatedAnswers); // Update answers state
+        setAnswers(updatedAnswers);
     
         // Update score based on new answer
-        let updatedScore = score;
-        const previousAnswer = answers.find(
-            (ans) => ans.question === questions[currentQuestionIndex]?.question
-        );
+        const updatedScore = updatedAnswers.filter((ans) => {
+            const question = questions.find(q => q.question === ans.question);
+            return question && ans.answer.text === question.correctAnswer;
+        }).length;
     
-        if (!previousAnswer || selectedAnswer.text !== previousAnswer.answer.text) {
-            updatedScore = updatedAnswers.filter((ans) => {
-                const question = questions.find(q => q.question === ans.question);
-                return question && ans.answer.text === question.correctAnswer;
-            }).length;
-        }
-    
-        setScore(updatedScore);  // Set new score
-    
-        // Save updated state in localStorage only if the quiz isn't completed
-        if (currentQuestionIndex + 1 < questions.length) {
-            localStorage.setItem("answers", JSON.stringify(updatedAnswers));
-            localStorage.setItem("score", updatedScore);
-            localStorage.setItem("currentQuestionIndex", currentQuestionIndex + 1);
-        }
+        setScore(updatedScore);
     
         // Check if it's the last question
         if (currentQuestionIndex + 1 === questions.length) {
-            const allAnswered = updatedAnswers.length === questions.length;
+            // Ensure no undefined in answeredQuestionTexts
+            const answeredQuestionTexts = updatedAnswers
+                .map(ans => ans.question?.trim())
+                .filter(Boolean); // Remove undefined/null values
+            const allQuestionTexts = questions.map(q => q.question?.trim());
     
-            if (!allAnswered) {
+            const unansweredQuestions = allQuestionTexts.filter(
+                q => !answeredQuestionTexts.includes(q)
+            );
+    
+            if (unansweredQuestions.length > 0) {
                 Swal.fire({
                     title: "لم يتم الإجابة على جميع الأسئلة",
-                    text: "يرجى الإجابة على جميع الأسئلة قبل تقديم الامتحان.",
+                    text: `باقي ${unansweredQuestions.length} سؤال لم يتم الإجابة عليه`,
                     icon: "warning",
                     confirmButtonText: "أفهم",
                 });
@@ -215,8 +225,14 @@ export default function QuizCh({ params }) {
                 if (result.isConfirmed) {
                     const saveGrade = async () => {
                         try {
-                            const response = await GlobalApi.SaveGradesOfQuiz(
-                                quizDetails.subject, quizDetails.level, email, user?.fullName, updatedScore, quizDetails.namequiz, questions.length
+                            await GlobalApi.SaveGradesOfQuiz(
+                                quizDetails.subject,
+                                quizDetails.level,
+                                email,
+                                user?.fullName,
+                                updatedScore,
+                                quizDetails.namequiz,
+                                questions.length
                             );
     
                             Swal.fire({
@@ -224,6 +240,10 @@ export default function QuizCh({ params }) {
                                 text: "انا فخور بيك انك حاولت مهما كانت النتيجة",
                                 icon: "success",
                             });
+                            setQuizComplete(true);
+                            localStorage.removeItem("answers");
+                            localStorage.removeItem("score");
+                            localStorage.removeItem("currentQuestionIndex");
                         } catch (error) {
                             console.error("Failed to save grades:", error);
                             Swal.fire({
@@ -234,10 +254,6 @@ export default function QuizCh({ params }) {
                         }
                     };
                     saveGrade();
-                    setQuizComplete(true);
-                    localStorage.removeItem("answers");
-                    localStorage.removeItem("score");
-                    localStorage.removeItem("currentQuestionIndex");
                 } else {
                     setSelectedAnswer(null);
                     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -251,7 +267,9 @@ export default function QuizCh({ params }) {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
     
-    
+
+
+
 
 
     useEffect(() => {
@@ -264,44 +282,32 @@ export default function QuizCh({ params }) {
 
     const handleClickNumber = (index) => {
         if (selectedAnswer) {
-            // Save answer if it exists
             const updatedAnswers = [...answers];
             const existingAnswerIndex = updatedAnswers.findIndex(
-                (ans) => ans.question === questions[currentQuestionIndex].question
+                (ans) => ans.questionId === questions[currentQuestionIndex].id
             );
-
+    
             if (existingAnswerIndex > -1) {
                 updatedAnswers[existingAnswerIndex].answer = selectedAnswer;
             } else {
                 updatedAnswers.push({
-                    question: questions[currentQuestionIndex].question,
+                    questionId: questions[currentQuestionIndex].id,
                     answer: selectedAnswer,
                 });
             }
             setAnswers(updatedAnswers);
             localStorage.setItem("answers", JSON.stringify(updatedAnswers));
-
-            // Update score based on the new answer
-            let updatedScore = 0;
-            updatedAnswers.forEach((ans) => {
-                const question = questions.find(q => q.question === ans.question);
-                if (question && ans.answer.text === question.correctAnswer) {
-                    updatedScore += 1; // Correct answer
-                }
-            });
-            setScore(updatedScore);
-            localStorage.setItem("score", updatedScore);
         }
-
-        // Restore the selected answer for the selected question
+    
         const selectedSavedAnswer = answers.find(
-            (ans) => ans.question === questions[index].question
+            (ans) => ans.questionId === questions[index].id
         )?.answer || null;
         setSelectedAnswer(selectedSavedAnswer);
         setCurrentQuestionIndex(index);
-
+    
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
+    
 
     const displayResult = () => {
         return (
@@ -369,20 +375,23 @@ export default function QuizCh({ params }) {
 
     if (loading) {
         return (
-            <div className='cursor-default backdrop-blur-xl rounded-xl w-fit m-auto outline-dashed mb-8 outline-2 bg-black/20 outline-white p-5'>
-                <h4 className='m-auto flex justify-center place-items-center font-arabicUI2 max-sm:text-3xl text-center gap-4 text-white text-5xl'>
-                    <BsPatchCheckFill className='text-4xl'></BsPatchCheckFill>
-                    جاري تحميل الاسئلة
-                </h4>
-
+            <div className="flex justify-center items-center h-screen bg-gray-800">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-white mx-auto"></div>
+                    <h4 className="mt-8 font-arabicUI3 text-4xl text-white">
+                        <BsPatchCheckFill className="inline text-5xl mr-2" />
+                        جاري تحميل الأسئلة، انتظر قليلًا...
+                    </h4>
+                </div>
             </div>
         );
     }
 
+
     if (quizComplete) {
         return displayResult();
     }
-    
+
     if (questions.length === 0) {
         return (
             <div className='cursor-default backdrop-blur-xl rounded-xl w-fit m-auto outline-dashed mb-8 outline-2 bg-black/20 outline-white p-5'>
@@ -405,19 +414,42 @@ export default function QuizCh({ params }) {
                     </h4>
                 </div>
 
+
                 <div className="mt-8">
-                    <h2
-                        className={`m-7 col-span-2 order-1 h-fit cursor-pointer leading-normal font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800 ${questions[currentQuestionIndex]?.language === 'ar' ? 'rtl' : ''}`}
-                    >
-                        {questions[currentQuestionIndex]?.question}
-                    </h2>
+
+                    {questions[currentQuestionIndex] && questions[currentQuestionIndex]?.imageUrl ? (
+                        <div className="grid max-lg:grid-cols-1 items-center grid-cols-3">
+                            <h2
+                                className={`m-7 col-span-2 order-1 h-fit  cursor-pointer leading-normal rtl font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
+                            >
+                                {questions[currentQuestionIndex]?.question}
+                            </h2>
+
+                            <img
+                                className="col-span-1 max-sm:w-full rounded-xl"
+                                src={questions[currentQuestionIndex]?.imageUrl} // Use fallback image if linkImage is empty
+                                alt="Quiz Image"
+                                width={400}
+                                height={400}
+                            />
+                        </div>
+                    ) : (
+                        <h2
+                            className={`m-7 cursor-pointer leading-normal rtl font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
+                        >
+                            {questions[currentQuestionIndex]?.question}
+                        </h2>
+                    )}
+
+
+
 
                     <div className="grid max-md:grid-cols-1 grid-cols-2">
                         {questions[currentQuestionIndex]?.options?.map((option) => (
                             <button
                                 key={option.letter}
                                 className={`mb-7 cursor-pointer max-sm:text-2xl font-arabicUI3 text-4xl m-3 p-4 rounded-lg text-center duration-500 transition active:ring-4 select-none
-                                ${selectedAnswer?.letter === option.letter
+                ${selectedAnswer?.letter === option.letter
                                         ? "bg-green-400 text-gray-800"
                                         : "text-white bg-gray-800"
                                     }`}
@@ -428,6 +460,7 @@ export default function QuizCh({ params }) {
                         ))}
                     </div>
                 </div>
+
             </div>
             <ToastContainer />
 

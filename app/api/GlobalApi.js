@@ -115,10 +115,10 @@ const premUsers = async (useremail) => {
 const physicsData = async () => {
   const shite = gql`
   query MyQuery {
-  quizzes(where: {subjectName: ph}) {
-    quiztitle
+  dataOfQuizs(where: {subject: ph}) {
+    level
+    namequiz
     id
-    chooseBook
   }
 }
   `
@@ -145,11 +145,11 @@ const chemstryDAta = async () => {
 }
 const biologyDAta = async () => {
   const shite = gql`
-  query MyQuery {
-  quizzes(where: {subjectName: bio}) {
-    quiztitle
+   query MyQuery {
+  dataOfQuizs(where: {subject: bio}) {
+    level
+    namequiz
     id
-    chooseBook
   }
 }
   `
@@ -160,10 +160,10 @@ const biologyDAta = async () => {
 const arabicData = async () => {
   const shite = gql`
   query MyQuery {
-  quizzes(where: {subjectName: ar}) {
-    quiztitle
+  dataOfQuizs(where: {subject: ar}) {
+    level
+    namequiz
     id
-    chooseBook
   }
 }
   `
@@ -173,11 +173,11 @@ const arabicData = async () => {
 }
 const englishData = async () => {
   const shite = gql`
-  query MyQuery {
-  quizzes(where: {subjectName: en}) {
-    quiztitle
+    query MyQuery {
+  dataOfQuizs(where: {subject: en}) {
+    level
+    namequiz
     id
-    chooseBook
   }
 }
   `
@@ -187,11 +187,11 @@ const englishData = async () => {
 }
 const frenchData = async () => {
   const shite = gql`
-  query MyQuery {
-  quizzes(where: {subjectName: fr}) {
-    quiztitle
+   query MyQuery {
+  dataOfQuizs(where: {subject: fr}) {
+    level
+    namequiz
     id
-    chooseBook
   }
 }
   `
@@ -201,11 +201,11 @@ const frenchData = async () => {
 }
 const geoData = async () => {
   const shite = gql`
-  query MyQuery {
-  quizzes(where: {subjectName: geo}) {
-    quiztitle
+   query MyQuery {
+  dataOfQuizs(where: {subject: geo}) {
+    level
+    namequiz
     id
-    chooseBook
   }
 }
   `
@@ -217,24 +217,15 @@ const geoData = async () => {
 
 const quizPh = async (quizid) => {
   const shite = gql`
-  
   query MyQuery {
-  quiz(where: {id: "`+ quizid + `"}) {
-        quiztitle
-        question (first: 100) {
-          opationA
-          opationC
-          opationB
-          imageOfQus
-          opationD
-          trueChoisevip
-          qus
-        }
-
-         chooseBook
-         subjectName
-    
-      }
+  dataOfQuizs(where: {id: "`+ quizid + `"}) {
+    level
+    namequiz
+    fileOfQus {
+      url
+    }
+    subject
+  }
 }
 
   `
@@ -265,22 +256,14 @@ const quizbio = async (quizid) => {
   const shite = gql`
   
   query MyQuery {
-  quiz(where: {id: "`+ quizid + `"}) {
-        quiztitle
-         question (first: 100) {
-      opationA
-      opationC
-      opationB
-      opationD
-      trueChoisevip
-      qus
-      imageOfQus
+  dataOfQuizs(where: {id: "`+ quizid + `"}) {
+    level
+    namequiz
+    fileOfQus {
+      url
     }
-
-         chooseBook
-         subjectName
-    
-      }
+    subject
+  }
 }
 
   `
@@ -290,24 +273,16 @@ const quizbio = async (quizid) => {
 }
 const quizAr = async (quizid) => {
   const shite = gql`
-  
+   
   query MyQuery {
-  quiz(where: {id: "`+ quizid + `"}) {
-        quiztitle
-        question (first: 100) {
-          opationA
-          opationC
-          opationB
-          opationD
-          imageOfQus
-          trueChoisevip
-          qus
-        }
-
-         chooseBook
-         subjectName
-    
-      }
+  dataOfQuizs(where: {id: "`+ quizid + `"}) {
+    level
+    namequiz
+    fileOfQus {
+      url
+    }
+    subject
+  }
 }
 
   `
@@ -319,24 +294,15 @@ const quizEn = async (quizid) => {
   const shite = gql`
   
   query MyQuery {
-  quiz(where: {id: "`+ quizid + `"}) {
-        quiztitle
-        question (first: 100) {
-          opationA
-          opationC
-          opationB
-          imageOfQus
-          opationD
-          trueChoisevip
-          qus
-        }
-
-         chooseBook
-         subjectName
-    
-      }
+  dataOfQuizs(where: {id: "`+ quizid + `"}) {
+    level
+    namequiz
+    fileOfQus {
+      url
+    }
+    subject
+  }
 }
-
   `
 
   const shitosd = await request(apien, shite)
@@ -344,24 +310,15 @@ const quizEn = async (quizid) => {
 }
 const quizFr = async (quizid) => {
   const shite = gql`
-  
   query MyQuery {
-  quiz(where: {id: "`+ quizid + `"}) {
-        quiztitle
-        question (first: 100) {
-          opationA
-          opationC
-          imageOfQus
-          opationB
-          opationD
-          trueChoisevip
-          qus
-        }
-
-         chooseBook
-         subjectName
-    
-      }
+  dataOfQuizs(where: {id: "`+ quizid + `"}) {
+    level
+    namequiz
+    fileOfQus {
+      url
+    }
+    subject
+  }
 }
 
   `
@@ -371,24 +328,15 @@ const quizFr = async (quizid) => {
 }
 const quizgeo = async (quizid) => {
   const shite = gql`
-  
-  query MyQuery {
-  quiz(where: {id: "`+ quizid + `"}) {
-        quiztitle
-        question (first: 100) {
-          opationA
-          opationC
-          imageOfQus
-          opationB
-          opationD
-          trueChoisevip
-          qus
-        }
-
-         chooseBook
-         subjectName
-    
-      }
+   query MyQuery {
+  dataOfQuizs(where: {id: "`+ quizid + `"}) {
+    level
+    namequiz
+    fileOfQus {
+      url
+    }
+    subject
+  }
 }
 
   `
@@ -436,7 +384,7 @@ export default {
   SaveGradesOfQuiz,
   vquiz,
   sendEnrollData,
-  
+
 
 
 }

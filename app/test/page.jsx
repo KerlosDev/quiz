@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import GlobalApi from "../api/GlobalApi";
 import { BiSolidPencil } from "react-icons/bi"; // Import icon
 import { BsPatchCheckFill } from "react-icons/bs";
@@ -9,7 +9,8 @@ import Swal from "sweetalert2";
 import { ToastContainer, toast } from 'react-toastify';
 import { useUser } from "@clerk/nextjs";
 
-export default function Quiz() {
+export default function QuizCh({ params }) {
+    const { quizid } = React.use(params);
     const [questions, setQuestions] = useState([]); // Store the parsed quiz questions
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Index of the current question
     const [selectedAnswer, setSelectedAnswer] = useState(null); // Track the user's selected answer
@@ -27,29 +28,29 @@ export default function Quiz() {
 
     const getdata = () => {
 
-        GlobalApi.testdata().then(res => {
+        GlobalApi.quizCh(quizid).then(res => {
             setQuizDetalis(res.dataOfQuizs[0])
 
         })
 
     }
-    console.log(quizDetails.level)
+
     console.log(score)
+
+
     useEffect(() => {
         const fetchQuizData = async () => {
             setLoading(true);
             try {
-
-
-
-                const data = await GlobalApi.testdata();
-                const fileUrl = data?.dataOfQuizs[0]?.fileOfQus?.url;
+                const fileUrl = await waitForFileUrl(quizDetails.fileOfQus?.url);
 
                 if (!fileUrl) {
                     console.error("File URL not found in API response");
                     setLoading(false);
                     return;
                 }
+
+                console.log("File URL found:", fileUrl); // Check the URL here
 
                 const textResponse = await fetch(fileUrl);
                 const text = await textResponse.text();
@@ -72,8 +73,20 @@ export default function Quiz() {
             }
         };
 
-        fetchQuizData(); // Fetch the data once on mount
-    }, []); // Empty dependency array ensures this runs only once on mount
+        fetchQuizData();
+    }, [quizDetails]);  // Use quizDetails as a dependency to ensure it's updated before fetch
+
+
+    const waitForFileUrl = (fileUrl) => {
+        return new Promise((resolve, reject) => {
+            if (fileUrl) {
+                resolve(fileUrl);
+            } else {
+                setTimeout(() => waitForFileUrl(fileUrl).then(resolve), 500); // retry after 500ms
+            }
+        });
+    };
+
 
     const convertTextToJson = (text) => {
         const questions = [];
@@ -81,14 +94,15 @@ export default function Quiz() {
 
         blocks.forEach((block) => {
             const lines = block.split("\n").filter(Boolean); // Split into lines and remove empty ones
-            const questionMatch = lines[0]?.match(/^\s*\d+\.\s*(.*?)\s*==>\s*(\w)\s*$/);
+            const questionMatch = lines[0]?.match(/^\s*\d+\.\s*(.*?)\s*(==>\s*(\w))?\s*$/);
 
             if (!questionMatch) return;
 
             const questionText = questionMatch[1].trim();
-            const correctAnswerLetter = questionMatch[2];
+            const correctAnswerLetter = questionMatch[2]?.trim().replace("==>", "") || '';
             const options = [];
             let correctAnswer = null;
+            let imageUrl = null; // To store the image URL if found
 
             lines.slice(1).forEach((line) => {
                 const cleanedLine = line.trim().replace(/\u00A0/g, " ");
@@ -103,15 +117,27 @@ export default function Quiz() {
                         correctAnswer = optionText;
                     }
                 }
+
+                // Check for image URL
+                const imageMatch = cleanedLine.match(/https:\/\/i\.imgur\.com\/[a-zA-Z0-9]+\.png/);
+                if (imageMatch) {
+                    imageUrl = imageMatch[0]; // Save the image URL if found
+                }
             });
 
             if (questionText && options.length && correctAnswer) {
-                questions.push({ question: questionText, options, correctAnswer });
+                questions.push({
+                    question: questionText,
+                    options,
+                    correctAnswer,
+                    imageUrl, // Add image URL to the question data if it exists
+                });
             }
         });
 
         return questions;
     };
+
 
     const handleAnswerSelect = (option) => {
         setSelectedAnswer(option); // Allow changing the answer by updating the selected option
@@ -119,6 +145,8 @@ export default function Quiz() {
 
     console.log(questions.length)
     console.log()
+
+
 
     const handleNextQuestion = () => {
         if (!selectedAnswer) {
@@ -133,7 +161,6 @@ export default function Quiz() {
                 theme: "colored",
                 className: 'font-arabicUI3 w-fit m-7 text-lg p-4 rounded-lg shadow-lg',
             });
-
             return;
         }
 
@@ -152,12 +179,13 @@ export default function Quiz() {
             });
         }
 
-        setAnswers(updatedAnswers); // Update answers state
+        setAnswers(updatedAnswers);
 
-        // Update score only if the current answer is correct
-        const updatedScore = selectedAnswer.text === questions[currentQuestionIndex].correctAnswer
-            ? score + 1
-            : score;
+        // Update score based on new answer
+        const updatedScore = updatedAnswers.filter((ans) => {
+            const question = questions.find(q => q.question === ans.question);
+            return question && ans.answer.text === question.correctAnswer;
+        }).length;
 
         setScore(updatedScore);
 
@@ -170,6 +198,23 @@ export default function Quiz() {
 
         // Check if it's the last question
         if (currentQuestionIndex + 1 === questions.length) {
+            // Create a Set of unique question texts that have been answered
+            const answeredQuestions = new Set(updatedAnswers.map(ans => ans.question));
+            const allQuestionsAnswered = answeredQuestions.size === questions.length;
+
+            if (!allQuestionsAnswered) {
+                const unansweredCount = questions.length - answeredQuestions.size;
+                Swal.fire({
+                    title: "لم يتم الإجابة على جميع الأسئلة",
+                    text: `باقي ${unansweredCount} سؤال لم يتم الإجابة عليه`,
+                    icon: "warning",
+                    confirmButtonText: "أفهم",
+                });
+                return;
+            }
+
+            
+
             Swal.fire({
                 title: "هل أنت متأكد؟",
                 text: "هل ترغب في تسليم الامتحان؟",
@@ -179,27 +224,29 @@ export default function Quiz() {
                 cancelButtonText: "لا، العودة",
             }).then((result) => {
                 if (result.isConfirmed) {
-
-                    // حفظ الدرجة على السيرفر
                     const saveGrade = async () => {
                         try {
-
-
-                            const response = await GlobalApi.SaveGradesOfQuiz(
-
-                                quizDetails.subject, quizDetails.level, email, user?.fullName, score, quizDetails.namequiz, questions.length
+                            await GlobalApi.SaveGradesOfQuiz(
+                                quizDetails.subject, 
+                                quizDetails.level, 
+                                email, 
+                                user?.fullName, 
+                                updatedScore, 
+                                quizDetails.namequiz, 
+                                questions.length
                             );
 
-                            // Notify the user of successful submission
                             Swal.fire({
                                 title: "تم التسليم بنجاح!",
                                 text: "انا فخور بيك انك حاولت مهما كانت النتيجة",
                                 icon: "success",
                             });
-
+                            setQuizComplete(true);
+                            localStorage.removeItem("answers");
+                            localStorage.removeItem("score");
+                            localStorage.removeItem("currentQuestionIndex");
                         } catch (error) {
                             console.error("Failed to save grades:", error);
-
                             Swal.fire({
                                 title: "خطأ!",
                                 text: "حدث خطأ أثناء حفظ النتائج. حاول مرة أخرى لاحقًا.",
@@ -207,29 +254,23 @@ export default function Quiz() {
                             });
                         }
                     };
-
-                    saveGrade(); // استدعاء دالة حفظ الدرجة
-
-
-                    setQuizComplete(true); // Finish the quiz
-                    // Clear localStorage when quiz is completed
-                    localStorage.removeItem("answers");
-                    localStorage.removeItem("score");
-                    localStorage.removeItem("currentQuestionIndex");
+                    saveGrade();
                 } else {
-                    // Keep the user on the current question
                     setSelectedAnswer(null);
                     window.scrollTo({ top: 0, behavior: "smooth" });
                 }
             });
         } else {
-            // Move to the next question
             setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
         }
 
-        setSelectedAnswer(null); // Clear selection for the next question
+        setSelectedAnswer(null);
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
+
+    
+
+
 
 
     useEffect(() => {
@@ -258,6 +299,17 @@ export default function Quiz() {
             }
             setAnswers(updatedAnswers);
             localStorage.setItem("answers", JSON.stringify(updatedAnswers));
+
+            // Update score based on the new answer
+            let updatedScore = 0;
+            updatedAnswers.forEach((ans) => {
+                const question = questions.find(q => q.question === ans.question);
+                if (question && ans.answer.text === question.correctAnswer) {
+                    updatedScore += 1; // Correct answer
+                }
+            });
+            setScore(updatedScore);
+            localStorage.setItem("score", updatedScore);
         }
 
         // Restore the selected answer for the selected question
@@ -351,7 +403,16 @@ export default function Quiz() {
     }
 
     if (questions.length === 0) {
-        return <p className="text-center text-white">No questions available.</p>;
+        return (
+            <div className='cursor-default backdrop-blur-xl rounded-xl w-fit m-auto outline-dashed mb-8 outline-2 bg-black/20 outline-white p-5'>
+                <h4 className='m-auto flex justify-center place-items-center font-arabicUI2 max-sm:text-3xl text-center gap-4 text-white text-5xl'>
+                    <BsPatchCheckFill className='text-4xl'></BsPatchCheckFill>
+                    جاري تحميل الاسئلة
+                </h4>
+
+            </div>
+
+        )
     }
 
     return (
@@ -363,19 +424,42 @@ export default function Quiz() {
                     </h4>
                 </div>
 
+
                 <div className="mt-8">
-                    <h2
-                        className={`m-7 col-span-2 order-1 h-fit cursor-pointer leading-normal font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800 ${questions[currentQuestionIndex]?.language === 'ar' ? 'rtl' : ''}`}
-                    >
-                        {questions[currentQuestionIndex]?.question}
-                    </h2>
+                  
+                    {questions[currentQuestionIndex] && questions[currentQuestionIndex]?.imageUrl ? (
+                        <div className="grid max-lg:grid-cols-1 items-center grid-cols-3">
+                            <h2
+                                className={`m-7 col-span-2 order-1 h-fit  cursor-pointer leading-normal rtl font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
+                            >
+                                {questions[currentQuestionIndex]?.question}
+                            </h2>
+
+                            <img
+                                className="col-span-1 max-sm:w-full rounded-xl"
+                                src={questions[currentQuestionIndex]?.imageUrl} // Use fallback image if linkImage is empty
+                                alt="Quiz Image"
+                                width={400}
+                                height={400}
+                            />
+                        </div>
+                    ) : (
+                        <h2
+                            className={`m-7 cursor-pointer leading-normal rtl font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
+                        >
+                            {questions[currentQuestionIndex]?.question}
+                        </h2>
+                    )}
+
+
+                  
 
                     <div className="grid max-md:grid-cols-1 grid-cols-2">
                         {questions[currentQuestionIndex]?.options?.map((option) => (
                             <button
                                 key={option.letter}
                                 className={`mb-7 cursor-pointer max-sm:text-2xl font-arabicUI3 text-4xl m-3 p-4 rounded-lg text-center duration-500 transition active:ring-4 select-none
-                                ${selectedAnswer?.letter === option.letter
+                ${selectedAnswer?.letter === option.letter
                                         ? "bg-green-400 text-gray-800"
                                         : "text-white bg-gray-800"
                                     }`}
@@ -386,6 +470,7 @@ export default function Quiz() {
                         ))}
                     </div>
                 </div>
+
             </div>
             <ToastContainer />
 
@@ -417,3 +502,4 @@ export default function Quiz() {
         </div>
     );
 }
+k

@@ -69,8 +69,8 @@ const Physics = () => {
         GlobalApi.physicsData("ph")
             .then((res) => {
                 console.log("Response: ", res);
-                setDataBook(res);
-                setNumberQuiz(res?.quizzes?.length);
+                setDataBook(res.dataOfQuizs);
+                setNumberQuiz(res.dataOfQuizs.length);
             })
             .catch((err) => {
                 console.error("Error: ", err);
@@ -82,11 +82,11 @@ const Physics = () => {
     // Function to filter and render quizzes based on numbook
     const renderQuizzes = () => {
         let filterKey = '';
-        if (numbook === 1) filterKey = 'emthan';
-        if (numbook === 2) filterKey = 'newotn';
+        if (numbook === 1) filterKey = 'hard';
+        if (numbook === 2) filterKey = 'med';
 
-        return dataBook?.quizzes
-            ?.filter((item) => item.chooseBook === filterKey)
+        return dataBook
+            ?.filter((item) => item.level === filterKey)
             ?.map((item, index) => {
                 const quizLink = !user
                     ? "/sign-up" // If no user is logged in, redirect to the sign-up page
@@ -96,7 +96,7 @@ const Physics = () => {
                 return (
                     <Link key={item.id} href={quizLink}>
                         <h4 className='hover:scale-105   justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto  flex'>
-                            {item?.quiztitle || 'No Title Available'}
+                            {item?.namequiz || 'No Title Available'}
 
                             {index > 1 ? (
                                 premuserorNot ? (
