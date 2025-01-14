@@ -159,6 +159,9 @@ const biologyDAta = async () => {
 }
 const arabicData = async () => {
   const shite = gql`
+ 
+  
+  
   query MyQuery {
   dataOfQuizs(where: {subject: ar}) {
     level
@@ -166,6 +169,7 @@ const arabicData = async () => {
     id
   }
 }
+
   `
 
   const shitosd = await request(apiar, shite)
@@ -173,13 +177,17 @@ const arabicData = async () => {
 }
 const englishData = async () => {
   const shite = gql`
-    query MyQuery {
+ 
+  
+  
+  query MyQuery {
   dataOfQuizs(where: {subject: en}) {
     level
     namequiz
     id
   }
 }
+
   `
 
   const shitosd = await request(apien, shite)
@@ -273,8 +281,7 @@ const quizbio = async (quizid) => {
 }
 const quizAr = async (quizid) => {
   const shite = gql`
-   
-  query MyQuery {
+   query MyQuery {
   dataOfQuizs(where: {id: "`+ quizid + `"}) {
     level
     namequiz
@@ -292,8 +299,7 @@ const quizAr = async (quizid) => {
 }
 const quizEn = async (quizid) => {
   const shite = gql`
-  
-  query MyQuery {
+   query MyQuery {
   dataOfQuizs(where: {id: "`+ quizid + `"}) {
     level
     namequiz
@@ -362,9 +368,37 @@ const greatDay = async () => {
   return shitosd
 }
 
+const testapi = async () => {
+  const shite = gql`
+  
+  query MyQuery {
+  quiz(where: {id: "cm5jy5z5s1h6c07pmd237ifzy"}) {
+        quiztitle
+         question (first: 100) {
+      opationA
+      opationC
+      opationB
+      opationD
+      trueChoisevip
+      qus
+      
+    }
+
+         chooseBook
+         subjectName
+    
+      }
+}
+
+  `
+
+  const shitosd = await request(apien, shite)
+  return shitosd
+}
 
 
 export default {
+  testapi,
   greatDay,
   arabicData,
   geoData,
@@ -384,7 +418,7 @@ export default {
   SaveGradesOfQuiz,
   vquiz,
   sendEnrollData,
-
+  
 
 
 }
