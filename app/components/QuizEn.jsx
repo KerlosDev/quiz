@@ -9,21 +9,15 @@ import Swal from "sweetalert2";
 import { ToastContainer, toast } from 'react-toastify';
 import { useUser } from "@clerk/nextjs";
 
+
 export default function QuizCh({ params }) {
 
     const { quizid } = React.use(params);
     const { user } = useUser();
     const email = user?.primaryEmailAddress?.emailAddress;
 
-    if (!user) {
-        return (
-            <div className="flex justify-center items-center h-screen bg-gray-800">
-                <h1 className="font-arabicUI3 text-4xl text-white">
-                    من فضلك سجل الدخول لبدء الامتحان
-                </h1>
-            </div>
-        );
-    }
+
+
 
     const [questions, setQuestions] = useState([]); // Store the parsed quiz questions
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Index of the current question
@@ -33,7 +27,17 @@ export default function QuizCh({ params }) {
     const [loading, setLoading] = useState(false);
     const [quizComplete, setQuizComplete] = useState(false);
     const [quizDetails, setQuizDetalis] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentImage, setCurrentImage] = useState('');
 
+    const openModal = (imageUrl) => {
+        setCurrentImage(imageUrl);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
 
 
     useEffect(() => {
@@ -424,89 +428,125 @@ export default function QuizCh({ params }) {
     }
 
     return (
-        <div className="bg-quiz2 cursor-default bg-cover rounded-xl p-8 m-4">
-            <div className="backdrop-blur-xl p-3 px-8 rounded-xl outline-dashed outline-white outline-2">
-                <div className="flex justify-end">
-                    <h4 className="text-right font-arabicUI3 text-5xl bg-white/10 p-4 w-fit rounded-md flex text-white">
-                        <BiSolidPencil /> {quizDetails.namequiz}
-                    </h4>
-                </div>
-
-
-                <div className="mt-8">
-
-                    {questions[currentQuestionIndex] && questions[currentQuestionIndex]?.imageUrl ? (
-                        <div className="grid max-lg:grid-cols-1 items-center grid-cols-3">
-                            <h2
-                                className={`m-7 col-span-2 order-1 h-fit  cursor-pointer leading-normal  font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
-                            >
-                                {questions[currentQuestionIndex]?.question}
-                            </h2>
-
-                            <img
-                                className="col-span-1 max-sm:w-full rounded-xl"
-                                src={questions[currentQuestionIndex]?.imageUrl} // Use fallback image if linkImage is empty
-                                alt="Quiz Image"
-                                width={400}
-                                height={400}
-                            />
+        <div>
+            {user ? (
+                <div className="bg-quiz2 cursor-default bg-cover rounded-xl p-8 m-4">
+                    <div className="backdrop-blur-xl p-3 px-8 rounded-xl outline-dashed outline-white outline-2">
+                        <div className="flex justify-end">
+                            <h4 className="text-right font-arabicUI3 text-5xl bg-white/10 p-4 w-fit rounded-md flex text-white">
+                                <BiSolidPencil /> {quizDetails.namequiz}
+                            </h4>
                         </div>
-                    ) : (
-                        <h2
-                            className={`m-7 cursor-pointer leading-normal font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
-                        >
-                            {questions[currentQuestionIndex]?.question}
-                        </h2>
-                    )}
+
+
+                        <div className="mt-8">
+
+                            {questions[currentQuestionIndex] && questions[currentQuestionIndex]?.imageUrl ? (
+                                <div className="grid max-lg:grid-cols-1 items-center grid-cols-3">
+                                    <h2 className="m-7 col-span-2 order-1 h-fit cursor-pointer leading-normal font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800">
+                                        {questions[currentQuestionIndex]?.question}
+                                    </h2>
+
+                                    <div className="col-span-1 max-sm:w-full rounded-xl">
+                                        <img
+                                            className="cursor-pointer rounded-xl"
+                                            src={questions[currentQuestionIndex]?.imageUrl}
+                                            alt="Quiz Image"
+                                            width={400}
+                                            height={400}
+                                            onClick={() => openModal(questions[currentQuestionIndex]?.imageUrl)}
+                                        />
+                                    </div>
+                                </div>
+                            ) : (
+                                <h2 className="m-7 cursor-pointer leading-normal font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800">
+                                    {questions[currentQuestionIndex]?.question}
+                                </h2>
+                            )}
+
+                            {/* Modal for Image Zoom */}
+                            {isModalOpen && (
+                                <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50" onClick={closeModal}>
+                                    <div className="relative max-w-5xl max-h-full">
+                                        <img
+                                            className="max-w-full rounded-lg max-h-full object-contain"
+                                            src={currentImage}
+                                            alt="Zoomed Image"
+                                            onClick={(e) => e.stopPropagation()}  // Prevent closing modal when clicking on the image itself
+                                        />
+                                        <button
+                                            className="z-10 absolute -bottom-20  right-1 p-4 text-2xl font-arabicUI3 text-white bg-gradient-to-r from-red-500 to-red-800 rounded-lg shadow-xl transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:ring-4 hover:ring-blue-300 backdrop-blur-xl focus:outline-none focus:ring-4 focus:ring-blue-500"
+                                            onClick={closeModal}
+                                        >
+                                            اغلاق الصورة
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
 
 
 
 
-                    <div className="grid max-md:grid-cols-1 grid-cols-2">
-                        {questions[currentQuestionIndex]?.options?.map((option) => (
-                            <button
-                                key={option.letter}
-                                className={`mb-7 cursor-pointer max-sm:text-2xl font-arabicUI3 text-4xl m-3 p-4 rounded-lg text-center duration-500 transition active:ring-4 select-none
-                ${selectedAnswer?.letter === option.letter
+
+                            <div className="grid max-md:grid-cols-1 grid-cols-2">
+                                {questions[currentQuestionIndex]?.options?.map((option) => (
+                                    <button
+                                        key={option.letter}
+                                        className={`mb-7 cursor-pointer max-sm:text-2xl font-arabicUI3 text-4xl m-3 p-4 rounded-lg text-center duration-500 transition active:ring-4 select-none
+                 ${selectedAnswer?.letter === option.letter
+                                                ? "bg-green-400 text-gray-800"
+                                                : "text-white bg-gray-800"
+                                            }`}
+                                        onClick={() => handleAnswerSelect(option)}
+                                    >
+                                        {option.text}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                    </div>
+                    <ToastContainer />
+
+                    <div className="mt-10 grid grid-cols-11 max-md:grid-cols-4 max-sm:grid-cols-3 max-lg:grid-cols-5 max-xl:grid-cols-7 gap-3">
+                        {questions.map((item, index) => (
+                            <h2
+                                onClick={() => handleClickNumber(index)}
+                                className={`mb-7 max-sm:text-2xl cursor-pointer font-arabicUI3 text-4xl p-4 rounded-lg text-center duration-500 transition active:ring-4 select-none
+                         ${answers.some((ans) => ans.question === item.question)
                                         ? "bg-green-400 text-gray-800"
-                                        : "text-white bg-gray-800"
-                                    }`}
-                                onClick={() => handleAnswerSelect(option)}
+                                        : currentQuestionIndex === index
+                                            ? "bg-slate-800 text-white"
+                                            : "bg-white text-gray-800"}`}
+                                key={index}
                             >
-                                {option.text}
-                            </button>
+                                {index + 1}
+                            </h2>
                         ))}
                     </div>
+
+                    <div className="mt-10 flex justify-center gap-4">
+                        <h2
+                            onClick={handleNextQuestion}
+                            className={`mb-7 cursor-pointer max-sm:text-2xl max-sm:p-4 w-fit font-arabicUI3 text-5xl m-3 p-8 mx-auto rounded-lg text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
+                        >
+                            {currentQuestionIndex + 1 === questions.length ? "تسليم الامتحان" : "السوال التالي"}
+                        </h2>
+                    </div>
                 </div>
+            )
 
-            </div>
-            <ToastContainer />
+                : (
+                    <div className="flex justify-center items-center h-screen bg-gray-800">
+                        <h1 className="font-arabicUI3 text-4xl text-white">
+                            من فضلك سجل الدخول لبدء الامتحان
+                        </h1>
+                    </div>
+                )
 
-            <div className="mt-10 grid grid-cols-11 max-md:grid-cols-4 max-sm:grid-cols-3 max-lg:grid-cols-5 max-xl:grid-cols-7 gap-3">
-                {questions.map((item, index) => (
-                    <h2
-                        onClick={() => handleClickNumber(index)}
-                        className={`mb-7 max-sm:text-2xl cursor-pointer font-arabicUI3 text-4xl p-4 rounded-lg text-center duration-500 transition active:ring-4 select-none
-                        ${answers.some((ans) => ans.question === item.question)
-                                ? "bg-green-400 text-gray-800"
-                                : currentQuestionIndex === index
-                                    ? "bg-slate-800 text-white"
-                                    : "bg-white text-gray-800"}`}
-                        key={index}
-                    >
-                        {index + 1}
-                    </h2>
-                ))}
-            </div>
-
-            <div className="mt-10 flex justify-center gap-4">
-                <h2
-                    onClick={handleNextQuestion}
-                    className={`mb-7 cursor-pointer max-sm:text-2xl max-sm:p-4 w-fit font-arabicUI3 text-5xl m-3 p-8 mx-auto rounded-lg text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
-                >
-                    {currentQuestionIndex + 1 === questions.length ? "تسليم الامتحان" : "السوال التالي"}
-                </h2>
-            </div>
+            }
         </div>
-    );
+
+
+    )
 }

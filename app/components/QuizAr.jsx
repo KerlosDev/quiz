@@ -10,19 +10,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useUser } from "@clerk/nextjs";
 
 export default function QuizCh({ params }) {
-   const { quizid } = React.use(params);
+    const { quizid } = React.use(params);
     const { user } = useUser();
     const email = user?.primaryEmailAddress?.emailAddress;
 
-    if (!user) {
-        return (
-            <div className="flex justify-center items-center h-screen bg-gray-800">
-                <h1 className="font-arabicUI3 text-4xl text-white">
-                    من فضلك سجل الدخول لبدء الامتحان
-                </h1>
-            </div>
-        );
-    }
 
     const [questions, setQuestions] = useState([]); // Store the parsed quiz questions
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Index of the current question
@@ -156,7 +147,7 @@ export default function QuizCh({ params }) {
     const handleAnswerSelect = (option) => {
         setSelectedAnswer(option);
     };
-    
+
 
     console.log(questions.length)
     console.log()
@@ -178,13 +169,13 @@ export default function QuizCh({ params }) {
             });
             return;
         }
-    
+
         // Update answers array
         const updatedAnswers = [...answers];
         const existingAnswerIndex = updatedAnswers.findIndex(
             (ans) => ans.question === questions[currentQuestionIndex]?.question
         );
-    
+
         if (existingAnswerIndex > -1) {
             updatedAnswers[existingAnswerIndex].answer = selectedAnswer;
         } else {
@@ -193,17 +184,17 @@ export default function QuizCh({ params }) {
                 answer: selectedAnswer,
             });
         }
-    
+
         setAnswers(updatedAnswers);
-    
+
         // Update score based on new answer
         const updatedScore = updatedAnswers.filter((ans) => {
             const question = questions.find(q => q.question === ans.question);
             return question && ans.answer.text === question.correctAnswer;
         }).length;
-    
+
         setScore(updatedScore);
-    
+
         // Check if it's the last question
         if (currentQuestionIndex + 1 === questions.length) {
             // Ensure no undefined in answeredQuestionTexts
@@ -211,11 +202,11 @@ export default function QuizCh({ params }) {
                 .map(ans => ans.question?.trim())
                 .filter(Boolean); // Remove undefined/null values
             const allQuestionTexts = questions.map(q => q.question?.trim());
-    
+
             const unansweredQuestions = allQuestionTexts.filter(
                 q => !answeredQuestionTexts.includes(q)
             );
-    
+
             if (unansweredQuestions.length > 0) {
                 Swal.fire({
                     title: "لم يتم الإجابة على جميع الأسئلة",
@@ -225,7 +216,7 @@ export default function QuizCh({ params }) {
                 });
                 return;
             }
-    
+
             Swal.fire({
                 title: "هل أنت متأكد؟",
                 text: "هل ترغب في تسليم الامتحان؟",
@@ -246,7 +237,7 @@ export default function QuizCh({ params }) {
                                 quizDetails.namequiz,
                                 questions.length
                             );
-    
+
                             Swal.fire({
                                 title: "تم التسليم بنجاح!",
                                 text: "انا فخور بيك انك حاولت مهما كانت النتيجة",
@@ -274,11 +265,11 @@ export default function QuizCh({ params }) {
         } else {
             setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
         }
-    
+
         setSelectedAnswer(null);
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
-    
+
 
 
 
@@ -292,7 +283,7 @@ export default function QuizCh({ params }) {
         setSelectedAnswer(savedAnswer);
     }, [currentQuestionIndex, answers]);
 
-   
+
     const handleClickNumber = (index) => {
         // تحديث الإجابة المحددة قبل التبديل إلى السؤال الجديد
         if (selectedAnswer) {
@@ -300,7 +291,7 @@ export default function QuizCh({ params }) {
             const existingAnswerIndex = updatedAnswers.findIndex(
                 (ans) => ans.question === questions[currentQuestionIndex]?.question
             );
-    
+
             if (existingAnswerIndex > -1) {
                 updatedAnswers[existingAnswerIndex].answer = selectedAnswer;
             } else {
@@ -309,22 +300,22 @@ export default function QuizCh({ params }) {
                     answer: selectedAnswer,
                 });
             }
-    
+
             setAnswers(updatedAnswers);
             localStorage.setItem("answers", JSON.stringify(updatedAnswers));
         }
-    
+
         // تحديث الإجابة المختارة عند الضغط على رقم السؤال
         const selectedSavedAnswer = answers.find(
             (ans) => ans.question === questions[index]?.question
         )?.answer || null;
         setSelectedAnswer(selectedSavedAnswer);
         setCurrentQuestionIndex(index);
-    
+
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    
+
 
     const displayResult = () => {
         return (
@@ -423,89 +414,100 @@ export default function QuizCh({ params }) {
     }
 
     return (
-        <div className="bg-quiz2 cursor-default bg-cover rounded-xl p-8 m-4">
-            <div className="backdrop-blur-xl p-3 px-8 rounded-xl outline-dashed outline-white outline-2">
-                <div className="flex justify-end">
-                    <h4 className="text-right font-arabicUI3 text-5xl bg-white/10 p-4 w-fit rounded-md flex text-white">
-                        <BiSolidPencil /> {quizDetails.namequiz}
-                    </h4>
-                </div>
-
-
-                <div className="mt-8">
-
-                    {questions[currentQuestionIndex] && questions[currentQuestionIndex]?.imageUrl ? (
-                        <div className="grid max-lg:grid-cols-1 items-center grid-cols-3">
-                            <h2
-                                className={`m-7 col-span-2 order-1 h-fit  cursor-pointer leading-normal rtl font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
-                            >
-                                {questions[currentQuestionIndex]?.question}
-                            </h2>
-
-                            <img
-                                className="col-span-1 max-sm:w-full rounded-xl"
-                                src={questions[currentQuestionIndex]?.imageUrl} // Use fallback image if linkImage is empty
-                                alt="Quiz Image"
-                                width={400}
-                                height={400}
-                            />
+        <div>
+            {user ? (
+                <div className="bg-quiz2 cursor-default bg-cover rounded-xl p-8 m-4">
+                    <div className="backdrop-blur-xl p-3 px-8 rounded-xl outline-dashed outline-white outline-2">
+                        <div className="flex justify-end">
+                            <h4 className="text-right font-arabicUI3 text-5xl bg-white/10 p-4 w-fit rounded-md flex text-white">
+                                <BiSolidPencil /> {quizDetails.namequiz}
+                            </h4>
                         </div>
-                    ) : (
-                        <h2
-                            className={`m-7 cursor-pointer leading-normal rtl font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
-                        >
-                            {questions[currentQuestionIndex]?.question}
-                        </h2>
-                    )}
+
+
+                        <div className="mt-8">
+
+                            {questions[currentQuestionIndex] && questions[currentQuestionIndex]?.imageUrl ? (
+                                <div className="grid max-lg:grid-cols-1 items-center grid-cols-3">
+                                    <h2
+                                        className={`m-7 col-span-2 order-1 h-fit  cursor-pointer leading-normal rtl font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
+                                    >
+                                        {questions[currentQuestionIndex]?.question}
+                                    </h2>
+
+                                    <img
+                                        className="col-span-1 max-sm:w-full rounded-xl"
+                                        src={questions[currentQuestionIndex]?.imageUrl} // Use fallback image if linkImage is empty
+                                        alt="Quiz Image"
+                                        width={400}
+                                        height={400}
+                                    />
+                                </div>
+                            ) : (
+                                <h2
+                                    className={`m-7 cursor-pointer leading-normal rtl font-arabicUI3 text-4xl max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
+                                >
+                                    {questions[currentQuestionIndex]?.question}
+                                </h2>
+                            )}
 
 
 
 
-                    <div className="grid max-md:grid-cols-1 grid-cols-2">
-                        {questions[currentQuestionIndex]?.options?.map((option) => (
-                            <button
-                                key={option.letter}
-                                className={`mb-7 cursor-pointer max-sm:text-2xl font-arabicUI3 text-4xl m-3 p-4 rounded-lg text-center duration-500 transition active:ring-4 select-none
-                ${selectedAnswer?.letter === option.letter
+                            <div className="grid max-md:grid-cols-1 grid-cols-2">
+                                {questions[currentQuestionIndex]?.options?.map((option) => (
+                                    <button
+                                        key={option.letter}
+                                        className={`mb-7 cursor-pointer max-sm:text-2xl font-arabicUI3 text-4xl m-3 p-4 rounded-lg text-center duration-500 transition active:ring-4 select-none
+                       ${selectedAnswer?.letter === option.letter
+                                                ? "bg-green-400 text-gray-800"
+                                                : "text-white bg-gray-800"
+                                            }`}
+                                        onClick={() => handleAnswerSelect(option)}
+                                    >
+                                        {option.text}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                    </div>
+                    <ToastContainer />
+
+                    <div className="mt-10 grid grid-cols-11 max-md:grid-cols-4 max-sm:grid-cols-3 max-lg:grid-cols-5 max-xl:grid-cols-7 gap-3">
+                        {questions.map((item, index) => (
+                            <h2
+                                onClick={() => handleClickNumber(index)}
+                                className={`mb-7 max-sm:text-2xl cursor-pointer font-arabicUI3 text-4xl p-4 rounded-lg text-center duration-500 transition active:ring-4 select-none
+                               ${answers.some((ans) => ans.question === item.question)
                                         ? "bg-green-400 text-gray-800"
-                                        : "text-white bg-gray-800"
-                                    }`}
-                                onClick={() => handleAnswerSelect(option)}
+                                        : currentQuestionIndex === index
+                                            ? "bg-slate-800 text-white"
+                                            : "bg-white text-gray-800"}`}
+                                key={index}
                             >
-                                {option.text}
-                            </button>
+                                {index + 1}
+                            </h2>
                         ))}
                     </div>
+
+                    <div className="mt-10 flex justify-center gap-4">
+                        <h2
+                            onClick={handleNextQuestion}
+                            className={`mb-7 cursor-pointer max-sm:text-2xl max-sm:p-4 w-fit font-arabicUI3 text-5xl m-3 p-8 mx-auto rounded-lg text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
+                        >
+                            {currentQuestionIndex + 1 === questions.length ? "تسليم الامتحان" : "السوال التالي"}
+                        </h2>
+                    </div>
                 </div>
-
-            </div>
-            <ToastContainer />
-
-            <div className="mt-10 grid grid-cols-11 max-md:grid-cols-4 max-sm:grid-cols-3 max-lg:grid-cols-5 max-xl:grid-cols-7 gap-3">
-                {questions.map((item, index) => (
-                    <h2
-                        onClick={() => handleClickNumber(index)}
-                        className={`mb-7 max-sm:text-2xl cursor-pointer font-arabicUI3 text-4xl p-4 rounded-lg text-center duration-500 transition active:ring-4 select-none
-                        ${answers.some((ans) => ans.question === item.question)
-                                ? "bg-green-400 text-gray-800"
-                                : currentQuestionIndex === index
-                                    ? "bg-slate-800 text-white"
-                                    : "bg-white text-gray-800"}`}
-                        key={index}
-                    >
-                        {index + 1}
-                    </h2>
-                ))}
-            </div>
-
-            <div className="mt-10 flex justify-center gap-4">
-                <h2
-                    onClick={handleNextQuestion}
-                    className={`mb-7 cursor-pointer max-sm:text-2xl max-sm:p-4 w-fit font-arabicUI3 text-5xl m-3 p-8 mx-auto rounded-lg text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
-                >
-                    {currentQuestionIndex + 1 === questions.length ? "تسليم الامتحان" : "السوال التالي"}
-                </h2>
-            </div>
+            ) : (
+                <div className="flex justify-center items-center h-screen bg-gray-800">
+                    <h1 className="font-arabicUI3 text-4xl text-white">
+                        من فضلك سجل الدخول لبدء الامتحان
+                    </h1>
+                </div>
+            )}
         </div>
+
     );
 }
