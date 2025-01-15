@@ -115,7 +115,7 @@ const premUsers = async (useremail) => {
 const physicsData = async () => {
   const shite = gql`
   query MyQuery {
-  dataOfQuizs(where: {subject: ph}) {
+  dataOfQuizs( first: 1000 where: {subject: ph}) {
     level
     namequiz
     id
@@ -131,7 +131,7 @@ const chemstryDAta = async () => {
   
   
   query MyQuery {
-  dataOfQuizs(where: {subject: chem}) {
+  dataOfQuizs( first: 1000 where: {subject: chem}) {
     level
     namequiz
     id
@@ -146,7 +146,7 @@ const chemstryDAta = async () => {
 const biologyDAta = async () => {
   const shite = gql`
    query MyQuery {
-  dataOfQuizs(where: {subject: bio}) {
+  dataOfQuizs( first: 1000 where: {subject: bio}) {
     level
     namequiz
     id
@@ -163,7 +163,7 @@ const arabicData = async () => {
   
   
   query MyQuery {
-  dataOfQuizs(where: {subject: ar}) {
+  dataOfQuizs( first: 1000 where: {subject: ar}) {
     level
     namequiz
     id
@@ -181,7 +181,7 @@ const englishData = async () => {
   
   
   query MyQuery {
-  dataOfQuizs(where: {subject: en}) {
+  dataOfQuizs( first: 1000 where: {subject: en}) {
     level
     namequiz
     id
@@ -196,7 +196,7 @@ const englishData = async () => {
 const frenchData = async () => {
   const shite = gql`
    query MyQuery {
-  dataOfQuizs(where: {subject: fr}) {
+  dataOfQuizs( first: 1000 where: {subject: fr}) {
     level
     namequiz
     id
@@ -210,7 +210,7 @@ const frenchData = async () => {
 const geoData = async () => {
   const shite = gql`
    query MyQuery {
-  dataOfQuizs(where: {subject: geo}) {
+  dataOfQuizs( first: 1000  where: {subject: geo}) {
     level
     namequiz
     id
