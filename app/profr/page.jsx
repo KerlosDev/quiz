@@ -37,26 +37,28 @@ const QuizFormat = () => {
   };
 
   const handleTextTInput = () => {
-    const regex = /(\d+\.\s*.*?)(\(\w\)) (.*?)\n(\(\w\)) (.*?)\n(\(\w\)) (.*?)\n==>(\w)/gs;
+    const regex = /(\d+\.\s*.*?)(\(\w\)) (.*?)\n(\(\w\)) (.*?)\n(\(\w\)) (.*?)\n(\(\w\))? ?(.*?)?\n==>(\w)/gs;
     let match;
     let formatted = '';
-
+  
     while ((match = regex.exec(inputTextt)) !== null) {
       const question = match[1].trim();
       const answerA = match[2] + ' ' + match[3].trim();
       const answerB = match[4] + ' ' + match[5].trim();
       const answerC = match[6] + ' ' + match[7].trim();
-      const correctAnswer = match[8];
-
-      formatted += `${question} ==>${correctAnswer}\n${answerA}\n${answerB}\n${answerC}\n\n`;
+      const answerD = match[8] ? match[8] + ' ' + match[9]?.trim() : '(D) Empty Choice'; // Handle missing choice
+      const correctAnswer = match[10];
+  
+      formatted += `${question} ==>${correctAnswer}\n${answerA}\n${answerB}\n${answerC}\n${answerD}\n\n`;
     }
-
+  
     if (formatted) {
       setFormattedTextt(formatted.trim());
     } else {
       setFormattedTextt('Invalid input format.');
     }
   };
+  
 
   // Function to copy the first formatted text to clipboard
   const handleCopyToClipboard = () => {
