@@ -20,7 +20,7 @@ const SaveGradesOfQuiz = async (subname, level, userEmail, uerName, userGrade, q
   
   mutation MyMutation {
   createQuizresult(
-    data: { nameofsub: `+ subname + `, level: ` + level + `, userEmail: "` + userEmail + `", userName: "` + uerName + `", quizGrade: ` + userGrade + `,nameofquiz: "` + quizname + `",numofqus:` + numofqus + `}
+    data: { nameofsub: `+ subname + `, userEmail: "` + userEmail + `", userName: "` + uerName + `", quizGrade: ` + userGrade + `,nameofquiz: "` + quizname + `",numofqus:` + numofqus + `}
   ) {
     id
   }

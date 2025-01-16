@@ -124,11 +124,6 @@ const English = () => {
                                 )
                             }
 
-                            {/*   {index > 1 && filterKey !== 'unit1' ? (
-                               
-                            ) : (
-                                <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-                            )} */}
 
                         </h4>
                     </Link>
