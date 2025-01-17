@@ -46,7 +46,7 @@ const QuizFormat = () => {
       const answerA = match[2] + ' ' + match[3].trim();
       const answerB = match[4] + ' ' + match[5].trim();
       const answerC = match[6] + ' ' + match[7].trim();
-      const answerD = match[8] ? match[8] + ' ' + match[9]?.trim() : '(D) Empty Choice'; // Handle missing choice
+      const answerD = match[8] ? match[8] + ' ' + match[9]?.trim() : '(d) Empty Choice'; // Handle missing choice
       const correctAnswer = match[10];
   
       formatted += `${question} ==>${correctAnswer}\n${answerA}\n${answerB}\n${answerC}\n${answerD}\n\n`;
