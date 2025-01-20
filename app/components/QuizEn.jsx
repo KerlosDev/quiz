@@ -76,7 +76,7 @@ export default function QuizCh({ params }) {
                 const parsedQuestions = convertTextToJson(text);
                 setQuestions(parsedQuestions);
 
-                // Load data from localStorage, if available (do not auto-fill answers when it's a fresh start)
+                // Load data from localStorage, if available
                 const savedAnswers = JSON.parse(localStorage.getItem('answers')) || [];
                 const savedScore = parseInt(localStorage.getItem('score')) || 0;
                 const savedQuestionIndex = parseInt(localStorage.getItem('currentQuestionIndex')) || 0;
@@ -180,7 +180,7 @@ export default function QuizCh({ params }) {
                 draggable: true,
                 progress: undefined,
                 theme: "colored",
-                className: 'font-arabicUI3 w-fit m-7 text-lg p-4 rounded-lg shadow-lg',
+                className: 'font-arabicUI3 w-fit م-7 text-lg p-4 rounded-lg shadow-lg',
             });
             return;
         }
@@ -188,38 +188,40 @@ export default function QuizCh({ params }) {
         // Update answers array
         const updatedAnswers = [...answers];
         const existingAnswerIndex = updatedAnswers.findIndex(
-            (ans) => ans.question === questions[currentQuestionIndex]?.question
+            (ans) => ans.questionId === questions[currentQuestionIndex]?.id
         );
 
         if (existingAnswerIndex > -1) {
             updatedAnswers[existingAnswerIndex].answer = selectedAnswer;
         } else {
             updatedAnswers.push({
-                question: questions[currentQuestionIndex]?.question || "", // Add default value
+                questionId: questions[currentQuestionIndex]?.id, // Use question ID
                 answer: selectedAnswer,
             });
         }
 
         setAnswers(updatedAnswers);
+        localStorage.setItem('answers', JSON.stringify(updatedAnswers)); // Save to localStorage
 
         // Update score based on new answer
         const updatedScore = updatedAnswers.filter((ans) => {
-            const question = questions.find(q => q.question === ans.question);
+            const question = questions.find(q => q.id === ans.questionId);
             return question && ans.answer.text === question.correctAnswer;
         }).length;
 
         setScore(updatedScore);
+        localStorage.setItem('score', updatedScore.toString()); // Save to localStorage
 
         // Check if it's the last question
         if (currentQuestionIndex + 1 === questions.length) {
-            // Ensure no undefined in answeredQuestionTexts
-            const answeredQuestionTexts = updatedAnswers
-                .map(ans => ans.question?.trim())
+            // Ensure no undefined in answeredQuestionIds
+            const answeredQuestionIds = updatedAnswers
+                .map(ans => ans.questionId)
                 .filter(Boolean); // Remove undefined/null values
-            const allQuestionTexts = questions.map(q => q.question?.trim());
+            const allQuestionIds = questions.map(q => q.id);
 
-            const unansweredQuestions = allQuestionTexts.filter(
-                q => !answeredQuestionTexts.includes(q)
+            const unansweredQuestions = allQuestionIds.filter(
+                id => !answeredQuestionIds.includes(id)
             );
 
             if (unansweredQuestions.length > 0) {
@@ -278,7 +280,11 @@ export default function QuizCh({ params }) {
                 }
             });
         } else {
-            setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+            setCurrentQuestionIndex((prevIndex) => {
+                const newIndex = prevIndex + 1;
+                localStorage.setItem('currentQuestionIndex', newIndex.toString()); // Save to localStorage
+                return newIndex;
+            });
         }
 
         setSelectedAnswer(null);
@@ -296,7 +302,7 @@ export default function QuizCh({ params }) {
     useEffect(() => {
         // Restore selected answer for the current question
         const savedAnswer = answers.find(
-            (ans) => ans.question === questions[currentQuestionIndex]?.question
+            (ans) => ans.questionId === questions[currentQuestionIndex]?.id
         )?.answer || null;
         setSelectedAnswer(savedAnswer);
     }, [currentQuestionIndex, answers]);
@@ -306,28 +312,29 @@ export default function QuizCh({ params }) {
         if (selectedAnswer) {
             const updatedAnswers = [...answers];
             const existingAnswerIndex = updatedAnswers.findIndex(
-                (ans) => ans.question === questions[currentQuestionIndex]?.question
+                (ans) => ans.questionId === questions[currentQuestionIndex]?.id
             );
 
             if (existingAnswerIndex > -1) {
                 updatedAnswers[existingAnswerIndex].answer = selectedAnswer;
             } else {
                 updatedAnswers.push({
-                    question: questions[currentQuestionIndex]?.question || "", // إضافة القيمة الافتراضية للسؤال
+                    questionId: questions[currentQuestionIndex]?.id, // إضافة القيمة الافتراضية للسؤال
                     answer: selectedAnswer,
                 });
             }
 
             setAnswers(updatedAnswers);
-            localStorage.setItem("answers", JSON.stringify(updatedAnswers));
+            localStorage.setItem("answers", JSON.stringify(updatedAnswers)); // Save to localStorage
         }
 
         // تحديث الإجابة المختارة عند الضغط على رقم السؤال
         const selectedSavedAnswer = answers.find(
-            (ans) => ans.question === questions[index]?.question
+            (ans) => ans.questionId === questions[index]?.id
         )?.answer || null;
         setSelectedAnswer(selectedSavedAnswer);
         setCurrentQuestionIndex(index);
+        localStorage.setItem('currentQuestionIndex', index.toString()); // Save to localStorage
 
         const questionDiv = document.getElementById("question");
         if (questionDiv) {
@@ -339,7 +346,7 @@ export default function QuizCh({ params }) {
 
     const displayResult = () => {
         return (
-            <div className="bg-quiz2 cursor-default bg-cover rounded-xl  m-2 p-1 md:p-8 md:m-4">
+            <div className="bg-quiz2 cursor-default bg-cover rounded-xl  م-2 p-1 md:p-8 md:م-4">
                 <div className="backdrop-blur-3xl rounded-xl p-6">
                     <h1 className="font-arabicUI3 text-6xl max-sm:text-3xl text-center text-white">
                         نتيجتك {score}/{questions.length}
@@ -363,7 +370,7 @@ export default function QuizCh({ params }) {
                                     const isCorrect = option.text === item.correctAnswer;
                                     const isSelected = answers.find(
                                         (ans) =>
-                                            ans.question === item.question &&
+                                            ans.questionId === item.id &&
                                             ans.answer.text === option.text
                                     );
 
@@ -422,8 +429,8 @@ export default function QuizCh({ params }) {
 
     if (questions.length === 0) {
         return (
-            <div className='cursor-default backdrop-blur-xl rounded-xl w-fit m-auto outline-dashed mb-8 outline-2 bg-black/20 outline-white p-5'>
-                <h4 className='m-auto flex justify-center place-items-center font-arabicUI2 max-sm:text-3xl text-center gap-4 text-white text-5xl'>
+            <div className='cursor-default backdrop-blur-xl rounded-xl w-fit م-auto outline-dashed mb-8 outline-2 bg-black/20 outline-white p-5'>
+                <h4 className='م-auto flex justify-center place-items-center font-arabicUI2 max-sm:text-3xl text-center gap-4 text-white text-5xl'>
                     <BsPatchCheckFill className='text-4xl'></BsPatchCheckFill>
                     جاري تحميل الاسئلة
                 </h4>
@@ -436,7 +443,7 @@ export default function QuizCh({ params }) {
     return (
         <div>
             {user ? (
-                 <div className="bg-quiz2 cursor-default bg-cover rounded-xl m-2 p-1 md:p-8 md:m-4">
+                 <div className="bg-quiz2 cursor-default bg-cover rounded-xl م-2 p-1 md:p-8 md:م-4">
                                    <div className="backdrop-blur-xl p-3 px-8 rounded-xl outline-dashed outline-white outline-2">
                                        <div className="flex justify-end">
                                            <h4 className="text-right font-arabicUI3 text-lg md:text-5xl bg-white/10 p-4 w-fit rounded-md flex text-white">
@@ -517,7 +524,7 @@ export default function QuizCh({ params }) {
                                            <h2
                                                onClick={() => handleClickNumber(index)}
                                                className={`mb-7 max-sm:text-2xl cursor-pointer font-arabicUI3 text-4xl p-4 rounded-lg text-center duration-500 transition active:ring-4 select-none
-                                        ${answers.some((ans) => ans.question === item.question)
+                                        ${answers.some((ans) => ans.questionId === item.id)
                                                        ? "bg-green-400 text-gray-800"
                                                        : currentQuestionIndex === index
                                                            ? "bg-slate-800 text-white"

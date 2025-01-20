@@ -8,12 +8,17 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from 'react-toastify';
 import { useUser } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
+
 
 export default function QuizCh({ params }) {
+
     const { quizid } = React.use(params);
     const { user } = useUser();
     const email = user?.primaryEmailAddress?.emailAddress;
+
+
+
+
     const [questions, setQuestions] = useState([]); // Store the parsed quiz questions
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Index of the current question
     const [selectedAnswer, setSelectedAnswer] = useState(null); // Track the user's selected answer
@@ -33,7 +38,6 @@ export default function QuizCh({ params }) {
     const closeModal = () => {
         setIsModalOpen(false);
     };
-
 
 
     useEffect(() => {
@@ -72,7 +76,7 @@ export default function QuizCh({ params }) {
                 const parsedQuestions = convertTextToJson(text);
                 setQuestions(parsedQuestions);
 
-                // Load data from localStorage, if available (do not auto-fill answers when it's a fresh start)
+                // Load data from localStorage, if available
                 const savedAnswers = JSON.parse(localStorage.getItem('answers')) || [];
                 const savedScore = parseInt(localStorage.getItem('score')) || 0;
                 const savedQuestionIndex = parseInt(localStorage.getItem('currentQuestionIndex')) || 0;
@@ -176,7 +180,7 @@ export default function QuizCh({ params }) {
                 draggable: true,
                 progress: undefined,
                 theme: "colored",
-                className: 'font-arabicUI3 w-fit m-7 text-lg p-4 rounded-lg shadow-lg',
+                className: 'font-arabicUI3 w-fit م-7 text-lg p-4 rounded-lg shadow-lg',
             });
             return;
         }
@@ -184,38 +188,40 @@ export default function QuizCh({ params }) {
         // Update answers array
         const updatedAnswers = [...answers];
         const existingAnswerIndex = updatedAnswers.findIndex(
-            (ans) => ans.question === questions[currentQuestionIndex]?.question
+            (ans) => ans.questionId === questions[currentQuestionIndex]?.id
         );
 
         if (existingAnswerIndex > -1) {
             updatedAnswers[existingAnswerIndex].answer = selectedAnswer;
         } else {
             updatedAnswers.push({
-                question: questions[currentQuestionIndex]?.question || "", // Add default value
+                questionId: questions[currentQuestionIndex]?.id, // Use question ID
                 answer: selectedAnswer,
             });
         }
 
         setAnswers(updatedAnswers);
+        localStorage.setItem('answers', JSON.stringify(updatedAnswers)); // Save to localStorage
 
         // Update score based on new answer
         const updatedScore = updatedAnswers.filter((ans) => {
-            const question = questions.find(q => q.question === ans.question);
+            const question = questions.find(q => q.id === ans.questionId);
             return question && ans.answer.text === question.correctAnswer;
         }).length;
 
         setScore(updatedScore);
+        localStorage.setItem('score', updatedScore.toString()); // Save to localStorage
 
         // Check if it's the last question
         if (currentQuestionIndex + 1 === questions.length) {
-            // Ensure no undefined in answeredQuestionTexts
-            const answeredQuestionTexts = updatedAnswers
-                .map(ans => ans.question?.trim())
+            // Ensure no undefined in answeredQuestionIds
+            const answeredQuestionIds = updatedAnswers
+                .map(ans => ans.questionId)
                 .filter(Boolean); // Remove undefined/null values
-            const allQuestionTexts = questions.map(q => q.question?.trim());
+            const allQuestionIds = questions.map(q => q.id);
 
-            const unansweredQuestions = allQuestionTexts.filter(
-                q => !answeredQuestionTexts.includes(q)
+            const unansweredQuestions = allQuestionIds.filter(
+                id => !answeredQuestionIds.includes(id)
             );
 
             if (unansweredQuestions.length > 0) {
@@ -274,7 +280,11 @@ export default function QuizCh({ params }) {
                 }
             });
         } else {
-            setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+            setCurrentQuestionIndex((prevIndex) => {
+                const newIndex = prevIndex + 1;
+                localStorage.setItem('currentQuestionIndex', newIndex.toString()); // Save to localStorage
+                return newIndex;
+            });
         }
 
         setSelectedAnswer(null);
@@ -292,7 +302,7 @@ export default function QuizCh({ params }) {
     useEffect(() => {
         // Restore selected answer for the current question
         const savedAnswer = answers.find(
-            (ans) => ans.question === questions[currentQuestionIndex]?.question
+            (ans) => ans.questionId === questions[currentQuestionIndex]?.id
         )?.answer || null;
         setSelectedAnswer(savedAnswer);
     }, [currentQuestionIndex, answers]);
@@ -302,41 +312,41 @@ export default function QuizCh({ params }) {
         if (selectedAnswer) {
             const updatedAnswers = [...answers];
             const existingAnswerIndex = updatedAnswers.findIndex(
-                (ans) => ans.question === questions[currentQuestionIndex]?.question
+                (ans) => ans.questionId === questions[currentQuestionIndex]?.id
             );
 
             if (existingAnswerIndex > -1) {
                 updatedAnswers[existingAnswerIndex].answer = selectedAnswer;
             } else {
                 updatedAnswers.push({
-                    question: questions[currentQuestionIndex]?.question || "", // إضافة القيمة الافتراضية للسؤال
+                    questionId: questions[currentQuestionIndex]?.id, // إضافة القيمة الافتراضية للسؤال
                     answer: selectedAnswer,
                 });
             }
 
             setAnswers(updatedAnswers);
-            localStorage.setItem("answers", JSON.stringify(updatedAnswers));
+            localStorage.setItem("answers", JSON.stringify(updatedAnswers)); // Save to localStorage
         }
 
         // تحديث الإجابة المختارة عند الضغط على رقم السؤال
         const selectedSavedAnswer = answers.find(
-            (ans) => ans.question === questions[index]?.question
+            (ans) => ans.questionId === questions[index]?.id
         )?.answer || null;
         setSelectedAnswer(selectedSavedAnswer);
         setCurrentQuestionIndex(index);
+        localStorage.setItem('currentQuestionIndex', index.toString()); // Save to localStorage
 
         const questionDiv = document.getElementById("question");
         if (questionDiv) {
           questionDiv.scrollIntoView({ behavior: "smooth" });
         }
-        
     };
 
 
 
     const displayResult = () => {
         return (
-            <div className="bg-quiz2 cursor-default bg-cover rounded-xl  m-2 p-1 md:p-8 md:m-4">
+            <div className="bg-quiz2 cursor-default bg-cover rounded-xl  م-2 p-1 md:p-8 md:م-4">
                 <div className="backdrop-blur-3xl rounded-xl p-6">
                     <h1 className="font-arabicUI3 text-6xl max-sm:text-3xl text-center text-white">
                         نتيجتك {score}/{questions.length}
@@ -360,7 +370,7 @@ export default function QuizCh({ params }) {
                                     const isCorrect = option.text === item.correctAnswer;
                                     const isSelected = answers.find(
                                         (ans) =>
-                                            ans.question === item.question &&
+                                            ans.questionId === item.id &&
                                             ans.answer.text === option.text
                                     );
 
@@ -419,8 +429,8 @@ export default function QuizCh({ params }) {
 
     if (questions.length === 0) {
         return (
-            <div className='cursor-default backdrop-blur-xl rounded-xl w-fit m-auto outline-dashed mb-8 outline-2 bg-black/20 outline-white p-5'>
-                <h4 className='m-auto flex justify-center place-items-center font-arabicUI2 max-sm:text-3xl text-center gap-4 text-white text-5xl'>
+            <div className='cursor-default backdrop-blur-xl rounded-xl w-fit م-auto outline-dashed mb-8 outline-2 bg-black/20 outline-white p-5'>
+                <h4 className='م-auto flex justify-center place-items-center font-arabicUI2 max-sm:text-3xl text-center gap-4 text-white text-5xl'>
                     <BsPatchCheckFill className='text-4xl'></BsPatchCheckFill>
                     جاري تحميل الاسئلة
                 </h4>
@@ -433,117 +443,121 @@ export default function QuizCh({ params }) {
     return (
         <div>
             {user ? (
-                <div className="bg-quiz2 cursor-default bg-cover rounded-xl m-2 p-1 md:p-8 md:m-4">
-                    <div className="backdrop-blur-xl p-3 px-8 rounded-xl outline-dashed outline-white outline-2">
-                        <div className="flex justify-end">
-                            <h4 className="text-right font-arabicUI3 text-lg md:text-5xl bg-white/10 p-4 w-fit rounded-md flex text-white">
-                                <BiSolidPencil /> {quizDetails.namequiz}
-                            </h4>
-                        </div>
+                 <div className="bg-quiz2 cursor-default bg-cover rounded-xl م-2 p-1 md:p-8 md:م-4">
+                                   <div className="backdrop-blur-xl p-3 px-8 rounded-xl outline-dashed outline-white outline-2">
+                                       <div className="flex justify-end">
+                                           <h4 className="text-right font-arabicUI3 text-lg md:text-5xl bg-white/10 p-4 w-fit rounded-md flex text-white">
+                                               <BiSolidPencil /> {quizDetails.namequiz}
+                                           </h4>
+                                       </div>
+               
+               
+                                       <div  id="question" className="mt-8">
+               
+                                       {questions[currentQuestionIndex] && questions[currentQuestionIndex]?.imageUrl ? (
+                                               <div className="grid max-lg:grid-cols-1 items-center grid-cols-3">
+                                                   <h2 className="md:m-7 col-span-2 text-xl md:text-5xl order-1 h-fit cursor-pointer leading-normal font-arabicUI3  max-sm:mt-6 p-2 md:p-4 rounded-lg  text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800">
+                                                       {questions[currentQuestionIndex]?.question}
+                                                   </h2>
+               
+                                                   <div className="col-span-1 max-sm:w-full rounded-xl">
+                                                       <img
+                                                           className="cursor-pointer rounded-xl"
+                                                           src={questions[currentQuestionIndex]?.imageUrl}
+                                                           alt="Quiz Image"
+                                                           width={400}
+                                                           height={400}
+                                                           onClick={() => openModal(questions[currentQuestionIndex]?.imageUrl)}
+                                                       />
+                                                   </div>
+                                               </div>
+                                           ) : (
+                                               <h2 className="md:m-7 cursor-pointer leading-normal  text-lg md:text-5xl font-arabicUI3  max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800">
+                                                   {questions[currentQuestionIndex]?.question}
+                                               </h2>
+                                           )}
+               
+                                           {/* Modal for Image Zoom */}
+                                           {isModalOpen && (
+                                               <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50" onClick={closeModal}>
+                                                   <div className="relative max-w-5xl max-h-full">
+                                                       <img
+                                                           className="max-w-full rounded-lg max-h-full object-contain"
+                                                           src={currentImage}
+                                                           alt="Zoomed Image"
+                                                           onClick={(e) => e.stopPropagation()}  // Prevent closing modal when clicking on the image itself
+                                                       />
+                                                       <button
+                                                           className="z-10 absolute -bottom-20  right-1 p-4 text-2xl font-arabicUI3 text-white bg-gradient-to-r from-red-500 to-red-800 rounded-lg shadow-xl transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:ring-4 hover:ring-blue-300 backdrop-blur-xl focus:outline-none focus:ring-4 focus:ring-blue-500"
+                                                           onClick={closeModal}
+                                                       >
+                                                           اغلاق الصورة
+                                                       </button>
+                                                   </div>
+                                               </div>
+                                           )}
+               
+               
+               
+                                           <div className="grid max-md:grid-cols-1  mt-4 grid-cols-2">
+                                               {questions[currentQuestionIndex]?.options?.map((option) => (
+                                                   <button
+                                                       key={option.letter}
+                                                       className={`mb-7 cursor-pointer text-lg md:text-5xl  font-arabicUI3 md:m-3 p-4 rounded-lg text-center duration-500 transition active:ring-4 select-none
+                                ${selectedAnswer?.letter === option.letter
+                                                               ? "bg-green-400 text-gray-800"
+                                                               : "text-white bg-gray-800"
+                                                           }`}
+                                                       onClick={() => handleAnswerSelect(option)}
+                                                   >
+                                                       {option.text}
+                                                   </button>
+                                               ))}
+                                           </div>
+                                       </div>
+               
+                                   </div>
+                                   <ToastContainer />
+               
+                                   <div className="mt-10 grid grid-cols-11  max-lg:grid-cols-5 max-xl:grid-cols-7 gap-3">
+                                       {questions.map((item, index) => (
+                                           <h2
+                                               onClick={() => handleClickNumber(index)}
+                                               className={`mb-7 max-sm:text-2xl cursor-pointer font-arabicUI3 text-4xl p-4 rounded-lg text-center duration-500 transition active:ring-4 select-none
+                                        ${answers.some((ans) => ans.questionId === item.id)
+                                                       ? "bg-green-400 text-gray-800"
+                                                       : currentQuestionIndex === index
+                                                           ? "bg-slate-800 text-white"
+                                                           : "bg-white text-gray-800"}`}
+                                               key={index}
+                                           >
+                                               {index + 1}
+                                           </h2>
+                                       ))}
+                                   </div>
+               
+                                   <div className="mt-10 flex justify-center gap-4">
+                                       <h2
+                                           onClick={handleNextQuestion}
+                                           className={`mb-7 cursor-pointer max-sm:text-2xl max-sm:p-4 w-fit font-arabicUI3 text-5xl m-3 p-8 mx-auto rounded-lg text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
+                                       >
+                                           {currentQuestionIndex + 1 === questions.length ? "تسليم الامتحان" : "السوال التالي"}
+                                       </h2>
+                                   </div>
+                               </div>
+            )
 
-
-                        <div id="question" className="mt-8">
-
-                        {questions[currentQuestionIndex] && questions[currentQuestionIndex]?.imageUrl ? (
-                                <div className="grid max-lg:grid-cols-1 items-center grid-cols-3">
-                                    <h2 className="md:m-7 col-span-2 text-xl md:text-5xl order-1 h-fit cursor-pointer leading-normal font-arabicUI3  max-sm:mt-6 p-2 md:p-4 rounded-lg  text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800">
-                                        {questions[currentQuestionIndex]?.question}
-                                    </h2>
-
-                                    <div className="col-span-1 max-sm:w-full rounded-xl">
-                                        <img
-                                            className="cursor-pointer rounded-xl"
-                                            src={questions[currentQuestionIndex]?.imageUrl}
-                                            alt="Quiz Image"
-                                            width={400}
-                                            height={400}
-                                            onClick={() => openModal(questions[currentQuestionIndex]?.imageUrl)}
-                                        />
-                                    </div>
-                                </div>
-                            ) : (
-                                <h2 className="md:m-7 cursor-pointer leading-normal  text-lg md:text-5xl font-arabicUI3  max-sm:mt-6 p-4 rounded-lg max-sm:text-2xl text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800">
-                                    {questions[currentQuestionIndex]?.question}
-                                </h2>
-                            )}
-
-                            {/* Modal for Image Zoom */}
-                            {isModalOpen && (
-                                <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50" onClick={closeModal}>
-                                    <div className="relative max-w-5xl max-h-full">
-                                        <img
-                                            className="max-w-full rounded-lg max-h-full object-contain"
-                                            src={currentImage}
-                                            alt="Zoomed Image"
-                                            onClick={(e) => e.stopPropagation()}  // Prevent closing modal when clicking on the image itself
-                                        />
-                                        <button
-                                            className="z-10 absolute -bottom-20  right-1 p-4 text-2xl font-arabicUI3 text-white bg-gradient-to-r from-red-500 to-red-800 rounded-lg shadow-xl transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:ring-4 hover:ring-blue-300 backdrop-blur-xl focus:outline-none focus:ring-4 focus:ring-blue-500"
-                                            onClick={closeModal}
-                                        >
-                                            اغلاق الصورة
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
-
-
-
-                            <div className="grid max-md:grid-cols-1  mt-4 grid-cols-2">
-                                {questions[currentQuestionIndex]?.options?.map((option) => (
-                                    <button
-                                        key={option.letter}
-                                        className={`mb-7 cursor-pointer text-lg md:text-5xl  font-arabicUI3 md:m-3 p-4 rounded-lg text-center duration-500 transition active:ring-4 select-none
-                 ${selectedAnswer?.letter === option.letter
-                                                ? "bg-green-400 text-gray-800"
-                                                : "text-white bg-gray-800"
-                                            }`}
-                                        onClick={() => handleAnswerSelect(option)}
-                                    >
-                                        {option.text}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-
+                : (
+                    <div className="flex justify-center items-center h-screen bg-gray-800">
+                        <h1 className="font-arabicUI3 text-4xl text-white">
+                            من فضلك سجل الدخول لبدء الامتحان
+                        </h1>
                     </div>
-                    <ToastContainer />
+                )
 
-                    <div className="mt-10 grid grid-cols-11 max-md:grid-cols-4 max-sm:grid-cols-3 max-lg:grid-cols-5 max-xl:grid-cols-7 gap-3">
-                        {questions.map((item, index) => (
-                            <h2
-                                onClick={() => handleClickNumber(index)}
-                                className={`mb-7 max-sm:text-2xl cursor-pointer font-arabicUI3 text-4xl p-4 rounded-lg text-center duration-500 transition active:ring-4 select-none
-                         ${answers.some((ans) => ans.question === item.question)
-                                        ? "bg-green-400 text-gray-800"
-                                        : currentQuestionIndex === index
-                                            ? "bg-slate-800 text-white"
-                                            : "bg-white text-gray-800"}`}
-                                key={index}
-                            >
-                                {index + 1}
-                            </h2>
-                        ))}
-                    </div>
-
-                    <div className="mt-10 flex justify-center gap-4">
-                        <h2
-                            onClick={handleNextQuestion}
-                            className={`mb-7 cursor-pointer max-sm:text-2xl max-sm:p-4 w-fit font-arabicUI3 text-5xl m-3 p-8 mx-auto rounded-lg text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800`}
-                        >
-                            {currentQuestionIndex + 1 === questions.length ? "تسليم الامتحان" : "السوال التالي"}
-                        </h2>
-                    </div>
-                </div>
-
-            ) : (
-                <div className="flex justify-center items-center h-screen bg-gray-800">
-                    <h1 className="font-arabicUI3 text-4xl text-white">
-                        من فضلك سجل الدخول لبدء الامتحان
-                    </h1>
-                </div>
-            )}
+            }
         </div>
 
-    );
+
+    )
 }
