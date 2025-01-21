@@ -11,7 +11,7 @@ const ImageFormatter = () => {
     const formatted = imageLinks
       .map(
         (link, index) =>
-          `${index + 1}. الاختيار الصح ؟ ==>\n(a) أ \n(b) ب \n(c) ج \n(d) د \nimage ==>${link}\n`
+          `${index + 1}. الاختيار الصح ؟ ==>\n(a) أ \n(b) ب \n(c) ج \n(d) د \nimage==>${link}\n`
       )
       .join('\n');
     setOutput(formatted);
