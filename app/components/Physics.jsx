@@ -143,7 +143,7 @@ const Physics = () => {
 
                 <div className='bg-yellow-800 bg-daark bg-cover cursor-default shadow-xl shadow-yellow-800/50 rounded-xl m-4 p-4'>
                     <h4 className='text-2xl sm:text-4xl md:text-5xl text-center  font-arabicUI2 bg-paton text-transparent bg-clip-text m-auto justify-center flex'>
-                        {title === 'فيزياء' ? 'يلا اختار كتاب تحله' : 'امتحانات الكتاب'}
+                        {title === 'فيزياء' ? 'يلا اختار فصل تحله' : 'امتحانات الفصل'}
                     </h4>
 
                     {title === 'فيزياء' && <div>
