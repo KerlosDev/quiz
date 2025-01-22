@@ -59,32 +59,7 @@ const testSaveQuizres = async (jsondata) => {
   const reslut6 = await request(apiQuiz, updateQuery, variables);
   return reslut6;
 }
-
-const SaveGradesOfQuiz = async (subname, level, userEmail, uerName, userGrade, quizname, numofqus) => {
-  const query6 = gql`
-  
-  mutation MyMutation {
-  createQuizresult(
-    data: { nameofsub: `+ subname + `, userEmail: "` + userEmail + `", userName: "` + uerName + `", quizGrade: ` + userGrade + `,nameofquiz: "` + quizname + `",numofqus:` + numofqus + `}
-  ) {
-    id
-  }
-
-  
-  
-  publishManyQuizresultsConnection (first: 10000) {
-    edges {
-      node {
-        id
-      }
-    }
-  }
-}
-  `
-
-  const reslut6 = await request(apiQuiz, query6)
-  return reslut6
-}
+ 
 
 
 const vquiz = async () => {
@@ -455,7 +430,6 @@ export default {
   physicsData,
   chemstryDAta,
   premUsers,
-  SaveGradesOfQuiz,
   vquiz,
   sendEnrollData,
   testSaveQuizres,
