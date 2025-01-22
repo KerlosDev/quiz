@@ -67,7 +67,6 @@ const Geo = () => {
     const chemData = () => {
         GlobalApi.geoData("geo")
             .then((res) => {
-                console.log("Response: ", res);
                 setDataBook(res.dataOfQuizs);
                 setNumberQuiz(res?.dataOfQuizs?.length);
             })
@@ -76,7 +75,6 @@ const Geo = () => {
             });
     };
 
-    console.log("Number of quizzes:", numberofquiz);
 
     // Function to filter and render quizzes based on numbook
     const renderQuizzes = () => {

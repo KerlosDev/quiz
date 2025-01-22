@@ -50,7 +50,6 @@ const Physics = () => {
         }
     };
 
-    console.log("prem", premuserorNot);
 
     // Handle click dynamically
     const handleClick = (namebook, index) => {
@@ -70,7 +69,6 @@ const Physics = () => {
     const physics_Data = () => {
         GlobalApi.physicsData("ph")
             .then((res) => {
-                console.log("Response: ", res);
                 setDataBook(res.dataOfQuizs);
                 setNumberQuiz(res.dataOfQuizs.length);
             })
@@ -79,7 +77,6 @@ const Physics = () => {
             });
     };
 
-    console.log("Number of quizzes:", numberofquiz);
 
     // Function to filter and render quizzes based on numbook
     const renderQuizzes = () => {
@@ -93,7 +90,7 @@ const Physics = () => {
         if (numbook === 7) filterKey = 'fasl7';
         if (numbook === 8) filterKey = 'fasl8';
 
-        
+
         return dataBook
             ?.filter((item) => item.level === filterKey)
             ?.map((item, index) => {

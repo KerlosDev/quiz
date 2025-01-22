@@ -8,6 +8,7 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from 'react-toastify';
 import { useUser } from "@clerk/nextjs";
+import CryptoJS from "crypto-js";
 
 
 export default function QuizCh({ params }) {
@@ -30,6 +31,7 @@ export default function QuizCh({ params }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentImage, setCurrentImage] = useState('');
     const [resultJson, setResultJson] = useState(null); // State for result JSON
+    const encryptionKey = 'jdfhaksjdh38457389475fjks46jy6i786kadhfkjsahdfkjash';
 
     const openModal = (imageUrl) => {
         setCurrentImage(imageUrl);
@@ -54,7 +56,6 @@ export default function QuizCh({ params }) {
 
     }
 
-    console.log(score)
 
 
     useEffect(() => {
@@ -69,7 +70,6 @@ export default function QuizCh({ params }) {
                     return;
                 }
 
-                console.log("File URL found:", fileUrl); // Check the URL here
 
                 const textResponse = await fetch(fileUrl);
                 const text = await textResponse.text();
@@ -165,8 +165,7 @@ export default function QuizCh({ params }) {
     };
 
 
-    console.log(questions.length)
-    console.log()
+
 
 
 
@@ -247,16 +246,17 @@ export default function QuizCh({ params }) {
                     // Create result JSON
                     const resultData = {
                         userEmail: email,
+                        userName: user.fullName,
                         score: updatedScore,
                         totalQuestions: questions.length,
                         quizName: quizDetails.namequiz,
                         sub: quizDetails.subject,
                     };
-                    setResultJson(resultData); // Set result JSON
+                    const encryptedResultData = CryptoJS.AES.encrypt(JSON.stringify(resultData), encryptionKey).toString();
 
                     const saveGrade = async () => {
                         try {
-                            await GlobalApi.testSaveQuizres(resultData);
+                            await GlobalApi.testSaveQuizres({ encryptedData: encryptedResultData });
 
                             Swal.fire({
                                 title: "تم التسليم بنجاح!",
@@ -349,27 +349,7 @@ export default function QuizCh({ params }) {
 
 
     const displayResult = () => {
-        const copyToClipboard = () => {
-            if (resultJson) {
-                navigator.clipboard.writeText(JSON.stringify(resultJson, null, 2))
-                    .then(() => {
-                        toast.success('تم نسخ البيانات بنجاح!', {
-                            position: "top-right",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "colored",
-                            className: 'font-arabicUI3 w-fit m-7 text-lg p-4 rounded-lg shadow-lg',
-                        });
-                    })
-                    .catch((error) => {
-                        console.error('Failed to copy text: ', error);
-                    });
-            }
-        };
+
 
         return (
             <div className="bg-quiz2 cursor-default bg-cover rounded-xl  م-2 p-1 md:p-8 md:م-4">
@@ -385,7 +365,7 @@ export default function QuizCh({ params }) {
                     <div className="grid max-sm:grid-cols-1 grid-cols-3">
                         {questions.map((item, index) => (
                             <div key={index}>
-                                 {item.imageUrl && (
+                                {item.imageUrl && (
                                     <img
                                         className="rounded-lg mx-auto my-4"
                                         src={item.imageUrl}
@@ -400,7 +380,7 @@ export default function QuizCh({ params }) {
                                 >
                                     {item.question}
                                 </h2>
-                               
+
                                 {item.options.map((option) => {
                                     // Check if the option is correct or selected
                                     const isCorrect = option.text === item.correctAnswer;
@@ -434,7 +414,7 @@ export default function QuizCh({ params }) {
                         ))}
                     </div>
 
-               
+
 
                     <Link href="/">
                         <div className="text-7xl max-sm:text-2xl text-white p-5 flex justify-center mx-auto م-6 font-arabicUI2 bg-white/20 w-fit rounded-xl outline-1 outline-white outline-dashed">

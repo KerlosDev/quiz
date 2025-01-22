@@ -56,7 +56,6 @@ const Page = () => {
                 user?.primaryEmailAddress?.emailAddress,
                 number
             );
-            console.log("Data sent successfully:", response);
             setLastSubmissionTime(now); // Update last submission time
             localStorage.setItem('lastSubmissionTime', now.toISOString()); // Save to localStorage
         } catch (error) {

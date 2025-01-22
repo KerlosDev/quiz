@@ -66,7 +66,6 @@ const Bio = () => {
     const chemData = () => {
         GlobalApi.biologyDAta("bio")
             .then((res) => {
-                console.log("Response: ", res);
                 setDataBook(res.dataOfQuizs);
                 setNumberQuiz(res?.dataOfQuizs?.length);
             })
@@ -75,7 +74,6 @@ const Bio = () => {
             });
     };
 
-    console.log("Number of quizzes:", numberofquiz);
 
     // Function to filter and render quizzes based on numbook
     const renderQuizzes = () => {
@@ -282,7 +280,7 @@ const Bio = () => {
                     onClick={() => handleClick('الحمض النووي DNA', 5)}
                     className="hover:scale-110 m-4 font-arabicUI2 flex h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition duration-300 bg-non2 bg-cover gap-2 py-5 rounded-xl cursor-pointer"
                 >
-                   <div>
+                    <div>
                         <span className="m-auto flex justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24">
                                 <mask id="lineMdSpeedTwotoneLoop0">

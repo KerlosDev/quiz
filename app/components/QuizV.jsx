@@ -5,6 +5,7 @@ import { useUser } from '@clerk/nextjs';
 import ProgCircle from './ProgCircle';
 import { BsPatchCheckFill } from 'react-icons/bs';
 import { IoBarChart } from 'react-icons/io5';
+import CryptoJS from 'crypto-js';
 
 const QuizV = () => {
     const [showMore, setShowMore] = useState(false);
@@ -20,10 +21,29 @@ const QuizV = () => {
 
     const quizdata = () => {
         GlobalApi.vquiz().then(res => {
-            console.log(res.testres[0].jsonres)
-            setQuiz(res.testres[0].jsonres || []); // Use default empty array if no quizresults exist
+
+            // Decrypt the encrypted quiz data
+            const decryptionKey = 'jdfhaksjdh38457389475fjks46jy6i786kadhfkjsahdfkjash';
+            const decryptedQuiz = res.testres[0].jsonres.map((item) => {
+                try {
+                    const bytes = CryptoJS.AES.decrypt(item.encryptedData, decryptionKey);
+                    const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
+
+                    // Check if the decrypted string is valid JSON
+                    if (decryptedString) {
+                        return JSON.parse(decryptedString);
+                    } else {
+                        console.error("Decrypted string is not valid JSON:", decryptedString);
+                        throw new Error("Decrypted string is empty or invalid");
+                    }
+                } catch (error) {
+                    console.error("Error decrypting or parsing item:", error);
+                    return null; // Return null for items that fail to decrypt or parse
+                }
+            }).filter(item => item !== null); // Filter out any null items
+
+            setQuiz(decryptedQuiz); // Store decrypted data in quiz state
         });
-        
     };
 
 
@@ -32,7 +52,6 @@ const QuizV = () => {
     };
 
     const filteredData = filterByEmail(email);
-    console.log(filteredData);
 
 
     const subjectTotals = filteredData.reduce((acc, item) => {
@@ -44,7 +63,6 @@ const QuizV = () => {
         return acc;
     }, {});
 
-    console.log(subjectTotals);
 
     if (quiz.length === 0) return <div> <div className=' cursor-default  backdrop-blur-xl rounded-xl w-fit m-auto outline-dashed mb-8  outline-2 bg-black/20 outline-white  p-5'>
         <h4 className=' m-auto flex justify-center font-arabicUI2 max-sm:text-3xl text-center  text-white text-5xl'
@@ -53,6 +71,8 @@ const QuizV = () => {
         </h4>
     </div></div>; // Show loading message while data is being fetched
 
+    const subjectOrder = ['ar', 'en', 'fr', 'chem', 'ph', 'bio', 'geo'];
+    const sortedSubjects = Object.keys(subjectTotals).sort((a, b) => subjectOrder.indexOf(a) - subjectOrder.indexOf(b));
 
     return (
 
@@ -73,7 +93,7 @@ const QuizV = () => {
 
 
                             < div className=' grid cursor-default rtl rtl-grid max-sm:grid-cols-2 gap-4 max-md:grid-cols-2 max-lg:grid-cols-2 max-xl:grid-cols-3 grid-cols-6'>
-                                {filteredData.slice().reverse().map((item, index) => (
+                                {filteredData.slice(-20).reverse().map((item, index) => (
                                     <div key={index} className=' hover:scale-110 transition-all duration-300 md:m-5 h-fit bg-black/15 backdrop-blur-2xl shadow-white/10 outline-dashed outline-white outline-2 shadow-xl  p-5 rounded-xl'>
                                         <div className=''>
                                             <h4 className=' font-arabicUI2 text-center md:text-2xl text-white text-sm mb-4'>{item?.quizName}</h4>
@@ -100,7 +120,7 @@ const QuizV = () => {
                                                     <img src="/geo.png" className='m-auto justify-center flex items-center' width={100} height={100} alt="فرنسي" />
                                                 )}
                                             </h4>
-                                            <p className=' font-arabicUI3 text-white/80  text-xl md:text-5xl my-4 flex justify-center mx-auto '>{(item?.score / item?.totalQuestions).toFixed(2) * 100}%</p>
+                                            <p className=' font-arabicUI3 text-white/80  text-xl md:text-5xl my-4 flex justify-center mx-auto '>{((item?.score / item?.totalQuestions) * 100).toFixed(1)}%</p>
                                             <ProgCircle hight={10} nsaba={(item?.score / item?.totalQuestions) * 100}></ProgCircle>
                                         </div>
                                     </div>
@@ -121,8 +141,9 @@ const QuizV = () => {
                         </div>
 
                         {/* Displaying Subject Totals */}
+
                         <div className='grid cursor-default rtl rtl-grid max-sm:grid-cols-2 gap-4 max-md:grid-cols-2 max-lg:grid-cols-2 max-xl:grid-cols-3 grid-cols-6'>
-                            {Object.keys(subjectTotals).map((subject, index) => (
+                            {sortedSubjects.map((subject, index) => (
                                 <div key={index} className='md:m-5 h-fit bg-black/15 backdrop-blur-2xl shadow-white/10 outline-dashed outline-white outline-2 shadow-xl p-5 rounded-xl'>
                                     <h4 className='font-arabicUI2 text-center text-white text-xl mb-4'>
                                         {subject === 'ar' && "لغة عربية"}
@@ -139,7 +160,7 @@ const QuizV = () => {
                                         <img src="/chem.jpg" className='m-auto justify-center flex items-center' width={100} height={100} alt="كيمياء" />
                                     )}
                                     {subject === 'ar' && (
-                                        <img src="/ar.png" className='m-auto justify-center flex items-center' width={100} height={100} alt="عربي" />
+                                        <img src="/ar.png" className='m-auto order-1 justify-center flex items-center' width={100} height={100} alt="عربي" />
                                     )}
                                     {subject === 'ph' && (
                                         <img src="/ph.png" className='m-auto justify-center flex items-center' width={100} height={100} alt="فيزياء" />

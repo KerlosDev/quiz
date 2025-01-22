@@ -64,7 +64,6 @@ const English = () => {
     const chemData = () => {
         GlobalApi.englishData("en")
             .then((res) => {
-                console.log("Response: ", res);
                 setDataBook(res.dataOfQuizs);
                 setNumberQuiz(res?.dataOfQuizs?.length);
             })
@@ -73,7 +72,6 @@ const English = () => {
             });
     };
 
-    console.log("Number of quizzes:", numberofquiz);
 
     // Function to filter and render quizzes based on numbook
     const renderQuizzes = () => {

@@ -26,11 +26,11 @@ const QuizData = ({ params }) => {
     // Function to fetch quiz data
 
     const chemdata = (quizid) => {
-        console.log("Quiz ID: ", quizid);
+     
         GlobalApi.dataofChem(quizid)
             .then((req) => {
-                console.log("Response: ", req.quiz);
-                console.log("Response 2 : ", req);
+
+            
                 setEnrolQuiz(req.quiz)
 
 
@@ -122,8 +122,6 @@ const QuizData = ({ params }) => {
     const trueChoices = enrolquiz?.question?.map((item) => item.trueChoisevip.toUpperCase()) || [];
 
 
-    console.log(enrolquiz?.subjectName)
-    console.log(enrolquiz?.chooseBook)
 
     const handleSumbit = () => {
         Swal.fire({
