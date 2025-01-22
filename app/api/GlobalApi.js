@@ -13,46 +13,61 @@ const apifr = process.env.NEXT_PUBLIC_MASTER_URL_FRENCH
 const apigeo = process.env.NEXT_PUBLIC_MASTER_URL_GEO
 
 
+const testSaveQuizres = async (jsondata) => {
+  // Fetch current results
+  const fetchQuery = gql`
+  query GetTestre {
+    testre(where: {id: "cm685kdd8071y07pjwxwtlg41"}) {
+      jsonres
+    }
+  }`;
 
+  const currentResults = await request(apien, fetchQuery);
+  let existingResults = currentResults.testre.jsonres;
 
-const SaveGradesOfQuiz = async (subname, level, userEmail, uerName, userGrade, quizname, numofqus) => {
-  const query6 = gql`
-  
-  mutation MyMutation {
-  createQuizresult(
-    data: { nameofsub: `+ subname + `, userEmail: "` + userEmail + `", userName: "` + uerName + `", quizGrade: ` + userGrade + `,nameofquiz: "` + quizname + `",numofqus:` + numofqus + `}
-  ) {
-    id
+  // Ensure existingResults is an array
+  if (!Array.isArray(existingResults)) {
+    existingResults = [];
   }
 
-  
-  
-  publishManyQuizresultsConnection (first: 10000) {
-    edges {
-      node {
-        id
+  // Append new result
+  const updatedResults = [...existingResults, jsondata];
+
+  // Update results
+  const updateQuery = gql`
+  mutation MyMutation($jsonres: Json!) {
+    updateTestre(
+      data: {jsonres: $jsonres}
+      where: {id: "cm687hnaj088507pjvo4cjkb4"}
+    ) {
+      id
+    }
+
+    publishManyTestresConnection {
+      edges {
+        node {
+          id
+        }
       }
     }
-  }
-}
-  `
+  }`
 
-  const reslut6 = await request(apiQuiz, query6)
-  return reslut6
+  const variables = {
+    jsonres: updatedResults
+  };
+
+  const reslut6 = await request(apiQuiz, updateQuery, variables);
+  return reslut6;
 }
-const vquiz = async (userEmail) => {
+
+
+
+
+const vquiz = async () => {
   const qmon = gql`
-  
-  
-query MyQuery {
-  quizresults(where: {userEmail: "`+ userEmail + `"}, last: 20) {
-    id
-    quizGrade
-    userName
-    nameofquiz
-    numofqus
-     nameofsub
-    level
+  query MyQuery {
+  testres(first: 10000) {
+    jsonres
   }
 }
 
@@ -416,10 +431,10 @@ export default {
   physicsData,
   chemstryDAta,
   premUsers,
-  SaveGradesOfQuiz,
+
   vquiz,
   sendEnrollData,
-  
+  testSaveQuizres,
 
 
 }

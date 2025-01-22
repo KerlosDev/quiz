@@ -29,6 +29,7 @@ export default function QuizCh({ params }) {
     const [quizDetails, setQuizDetalis] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentImage, setCurrentImage] = useState('');
+    const [resultJson, setResultJson] = useState(null); // State for result JSON
 
     const openModal = (imageUrl) => {
         setCurrentImage(imageUrl);
@@ -243,23 +244,26 @@ export default function QuizCh({ params }) {
                 cancelButtonText: "لا، العودة",
             }).then((result) => {
                 if (result.isConfirmed) {
+                    // Create result JSON
+                    const resultData = {
+                        userEmail: email,
+                        score: updatedScore,
+                        totalQuestions: questions.length,
+                        quizName: quizDetails.namequiz,
+                        sub: quizDetails.subject,
+                    };
+                    setResultJson(resultData); // Set result JSON
+
                     const saveGrade = async () => {
                         try {
-                            await GlobalApi.SaveGradesOfQuiz(
-                                quizDetails.subject,
-                                quizDetails.level,
-                                email,
-                                user?.fullName,
-                                updatedScore,
-                                quizDetails.namequiz,
-                                questions.length
-                            );
+                            await GlobalApi.testSaveQuizres(resultData);
 
                             Swal.fire({
                                 title: "تم التسليم بنجاح!",
                                 text: "انا فخور بيك انك حاولت مهما كانت النتيجة",
                                 icon: "success",
                             });
+
                             setQuizComplete(true);
                             localStorage.removeItem("answers");
                             localStorage.removeItem("score");
@@ -345,6 +349,28 @@ export default function QuizCh({ params }) {
 
 
     const displayResult = () => {
+        const copyToClipboard = () => {
+            if (resultJson) {
+                navigator.clipboard.writeText(JSON.stringify(resultJson, null, 2))
+                    .then(() => {
+                        toast.success('تم نسخ البيانات بنجاح!', {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                            className: 'font-arabicUI3 w-fit m-7 text-lg p-4 rounded-lg shadow-lg',
+                        });
+                    })
+                    .catch((error) => {
+                        console.error('Failed to copy text: ', error);
+                    });
+            }
+        };
+
         return (
             <div className="bg-quiz2 cursor-default bg-cover rounded-xl  م-2 p-1 md:p-8 md:م-4">
                 <div className="backdrop-blur-3xl rounded-xl p-6">
@@ -359,12 +385,22 @@ export default function QuizCh({ params }) {
                     <div className="grid max-sm:grid-cols-1 grid-cols-3">
                         {questions.map((item, index) => (
                             <div key={index}>
+                                 {item.imageUrl && (
+                                    <img
+                                        className="rounded-lg mx-auto my-4"
+                                        src={item.imageUrl}
+                                        alt={`Question ${index + 1} Image`}
+                                        width={400}
+                                        height={400}
+                                    />
+                                )}
                                 <h2
                                     onClick={() => handleClickNumber(index)}
                                     className="cursor-pointer max-sm:text-lg font-arabicUI3 md:m-5 text-4xl p-4 rounded-lg text-center duration-500 transition h-fit active:ring-4 select-none bg-white text-gray-800"
                                 >
                                     {item.question}
                                 </h2>
+                               
                                 {item.options.map((option) => {
                                     // Check if the option is correct or selected
                                     const isCorrect = option.text === item.correctAnswer;
@@ -398,8 +434,10 @@ export default function QuizCh({ params }) {
                         ))}
                     </div>
 
+               
+
                     <Link href="/">
-                        <div className="text-7xl max-sm:text-2xl text-white p-5 flex justify-center mx-auto m-6 font-arabicUI2 bg-white/20 w-fit rounded-xl outline-1 outline-white outline-dashed">
+                        <div className="text-7xl max-sm:text-2xl text-white p-5 flex justify-center mx-auto م-6 font-arabicUI2 bg-white/20 w-fit rounded-xl outline-1 outline-white outline-dashed">
                             <h1>الصفحة الرئيسية</h1>
                         </div>
                     </Link>
