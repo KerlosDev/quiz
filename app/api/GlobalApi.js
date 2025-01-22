@@ -12,18 +12,18 @@ const apien = process.env.NEXT_PUBLIC_MASTER_URL_ENGLISH
 const apifr = process.env.NEXT_PUBLIC_MASTER_URL_FRENCH
 const apigeo = process.env.NEXT_PUBLIC_MASTER_URL_GEO
 
-
 const testSaveQuizres = async (jsondata) => {
   // Fetch current results
   const fetchQuery = gql`
   query GetTestre {
-    testre(where: {id: "cm685kdd8071y07pjwxwtlg41"}) {
+    testre(where: {id: "cm687hnaj088507pjvo4cjkb4"}) {
       jsonres
     }
   }`;
 
-  const currentResults = await request(apien, fetchQuery);
-  let existingResults = currentResults.testre.jsonres;
+  const currentResults = await request(apiQuiz, fetchQuery);
+
+  let existingResults = currentResults.testre?.jsonres;
 
   // Ensure existingResults is an array
   if (!Array.isArray(existingResults)) {
@@ -50,7 +50,7 @@ const testSaveQuizres = async (jsondata) => {
         }
       }
     }
-  }`
+  }`;
 
   const variables = {
     jsonres: updatedResults
@@ -60,7 +60,31 @@ const testSaveQuizres = async (jsondata) => {
   return reslut6;
 }
 
+const SaveGradesOfQuiz = async (subname, level, userEmail, uerName, userGrade, quizname, numofqus) => {
+  const query6 = gql`
+  
+  mutation MyMutation {
+  createQuizresult(
+    data: { nameofsub: `+ subname + `, userEmail: "` + userEmail + `", userName: "` + uerName + `", quizGrade: ` + userGrade + `,nameofquiz: "` + quizname + `",numofqus:` + numofqus + `}
+  ) {
+    id
+  }
 
+  
+  
+  publishManyQuizresultsConnection (first: 10000) {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}
+  `
+
+  const reslut6 = await request(apiQuiz, query6)
+  return reslut6
+}
 
 
 const vquiz = async () => {
@@ -431,7 +455,7 @@ export default {
   physicsData,
   chemstryDAta,
   premUsers,
-
+  SaveGradesOfQuiz,
   vquiz,
   sendEnrollData,
   testSaveQuizres,

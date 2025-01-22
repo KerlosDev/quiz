@@ -391,6 +391,7 @@ export default function QuizCh({ params }) {
                                 >
                                     {item.question}
                                 </h2>
+                               
                                 {item.options.map((option) => {
                                     // Check if the option is correct or selected
                                     const isCorrect = option.text === item.correctAnswer;
