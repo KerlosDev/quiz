@@ -32,8 +32,8 @@ const French = () => {
         try {
             const res = await GlobalApi.premUsers(email);
 
-            if (res && res.userEnrolls && res.userEnrolls.length > 0 && res.userEnrolls[0]) {
-                const isPremium = res.userEnrolls[0].isHePaid;
+            if (res && res.premiumUsersReqs && res.premiumUsersReqs.length > 0 && res.premiumUsersReqs[0]) {
+                const isPremium = res.premiumUsersReqs[0].isHePaid;
                 setPremUser(isPremium);
 
                 // Store the premium status in localStorage
