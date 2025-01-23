@@ -28,7 +28,6 @@ const ActiveSqu = () => {
         try {
             const res = await GlobalApi.premUsers(email);
 
-            console.log(res)
 
             if (res && res.premiumUsersReqs && res.premiumUsersReqs.length > 0 && res.premiumUsersReqs[0]) {
                 const isPremium = res.premiumUsersReqs[0].isHePaid;

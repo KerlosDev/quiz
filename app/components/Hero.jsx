@@ -6,6 +6,7 @@ import { FaClipboardList } from "react-icons/fa";
 import { TbMessageFilled } from "react-icons/tb";
 import ActiveSqu from "./ActiveSqu";
 import GreatToday from "./GreatToday";
+import Image from 'next/image';
 
 const Hero = () => {
     const Features = [
@@ -138,11 +139,19 @@ const Hero = () => {
                 <ActiveSqu />
 
 
-                <div className="col-span-2 lg:col-span-3  h-full  bg-yellow-400 shadow-2xl bg-paton bg-cover outline-dashed outline-offset-2 outline-yellow-300  p-6 mt-2 rounded-xl flex items-center">
+                <div className="col-span-2 lg:col-span-3  h-full  bg-yellow-400 shadow-2xl bg-paton bg-cover  outline-dashed outline-offset-2 outline-yellow-300  p-6 mt-2 rounded-xl flex items-center">
 
-                    <h3 className="flex  font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-yellow-800">
-                        <GiTrophyCup className="text-6xl  md:text-8xl transition hover:scale-150 hover:cursor-pointer" />
-                        موقع كويزاتك اكبر بنك اسئلة للمراجعة النهائية من جميع الكتب الخارجيه
+                    <h3 className="block md:flex  font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-yellow-800 ">
+                        <Image
+                            src="/trophy.png"
+                            width={200}
+                            height={200}
+                            className="drop-shadow-2xl m-auto mb-5 md:m-0  hover:scale-110 transition-transform duration-500 ease-in-out"
+                            alt="trophy"
+                        />
+                        <span className=" text-2xl md:text-5xl rtl  leading-normal  text-right ">
+                            موقع كويزاتك اكبر بنك اسئلة للمراجعة النهائية من جميع الكتب الخارجيه ...
+                        </span>
                     </h3>
                 </div>
 
