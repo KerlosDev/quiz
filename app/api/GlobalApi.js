@@ -118,7 +118,7 @@ const sendEnrollData = async (userEmail, phonenumber) => {
 const premUsers = async (useremail) => {
   const query3 = gql`
   query MyQuery {
-  userEnrolls(where: {isHePaid: true, userEmail: "`+ useremail + `"}) {
+  premiumUsersReqs(where: {isHePaid: true, userEmail: "`+ useremail + `"}) {
     id
     userEmail
     isHePaid
