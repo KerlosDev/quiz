@@ -1,4 +1,4 @@
-import request, { gql } from "graphql-request"
+import request, { gql, GraphQLClient } from "graphql-request"
 
 
 
@@ -11,6 +11,9 @@ const apiar = process.env.NEXT_PUBLIC_MASTER_URL_ARABIC
 const apien = process.env.NEXT_PUBLIC_MASTER_URL_ENGLISH
 const apifr = process.env.NEXT_PUBLIC_MASTER_URL_FRENCH
 const apigeo = process.env.NEXT_PUBLIC_MASTER_URL_GEO
+
+const token = process.env.NEXT_PUBLIC_HYGRAPH_API_TOKEN
+
 
 const testSaveQuizres = async (jsondata) => {
   // Fetch current results
@@ -60,8 +63,6 @@ const testSaveQuizres = async (jsondata) => {
   return reslut6;
 }
  
-
-
 const vquiz = async () => {
   const qmon = gql`
   query MyQuery {
@@ -82,31 +83,36 @@ const vquiz = async () => {
 
 const sendEnrollData = async (userEmail, phonenumber) => {
   const query3 = gql`
-  
   mutation MyMutation {
-
-   createUserEnroll(
-    data: {phonenumber: "`+ phonenumber + `", isHePaid: false, userEmail: "` + userEmail + `"}
-  ) {
-    id
-    userEmail
-  }
-
- 
-     publishManyUserEnrollsConnection(where: {}) {
-    edges {
-      node {
-        id
+    createUserEnroll(
+      data: {phonenumber: "${phonenumber}", isHePaid: false, userEmail: "${userEmail}"}
+    ) {
+      id
+      userEmail
+    }
+    publishManyUserEnrollsConnection(where: {}) {
+      edges {
+        node {
+          id
+        }
       }
     }
   }
-}
-  
-  `
+  `;
 
+  const client = new GraphQLClient(MAINAPI, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
 
-  const result3 = await request(MAINAPI, query3)
-  return result3
+  try {
+    const result3 = await client.request(query3);
+    return result3;
+  } catch (error) {
+    console.error("Error sending enroll data:", error);
+    throw new Error("Failed to send enroll data");
+  }
 }
 
 const premUsers = async (useremail) => {
@@ -433,6 +439,4 @@ export default {
   vquiz,
   sendEnrollData,
   testSaveQuizres,
-
-
 }
