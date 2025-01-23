@@ -7,6 +7,7 @@ import { TbMessageFilled } from "react-icons/tb";
 import ActiveSqu from "./ActiveSqu";
 import GreatToday from "./GreatToday";
 import Image from 'next/image';
+import Link from "next/link";
 
 const Hero = () => {
     const Features = [
@@ -93,6 +94,18 @@ const Hero = () => {
         return messages[randomIndex];
     };
 
+    const handleScrollToSub = () => {
+        const targetElement = document.getElementById('subs');
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        } else {
+            console.error("Element with id 'subs' not found.");
+        }
+    };
+
     // Update the message after the component mounts
     useEffect(() => {
         setMessage(getRandomMessage());
@@ -142,14 +155,18 @@ const Hero = () => {
                 <div className="col-span-2 lg:col-span-3  h-full  bg-yellow-400 shadow-2xl bg-paton bg-cover  outline-dashed outline-offset-2 outline-yellow-300  p-6 mt-2 rounded-xl flex items-center">
 
                     <h3 className="block md:flex  font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-yellow-800 ">
+
                         <Image
+                            onClick={handleScrollToSub}
                             src="/trophy.png"
                             width={200}
                             height={200}
-                            className="drop-shadow-2xl m-auto mb-5 md:m-0  hover:scale-110 transition-transform duration-500 ease-in-out"
+                            className="drop-shadow-2xl cursor-pointer m-auto mb-5 md:m-0  hover:scale-110 transition-transform duration-500 ease-in-out"
                             alt="trophy"
                         />
-                        <span className=" text-2xl md:text-5xl rtl  leading-normal  text-right ">
+
+
+                        <span className="  leading-normal  text-right  text-2xl md:leading-normal md:text-5xl rtl  " >
                             موقع كويزاتك اكبر بنك اسئلة للمراجعة النهائية من جميع الكتب الخارجيه ...
                         </span>
                     </h3>
