@@ -11,7 +11,7 @@ const apiar = process.env.NEXT_PUBLIC_MASTER_URL_ARABIC
 const apien = process.env.NEXT_PUBLIC_MASTER_URL_ENGLISH
 const apifr = process.env.NEXT_PUBLIC_MASTER_URL_FRENCH
 const apigeo = process.env.NEXT_PUBLIC_MASTER_URL_GEO
-
+const premusers = process.env.NEXT_PUBLIC_MASTER_URL_PREMUSERS
 const token = process.env.NEXT_PUBLIC_HYGRAPH_API_TOKEN
 
 
@@ -127,7 +127,7 @@ const premUsers = async (useremail) => {
   `
 
 
-  const result3 = await request(MAINAPI, query3)
+  const result3 = await request(premusers, query3)
   return result3
 }
 
@@ -389,52 +389,28 @@ const greatDay = async () => {
   return shitosd
 }
 
-const testapi = async () => {
-  const shite = gql`
-  
-  query MyQuery {
-  quiz(where: {id: "cm5vg6hnv03im07oa01gzgyhz"}) {
-        quiztitle
-         question (first: 100) {
-      opationA
-      opationC
-      opationB
-      opationD
-      trueChoisevip
-      qus
-      
-    }
 
-         chooseBook
-         subjectName
-    
-      }
-}
-
-  `
-
-  const shitosd = await request(apien, shite)
-  return shitosd
-}
 
 
 export default {
-  testapi,
-  greatDay,
   arabicData,
-  geoData,
   englishData,
   frenchData,
   biologyDAta,
-  quizEn,
-  quizgeo,
-  quizFr,
+  chemstryDAta,
+  physicsData,
+  geoData,
+
   quizAr,
-  quizbio,
+  quizEn,
+  quizFr,
   quizCh,
   quizPh,
-  physicsData,
-  chemstryDAta,
+  quizbio,
+  quizgeo,
+
+  greatDay,
+  
   premUsers,
   vquiz,
   sendEnrollData,
