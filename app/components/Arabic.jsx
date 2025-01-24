@@ -9,6 +9,7 @@ import RedButton from './RedButton';
 import GreenButton from './GreenButton';
 import YellowButton from './YellowButton';
 import { usePremiumUser } from '../context/PremiumUserContext';
+import CoutText from './CoutText';
 
 
 const Arabic = () => {
@@ -121,14 +122,17 @@ const Arabic = () => {
                         {title === 'لغة عربية' ? 'يلا اختار كتاب تحله' : 'امتحانات الكتاب'}
                     </h4>
 
-                    {title === 'لغة عربية' && <div>
-                        <h4 className='font-arabicUI3 my-3 gap-2 rtl mx-auto mt-4 mb-2 justify-center text-center flex text-4xl text-yellow-800 bg-paton bg-cover p-4 rounded-xl'>
-                            عافر حلمك يستاهل
-                        </h4>
-                    </div>}
+                    {title === 'لغة عربية' &&
+                        <div>
+                            <h4 className='font-arabicUI3 my-3 gap-2 rtl mx-auto mt-4 mb-2 justify-center text-center flex text-4xl text-yellow-800 bg-paton bg-cover p-4 rounded-xl'>
+                                عافر حلمك يستاهل
+                            </h4>
+                        </div>}
                     {/* Render quizzes dynamically */}
                     {renderQuizzes()}
                 </div>
+               
+                <CoutText number={4000} />
             </div>
 
             {/* Books Grid Section */}
