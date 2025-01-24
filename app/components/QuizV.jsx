@@ -63,13 +63,16 @@ const QuizV = () => {
         return acc;
     }, {});
 
+    console.log(filteredData.length)
 
-    if (quiz.length === 0) return <div> <div className=' cursor-default  backdrop-blur-xl rounded-xl w-fit m-auto outline-dashed mb-8  outline-2 bg-black/20 outline-white  p-5'>
-        <h4 className=' m-auto flex justify-center font-arabicUI2 max-sm:text-3xl text-center  text-white text-5xl'
-        >
-            انت لسة ممتحنتش اي امتحان للاسف
-        </h4>
-    </div></div>; // Show loading message while data is being fetched
+    if (filteredData.length === 0) return <div>
+        <div className=' cursor-default  backdrop-blur-xl rounded-xl w-fit m-auto outline-dashed mb-8  outline-2 bg-black/20 outline-white  p-5'>
+            <h4 className=' m-auto flex justify-center font-arabicUI2 max-sm:text-3xl text-center  text-white text-5xl'
+            >
+                انت لسة ممتحنتش اي امتحان للاسف
+            </h4>
+        </div>
+    </div>; // Show loading message while data is being fetched
 
     const subjectOrder = ['ar', 'en', 'fr', 'chem', 'ph', 'bio', 'geo'];
     const sortedSubjects = Object.keys(subjectTotals).sort((a, b) => subjectOrder.indexOf(a) - subjectOrder.indexOf(b));
@@ -202,7 +205,7 @@ const QuizV = () => {
                         </div>
                     </div>
 
-                )}
+                ) }
 
         </div>
 

@@ -16,7 +16,6 @@ const Arabic = () => {
     const [title, setTitle] = useState('لغة عربية');
     const [dataBook, setDataBook] = useState([]);
     const [numbook, setNumBook] = useState(0);
-    const [numberofquiz, setNumberQuiz] = useState(0);
     const premuserorNot = usePremiumUser();
     const { user } = useUser();
 
@@ -42,7 +41,6 @@ const Arabic = () => {
         GlobalApi.arabicData("ar")
             .then((res) => {
                 setDataBook(res.dataOfQuizs);
-                setNumberQuiz(res?.dataOfQuizs?.length);
             })
             .catch((err) => {
                 console.error("Error: ", err);

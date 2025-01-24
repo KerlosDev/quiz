@@ -1,0 +1,122 @@
+Date : 2025-01-24 08:12:40
+Directory : c:\Users\Kerlos\Desktop\quiz\app
+Total : 58 files,  6845 codes, 203 comments, 1645 blanks, all 8693 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JavaScript JSX |         54 |      6,389 |        198 |      1,559 |      8,146 |
+| JavaScript     |          1 |        339 |          4 |         75 |        418 |
+| SCSS           |          1 |         61 |          1 |          8 |         70 |
+| XML            |          1 |         50 |          0 |          1 |         51 |
+| CSS            |          1 |          6 |          0 |          2 |          8 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                             | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                |         58 |      6,845 |        203 |      1,645 |      8,693 |
+| . (Files)                                                        |          5 |        179 |          3 |         39 |        221 |
+| ans                                                              |          1 |        101 |          3 |         13 |        117 |
+| api                                                              |          1 |        339 |          4 |         75 |        418 |
+| arabic                                                           |          2 |         27 |          0 |         21 |         48 |
+| arabic (Files)                                                   |          1 |         15 |          0 |         13 |         28 |
+| arabic\[quizid]                                                  |          1 |         12 |          0 |          8 |         20 |
+| bio                                                              |          2 |         26 |          0 |         22 |         48 |
+| bio (Files)                                                      |          1 |         15 |          0 |         14 |         29 |
+| bio\[quizid]                                                     |          1 |         11 |          0 |          8 |         19 |
+| chem                                                             |          2 |         25 |          0 |         24 |         49 |
+| chem (Files)                                                     |          1 |         15 |          0 |         16 |         31 |
+| chem\[quizid]                                                    |          1 |         10 |          0 |          8 |         18 |
+| components                                                       |         28 |      5,359 |        185 |      1,248 |      6,792 |
+| context                                                          |          1 |         37 |          0 |          7 |         44 |
+| cop                                                              |          1 |         70 |          0 |         10 |         80 |
+| english                                                          |          2 |         29 |          0 |         19 |         48 |
+| english (Files)                                                  |          1 |         17 |          0 |         11 |         28 |
+| english\[quizid]                                                 |          1 |         12 |          0 |          8 |         20 |
+| french                                                           |          2 |         24 |          0 |         18 |         42 |
+| french (Files)                                                   |          1 |         14 |          0 |         11 |         25 |
+| french\[quizid]                                                  |          1 |         10 |          0 |          7 |         17 |
+| geo                                                              |          2 |         25 |          0 |         19 |         44 |
+| geo (Files)                                                      |          1 |         15 |          0 |         12 |         27 |
+| geo\[quizid]                                                     |          1 |         10 |          0 |          7 |         17 |
+| payment                                                          |          1 |        161 |          0 |         35 |        196 |
+| phys                                                             |          2 |         25 |          0 |         17 |         42 |
+| phys (Files)                                                     |          1 |         16 |          0 |         10 |         26 |
+| phys\[quizid]                                                    |          1 |          9 |          0 |          7 |         16 |
+| proc                                                             |          1 |         92 |          3 |         12 |        107 |
+| profr                                                            |          1 |        146 |          5 |         20 |        171 |
+| quiz                                                             |          1 |          8 |          0 |          5 |         13 |
+| sign-in                                                          |          1 |         80 |          0 |         15 |         95 |
+| sign-in\[[...sign-in]]                                           |          1 |         80 |          0 |         15 |         95 |
+| sign-up                                                          |          1 |         82 |          0 |         20 |        102 |
+| sign-up\[[...sign-up]]                                           |          1 |         82 |          0 |         20 |        102 |
+| subscriptions                                                    |          1 |         10 |          0 |          6 |         16 |
++------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                         | language       | code       | comment    | blank      | total      |
++------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| c:\Users\Kerlos\Desktop\quiz\app\TrueFocus.scss                  | SCSS           |         61 |          1 |          8 |         70 |
+| c:\Users\Kerlos\Desktop\quiz\app\ans\page.jsx                    | JavaScript JSX |        101 |          3 |         13 |        117 |
+| c:\Users\Kerlos\Desktop\quiz\app\api\GlobalApi.js                | JavaScript     |        339 |          4 |         75 |        418 |
+| c:\Users\Kerlos\Desktop\quiz\app\arabic\[quizid]\page.jsx        | JavaScript JSX |         12 |          0 |          8 |         20 |
+| c:\Users\Kerlos\Desktop\quiz\app\arabic\page.jsx                 | JavaScript JSX |         15 |          0 |         13 |         28 |
+| c:\Users\Kerlos\Desktop\quiz\app\bio\[quizid]\page.jsx           | JavaScript JSX |         11 |          0 |          8 |         19 |
+| c:\Users\Kerlos\Desktop\quiz\app\bio\page.jsx                    | JavaScript JSX |         15 |          0 |         14 |         29 |
+| c:\Users\Kerlos\Desktop\quiz\app\chem\[quizid]\page.jsx          | JavaScript JSX |         10 |          0 |          8 |         18 |
+| c:\Users\Kerlos\Desktop\quiz\app\chem\page.jsx                   | JavaScript JSX |         15 |          0 |         16 |         31 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\ActiveSqu.jsx        | JavaScript JSX |         59 |          1 |          7 |         67 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\Arabic.jsx           | JavaScript JSX |        113 |          7 |         30 |        150 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\Bio.jsx              | JavaScript JSX |        117 |          7 |         41 |        165 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\Chem.jsx             | JavaScript JSX |        115 |          7 |         33 |        155 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\English.jsx          | JavaScript JSX |        128 |          7 |         39 |        174 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\Footer.jsx           | JavaScript JSX |         25 |          0 |         13 |         38 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\French.jsx           | JavaScript JSX |        139 |         10 |         32 |        181 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\Geo.jsx              | JavaScript JSX |        109 |          7 |         32 |        148 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\GreatToday.jsx       | JavaScript JSX |         78 |          4 |         12 |         94 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\GreenButton.jsx      | JavaScript JSX |         41 |          0 |          3 |         44 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\Header.jsx           | JavaScript JSX |         78 |          9 |         11 |         98 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\Hero.jsx             | JavaScript JSX |        168 |          9 |         38 |        215 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\Physics.jsx          | JavaScript JSX |        122 |          7 |         35 |        164 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\ProgCircle.jsx       | JavaScript JSX |         33 |          0 |         14 |         47 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\QuizAr.jsx           | JavaScript JSX |        463 |         12 |        106 |        581 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\QuizBio.jsx          | JavaScript JSX |        463 |         12 |        106 |        581 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\QuizCh.jsx           | JavaScript JSX |        463 |         13 |        106 |        582 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\QuizData.jsx         | JavaScript JSX |        234 |         13 |         69 |        316 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\QuizEn.jsx           | JavaScript JSX |        475 |         12 |        106 |        593 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\QuizFr.jsx           | JavaScript JSX |        484 |         12 |        106 |        602 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\QuizGeo.jsx          | JavaScript JSX |        463 |         12 |        109 |        584 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\QuizPh.jsx           | JavaScript JSX |        463 |         12 |        107 |        582 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\QuizV.jsx            | JavaScript JSX |        171 |          4 |         38 |        213 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\RedButton.jsx        | JavaScript JSX |         41 |          0 |          2 |         43 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\Subjects.jsx         | JavaScript JSX |        140 |          8 |         31 |        179 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\Subs.jsx             | JavaScript JSX |         13 |          0 |          7 |         20 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\TrueFocus.jsx        | JavaScript JSX |        130 |          0 |         11 |        141 |
+| c:\Users\Kerlos\Desktop\quiz\app\components\YellowButton.jsx     | JavaScript JSX |         31 |          0 |          4 |         35 |
+| c:\Users\Kerlos\Desktop\quiz\app\context\PremiumUserContext.jsx  | JavaScript JSX |         37 |          0 |          7 |         44 |
+| c:\Users\Kerlos\Desktop\quiz\app\cop\page.jsx                    | JavaScript JSX |         70 |          0 |         10 |         80 |
+| c:\Users\Kerlos\Desktop\quiz\app\english\[quizid]\page.jsx       | JavaScript JSX |         12 |          0 |          8 |         20 |
+| c:\Users\Kerlos\Desktop\quiz\app\english\page.jsx                | JavaScript JSX |         17 |          0 |         11 |         28 |
+| c:\Users\Kerlos\Desktop\quiz\app\french\[quizid]\page.jsx        | JavaScript JSX |         10 |          0 |          7 |         17 |
+| c:\Users\Kerlos\Desktop\quiz\app\french\page.jsx                 | JavaScript JSX |         14 |          0 |         11 |         25 |
+| c:\Users\Kerlos\Desktop\quiz\app\geo\[quizid]\page.jsx           | JavaScript JSX |         10 |          0 |          7 |         17 |
+| c:\Users\Kerlos\Desktop\quiz\app\geo\page.jsx                    | JavaScript JSX |         15 |          0 |         12 |         27 |
+| c:\Users\Kerlos\Desktop\quiz\app\globals.css                     | CSS            |          6 |          0 |          2 |          8 |
+| c:\Users\Kerlos\Desktop\quiz\app\layout.jsx                      | JavaScript JSX |         52 |          2 |         17 |         71 |
+| c:\Users\Kerlos\Desktop\quiz\app\page.jsx                        | JavaScript JSX |         10 |          0 |         11 |         21 |
+| c:\Users\Kerlos\Desktop\quiz\app\payment\page.jsx                | JavaScript JSX |        161 |          0 |         35 |        196 |
+| c:\Users\Kerlos\Desktop\quiz\app\phys\[quizid]\page.jsx          | JavaScript JSX |          9 |          0 |          7 |         16 |
+| c:\Users\Kerlos\Desktop\quiz\app\phys\page.jsx                   | JavaScript JSX |         16 |          0 |         10 |         26 |
+| c:\Users\Kerlos\Desktop\quiz\app\proc\page.jsx                   | JavaScript JSX |         92 |          3 |         12 |        107 |
+| c:\Users\Kerlos\Desktop\quiz\app\profr\page.jsx                  | JavaScript JSX |        146 |          5 |         20 |        171 |
+| c:\Users\Kerlos\Desktop\quiz\app\quiz\page.jsx                   | JavaScript JSX |          8 |          0 |          5 |         13 |
+| c:\Users\Kerlos\Desktop\quiz\app\sign-in\[[...sign-in]]\page.jsx | JavaScript JSX |         80 |          0 |         15 |         95 |
+| c:\Users\Kerlos\Desktop\quiz\app\sign-up\[[...sign-up]]\page.jsx | JavaScript JSX |         82 |          0 |         20 |        102 |
+| c:\Users\Kerlos\Desktop\quiz\app\sitemap.xml                     | XML            |         50 |          0 |          1 |         51 |
+| c:\Users\Kerlos\Desktop\quiz\app\subscriptions\page.jsx          | JavaScript JSX |         10 |          0 |          6 |         16 |
+| Total                                                            |                |      6,845 |        203 |      1,645 |      8,693 |
++------------------------------------------------------------------+----------------+------------+------------+------------+------------+
