@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { FaFireAlt } from "react-icons/fa";
 import { FaBookOpenReader } from "react-icons/fa6";
+import TrueFocus from "./TrueFocus";
 
 const Subjects = () => {
     const subjects = [
@@ -55,10 +56,24 @@ const Subjects = () => {
     return (
         <div id="subs" className="px-4 mt-1 sm:px-6 lg:px-8">
             {/* Header */}
-            <h3 className="flex justify-center items-center m-auto font-arabicUI2 gap-2 text-4xl sm:text-6xl lg:text-7xl text-white text-center">
+
+
+
+            <h3 className="flex rtl justify-center items-center m-auto font-arabicUI2 gap-2 text-4xl sm:text-6xl lg:text-7xl text-white text-center">
+
+                <TrueFocus
+                    sentence="يلا امتحن دلوقتي"
+                    manualMode={false}
+                    blurAmount={5}
+                    borderColor="red"
+                    animationDuration={0.5}
+                    pauseBetweenAnimations={1}
+                />
+
                 <FaFireAlt className="text-3xl sm:text-5xl lg:text-6xl text-red-500 animate-pulse" />
-                يلا امتحن دلوقتي
+
             </h3>
+
 
             {/* Subjects Grid */}
             <div className="p-3 m-3 mt-7 rtl grid grid-cols-1   sm:grid-cols-3 lg:grid-cols-4 gap-14">
