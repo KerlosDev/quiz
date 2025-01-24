@@ -8,6 +8,9 @@ import { useUser } from '@clerk/nextjs';
 import { FaLock } from "react-icons/fa";
 import { FaPlay } from "react-icons/fa";
 
+import RedButton from './RedButton';
+import GreenButton from './GreenButton';
+import YellowButton from './YellowButton';
 
 
 const Physics = () => {
@@ -156,255 +159,22 @@ const Physics = () => {
 
             {/* Books Grid Section */}
 
-
             <div className="grid grid-cols-1 p-5 sm:grid-cols-2 lg:grid-cols-2 h-fit gap-6 lg:col-span-2">
-                <div
-                    onClick={() => handleClick('الفصل الاول', 1)}
-                    className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition duration-300 bg-non bg-cover gap-2 p-5 rounded-xl cursor-pointer"
-                >
-                    <span className="m-auto flex justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24">
-                            <mask id="lineMdSpeedTwotoneLoop0">
-                                <path
-                                    fill="#fff"
-                                    fillOpacity={0}
-                                    stroke="#fff"
-                                    strokeDasharray={56}
-                                    strokeDashoffset={56}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M5 19v0c-0.3 0 -0.59 -0.15 -0.74 -0.41c-0.8 -1.34 -1.26 -2.91 -1.26 -4.59c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 1.68 -0.46 3.25 -1.26 4.59c-0.15 0.26 -0.44 0.41 -0.74 0.41Z">
-                                    <animate fill="freeze" attributeName="fill-opacity" begin="0.3s" dur="0.15s" values="0;0.3"></animate>
-                                    <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="56;0"></animate>
-                                </path>
-                                <g transform="rotate(-100 12 14)">
-                                    <path d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
-                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M16 14C16 16.21 14.21 18 12 18C9.79 18 8 16.21 8 14C8 11.79 12 0 12 0C12 0 16 11.79 16 14Z"></animate>
-                                    </path>
-                                    <path fill="#fff" d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
-                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M14 14C14 15.1 13.1 16 12 16C10.9 16 10 15.1 10 14C10 12.9 12 4 12 4C12 4 14 12.9 14 14Z"></animate>
-                                    </path>
-                                    <animateTransform attributeName="transform" begin="0.4s" dur="6s" repeatCount="indefinite" type="rotate" values="-100 12 14;45 12 14;45 12 14;45 12 14;20 12 14;10 12 14;0 12 14;35 12 14;45 12 14;55 12 14;50 12 14;15 12 14;-20 12 14;-100 12 14"></animateTransform>
-                                </g>
-                            </mask>
-                            <rect width={24} height={24} fill="#fff" mask="url(#lineMdSpeedTwotoneLoop0)"></rect>
-                        </svg>        </span>
-                    <span className="text-5xl">الفصل الاول</span>
-                </div>
-                <div
-                    onClick={() => handleClick('الفصل التاني', 2)}
-                    className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition duration-300 bg-non bg-cover gap-2 py-5 rounded-xl cursor-pointer"
-                >
-                    <span className="m-auto flex justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24">
-                            <mask id="lineMdSpeedTwotoneLoop0">
-                                <path
-                                    fill="#fff"
-                                    fillOpacity={0}
-                                    stroke="#fff"
-                                    strokeDasharray={56}
-                                    strokeDashoffset={56}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M5 19v0c-0.3 0 -0.59 -0.15 -0.74 -0.41c-0.8 -1.34 -1.26 -2.91 -1.26 -4.59c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 1.68 -0.46 3.25 -1.26 4.59c-0.15 0.26 -0.44 0.41 -0.74 0.41Z">
-                                    <animate fill="freeze" attributeName="fill-opacity" begin="0.3s" dur="0.15s" values="0;0.3"></animate>
-                                    <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="56;0"></animate>
-                                </path>
-                                <g transform="rotate(-100 12 14)">
-                                    <path d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
-                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M16 14C16 16.21 14.21 18 12 18C9.79 18 8 16.21 8 14C8 11.79 12 0 12 0C12 0 16 11.79 16 14Z"></animate>
-                                    </path>
-                                    <path fill="#fff" d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
-                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M14 14C14 15.1 13.1 16 12 16C10.9 16 10 15.1 10 14C10 12.9 12 4 12 4C12 4 14 12.9 14 14Z"></animate>
-                                    </path>
-                                    <animateTransform attributeName="transform" begin="0.4s" dur="6s" repeatCount="indefinite" type="rotate" values="-100 12 14;45 12 14;45 12 14;45 12 14;20 12 14;10 12 14;0 12 14;35 12 14;45 12 14;55 12 14;50 12 14;15 12 14;-20 12 14;-100 12 14"></animateTransform>
-                                </g>
-                            </mask>
-                            <rect width={24} height={24} fill="#fff" mask="url(#lineMdSpeedTwotoneLoop0)"></rect>
-                        </svg>        </span>
-                    <span className="text-5xl">الفصل التاني</span>
-                </div>
-                <div
-                    onClick={() => handleClick('الفصل التالت', 3)}
-                    className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition duration-300 bg-non bg-cover gap-2 py-5 rounded-xl cursor-pointer"
-                >
-                    <span className="m-auto flex justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24">
-                            <mask id="lineMdSpeedTwotoneLoop0">
-                                <path
-                                    fill="#fff"
-                                    fillOpacity={0}
-                                    stroke="#fff"
-                                    strokeDasharray={56}
-                                    strokeDashoffset={56}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M5 19v0c-0.3 0 -0.59 -0.15 -0.74 -0.41c-0.8 -1.34 -1.26 -2.91 -1.26 -4.59c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 1.68 -0.46 3.25 -1.26 4.59c-0.15 0.26 -0.44 0.41 -0.74 0.41Z">
-                                    <animate fill="freeze" attributeName="fill-opacity" begin="0.3s" dur="0.15s" values="0;0.3"></animate>
-                                    <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="56;0"></animate>
-                                </path>
-                                <g transform="rotate(-100 12 14)">
-                                    <path d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
-                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M16 14C16 16.21 14.21 18 12 18C9.79 18 8 16.21 8 14C8 11.79 12 0 12 0C12 0 16 11.79 16 14Z"></animate>
-                                    </path>
-                                    <path fill="#fff" d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
-                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M14 14C14 15.1 13.1 16 12 16C10.9 16 10 15.1 10 14C10 12.9 12 4 12 4C12 4 14 12.9 14 14Z"></animate>
-                                    </path>
-                                    <animateTransform attributeName="transform" begin="0.4s" dur="6s" repeatCount="indefinite" type="rotate" values="-100 12 14;45 12 14;45 12 14;45 12 14;20 12 14;10 12 14;0 12 14;35 12 14;45 12 14;55 12 14;50 12 14;15 12 14;-20 12 14;-100 12 14"></animateTransform>
-                                </g>
-                            </mask>
-                            <rect width={24} height={24} fill="#fff" mask="url(#lineMdSpeedTwotoneLoop0)"></rect>
-                        </svg>        </span>
-                    <span className="text-5xl">الفصل التالت</span>
-                </div>
-                <div
-                    onClick={() => handleClick('الفصل الرابع', 4)}
-                    className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition duration-300 bg-non5 bg-cover gap-2 py-5 rounded-xl cursor-pointer"
-                >
-                    <span className="m-auto flex justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24">
-                            <mask id="lineMdSpeedTwotoneLoop0">
-                                <path fill="#fff" fillOpacity={0} stroke="#fff" strokeDasharray={56} strokeDashoffset={56} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 19v0c-0.3 0 -0.59 -0.15 -0.74 -0.41c-0.8 -1.34 -1.26 -2.91 -1.26 -4.59c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 1.68 -0.46 3.25 -1.26 4.59c-0.15 0.26 -0.44 0.41 -0.74 0.41Z">
-                                    <animate fill="freeze" attributeName="fill-opacity" begin="0.3s" dur="0.15s" values="0;0.3"></animate>
-                                    <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="56;0"></animate>
-                                </path>
-                                <g transform="rotate(-100 12 14)">
-                                    <path d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
-                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M16 14C16 16.21 14.21 18 12 18C9.79 18 8 16.21 8 14C8 11.79 12 0 12 0C12 0 16 11.79 16 14Z"></animate>
-                                    </path>
-                                    <path fill="#fff" d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
-                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M14 14C14 15.1 13.1 16 12 16C10.9 16 10 15.1 10 14C10 12.9 12 4 12 4C12 4 14 12.9 14 14Z"></animate>
-                                    </path>
-                                    <animateTransform attributeName="transform" begin="0.4s" dur="6s" repeatCount="indefinite" type="rotate" values="-100 12 14;45 12 14;45 12 14;45 12 14;20 12 14;10 12 14;0 12 14;35 12 14;45 12 14;55 12 14;50 12 14;15 12 14;-20 12 14;-100 12 14"></animateTransform>
-                                </g>
-                            </mask>
-                            <rect width={24} height={24} fill="#000" mask="url(#lineMdSpeedTwotoneLoop0)"></rect>
-                        </svg>       </span>
-                    <span className="text-black text-5xl">الفصل الرابع</span>
-                </div>
-                <div
-                    onClick={() => handleClick('الفصل الخامس', 5)}
-                    className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition duration-300 bg-non5 bg-cover gap-2 py-5 rounded-xl cursor-pointer"
-                >
-                    <span className="m-auto flex justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24">
-                            <mask id="lineMdSpeedTwotoneLoop0">
-                                <path fill="#fff" fillOpacity={0} stroke="#fff" strokeDasharray={56} strokeDashoffset={56} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 19v0c-0.3 0 -0.59 -0.15 -0.74 -0.41c-0.8 -1.34 -1.26 -2.91 -1.26 -4.59c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 1.68 -0.46 3.25 -1.26 4.59c-0.15 0.26 -0.44 0.41 -0.74 0.41Z">
-                                    <animate fill="freeze" attributeName="fill-opacity" begin="0.3s" dur="0.15s" values="0;0.3"></animate>
-                                    <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="56;0"></animate>
-                                </path>
-                                <g transform="rotate(-100 12 14)">
-                                    <path d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
-                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M16 14C16 16.21 14.21 18 12 18C9.79 18 8 16.21 8 14C8 11.79 12 0 12 0C12 0 16 11.79 16 14Z"></animate>
-                                    </path>
-                                    <path fill="#fff" d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
-                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M14 14C14 15.1 13.1 16 12 16C10.9 16 10 15.1 10 14C10 12.9 12 4 12 4C12 4 14 12.9 14 14Z"></animate>
-                                    </path>
-                                    <animateTransform attributeName="transform" begin="0.4s" dur="6s" repeatCount="indefinite" type="rotate" values="-100 12 14;45 12 14;45 12 14;45 12 14;20 12 14;10 12 14;0 12 14;35 12 14;45 12 14;55 12 14;50 12 14;15 12 14;-20 12 14;-100 12 14"></animateTransform>
-                                </g>
-                            </mask>
-                            <rect width={24} height={24} fill="#000" mask="url(#lineMdSpeedTwotoneLoop0)"></rect>
-                        </svg>       </span>
-                    <span className="text-black scale-95 flex text-5xl">الفصل الخامس</span>
-                </div>
-                <div
-                    onClick={() => handleClick('الفصل السادس', 6)}
-                    className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition duration-300 bg-non5 bg-cover gap-2 py-5 rounded-xl cursor-pointer"
-                >
-                    <span className="m-auto flex justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24">
-                            <mask id="lineMdSpeedTwotoneLoop0">
-                                <path fill="#fff" fillOpacity={0} stroke="#fff" strokeDasharray={56} strokeDashoffset={56} strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 19v0c-0.3 0 -0.59 -0.15 -0.74 -0.41c-0.8 -1.34 -1.26 -2.91 -1.26 -4.59c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 1.68 -0.46 3.25 -1.26 4.59c-0.15 0.26 -0.44 0.41 -0.74 0.41Z">
-                                    <animate fill="freeze" attributeName="fill-opacity" begin="0.3s" dur="0.15s" values="0;0.3"></animate>
-                                    <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="56;0"></animate>
-                                </path>
-                                <g transform="rotate(-100 12 14)">
-                                    <path d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
-                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M16 14C16 16.21 14.21 18 12 18C9.79 18 8 16.21 8 14C8 11.79 12 0 12 0C12 0 16 11.79 16 14Z"></animate>
-                                    </path>
-                                    <path fill="#fff" d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
-                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M14 14C14 15.1 13.1 16 12 16C10.9 16 10 15.1 10 14C10 12.9 12 4 12 4C12 4 14 12.9 14 14Z"></animate>
-                                    </path>
-                                    <animateTransform attributeName="transform" begin="0.4s" dur="6s" repeatCount="indefinite" type="rotate" values="-100 12 14;45 12 14;45 12 14;45 12 14;20 12 14;10 12 14;0 12 14;35 12 14;45 12 14;55 12 14;50 12 14;15 12 14;-20 12 14;-100 12 14"></animateTransform>
-                                </g>
-                            </mask>
-                            <rect width={24} height={24} fill="#000" mask="url(#lineMdSpeedTwotoneLoop0)"></rect>
-                        </svg>       </span>
-                    <span className="text-black flex scale-110 text-4xl">الفصل السادس</span>
-                </div>
-                <div
-                    onClick={() => handleClick('الفصل السابع', 7)}
-                    className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition duration-300 bg-non2 bg-cover gap-2 py-5 rounded-xl cursor-pointer"
-                >
-                    <span className="m-auto flex justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24">
-                            <mask id="lineMdSpeedTwotoneLoop0">
-                                <path
-                                    fill="#fff"
-                                    fillOpacity={0}
-                                    stroke="#fff"
-                                    strokeDasharray={56}
-                                    strokeDashoffset={56}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M5 19v0c-0.3 0 -0.59 -0.15 -0.74 -0.41c-0.8 -1.34 -1.26 -2.91 -1.26 -4.59c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 1.68 -0.46 3.25 -1.26 4.59c-0.15 0.26 -0.44 0.41 -0.74 0.41Z">
-                                    <animate fill="freeze" attributeName="fill-opacity" begin="0.3s" dur="0.15s" values="0;0.3"></animate>
-                                    <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="56;0"></animate>
-                                </path>
-                                <g transform="rotate(-100 12 14)">
-                                    <path d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
-                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M16 14C16 16.21 14.21 18 12 18C9.79 18 8 16.21 8 14C8 11.79 12 0 12 0C12 0 16 11.79 16 14Z"></animate>
-                                    </path>
-                                    <path fill="#fff" d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
-                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M14 14C14 15.1 13.1 16 12 16C10.9 16 10 15.1 10 14C10 12.9 12 4 12 4C12 4 14 12.9 14 14Z"></animate>
-                                    </path>
-                                    <animateTransform attributeName="transform" begin="0.4s" dur="6s" repeatCount="indefinite" type="rotate" values="-100 12 14;45 12 14;45 12 14;45 12 14;20 12 14;10 12 14;0 12 14;35 12 14;45 12 14;55 12 14;50 12 14;15 12 14;-20 12 14;-100 12 14"></animateTransform>
-                                </g>
-                            </mask>
-                            <rect width={24} height={24} fill="#fff" mask="url(#lineMdSpeedTwotoneLoop0)"></rect>
-                        </svg>        </span>
-                    <span className="text-5xl ">الفصل السابع</span>
-                </div>
-                <div
-                    onClick={() => handleClick('الفصل الثامن', 8)}
-                    className="hover:scale-110 m-4 font-arabicUI2 h-40 place-items-center justify-center bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold transition duration-300 bg-non2 bg-cover gap-2 py-5 rounded-xl cursor-pointer"
-                >
-                    <span className="m-auto flex justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width={50} height={50} viewBox="0 0 24 24">
-                            <mask id="lineMdSpeedTwotoneLoop0">
-                                <path
-                                    fill="#fff"
-                                    fillOpacity={0}
-                                    stroke="#fff"
-                                    strokeDasharray={56}
-                                    strokeDashoffset={56}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M5 19v0c-0.3 0 -0.59 -0.15 -0.74 -0.41c-0.8 -1.34 -1.26 -2.91 -1.26 -4.59c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 1.68 -0.46 3.25 -1.26 4.59c-0.15 0.26 -0.44 0.41 -0.74 0.41Z">
-                                    <animate fill="freeze" attributeName="fill-opacity" begin="0.3s" dur="0.15s" values="0;0.3"></animate>
-                                    <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="56;0"></animate>
-                                </path>
-                                <g transform="rotate(-100 12 14)">
-                                    <path d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
-                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M16 14C16 16.21 14.21 18 12 18C9.79 18 8 16.21 8 14C8 11.79 12 0 12 0C12 0 16 11.79 16 14Z"></animate>
-                                    </path>
-                                    <path fill="#fff" d="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z">
-                                        <animate fill="freeze" attributeName="d" begin="0.4s" dur="0.2s" values="M12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14C12 14 12 14 12 14Z;M14 14C14 15.1 13.1 16 12 16C10.9 16 10 15.1 10 14C10 12.9 12 4 12 4C12 4 14 12.9 14 14Z"></animate>
-                                    </path>
-                                    <animateTransform attributeName="transform" begin="0.4s" dur="6s" repeatCount="indefinite" type="rotate" values="-100 12 14;45 12 14;45 12 14;45 12 14;20 12 14;10 12 14;0 12 14;35 12 14;45 12 14;55 12 14;50 12 14;15 12 14;-20 12 14;-100 12 14"></animateTransform>
-                                </g>
-                            </mask>
-                            <rect width={24} height={24} fill="#fff" mask="url(#lineMdSpeedTwotoneLoop0)"></rect>
-                        </svg>        </span>
-                    <span className="text-5xl ">الفصل الثامن</span>
-                </div>
-            </div>
 
+                <RedButton handleClick={() =>    handleClick('الفصل الاول', 1)} title='الفصل الاول' number={1}  ></RedButton>
+                <RedButton handleClick={() =>    handleClick('الفصل الثاني', 2)} title='الفصل الثاني' number={2}  ></RedButton>
+                <RedButton handleClick={() =>    handleClick('الفصل الثالث', 3)} title='الفصل الثالث' number={3}  ></RedButton>
+                <YellowButton handleClick={() => handleClick('الفصل الرابع', 4)} title='الفصل الرابع' number={4}  ></YellowButton>
+                <YellowButton handleClick={() => handleClick('الفصل الخامس', 5)} title='الفصل الخامس' number={5}  ></YellowButton>
+                <YellowButton handleClick={() => handleClick('الفصل السادس', 6)} title='الفصل السادس' number={6} size={4}  ></YellowButton>
+                <GreenButton handleClick={() =>  handleClick('الفصل السابع', 7)} title='الفصل السابع' number={7}   ></GreenButton>
+                <GreenButton handleClick={() =>  handleClick('الفصل الثامن', 8)} title=' الفصل الثامن' number={8}  ize={4}  ></GreenButton>
+                <GreenButton handleClick={() =>  handleClick('شوامل ', 9)} title='شوامل ' number={9}  ></GreenButton>
+
+
+
+
+            </div>
         </div>
     );
 };
