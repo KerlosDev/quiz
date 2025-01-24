@@ -38,7 +38,9 @@ const GreatToday = () => {
         });
     };
 
-
+    const getFirstTwoWords = (name) => {
+        return name.split(" ").slice(0, 2).join(" ");
+    };
 
     const userGrades = nameofstudent.reduce((acc, curr) => {
         if (!acc[curr.userEmail]) {
@@ -75,7 +77,7 @@ const GreatToday = () => {
                                 <h3 className='  rtl'>
                                     {user.totalQuizGrade}&nbsp; نقطة
                                 </h3>
-                                <h3 className=' font-arabicUI3'>{user.userName}</h3>
+                                <h3 className=' font-arabicUI3 '>{getFirstTwoWords(user.userName)}</h3>
                             </li>
                         ))
                     ) : (

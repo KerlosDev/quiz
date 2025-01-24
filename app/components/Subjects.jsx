@@ -9,45 +9,45 @@ const Subjects = () => {
         {
             name: "عربي",
             img: "/ar.png",
-            books: ["سهل", "متوسط", "صعب"],
+            books: ["نحو", "ادب", "بلاغة", "شوامل"],
             link: "/arabic"
 
         },
         {
             name: "انجليزي",
             img: "/en.png",
-            books: ["سهل", "متوسط", "صعب"],
+            books: ["كل وحدات المنهج", "شوامل"],
             link: "/english"
         },
         {
             name: "فرنساوي",
             img: "/fr.png",
-            books: ["صعب"],
+            books: ["الاربع وحدات", "شوامل"],
             link: "/french"
         },
 
         {
             name: "كيمياء",
             img: "/chem.jpg",
-            books: ["سهل", "متوسط", "صعب"],
+            books: ["الخمس ابواب", "شوامل"],
             link: "/chem"
         },
         {
             name: "فيزياء",
             img: "/ph.png",
-            books: ["متوسط", "صعب"],
+            books: ["كلاسيكية وحديثة", "شوامل"],
             link: "/phys"
         },
         {
             name: "احياء",
             img: "/bio2.jpg",
-            books: ["متوسط", "صعب"],
+            books: ["الست ابواب", "شوامل"],
             link: "/bio"
         },
         {
             name: "جيولوجيا",
             img: "/geo.png",
-            books: ["متوسط", "صعب"],
+            books: ["التلات ابواب"],
             link: "/geo"
         },
     ];
@@ -79,16 +79,16 @@ const Subjects = () => {
                                 />
 
                                 {/* Subject Name */}
-                                <h3 className="flex m-auto justify-center p-1 leading-relaxed text-yellow-700 text-2xl sm:text-3xl lg:text-4xl font-arabicUI">
+                                <h3 className="flex bg-daark bg-cover bg-clip-text m-auto justify-center p-1 leading-relaxed text-transparent text-2xl sm:text-3xl lg:text-7xl font-arabicUI4">
                                     {item.name}
                                 </h3>
 
 
-                                <div className="flex m-auto justify-center flex-wrap w-fit mt-10 outline-dashed outline-4 outline-offset-2 outline-yellow-700 rounded-xl text-yellow-400 bg-yellow-700 p-1">
+                                <div className="flex m-auto bg-daark bg-cover justify-center flex-wrap w-fit mt-10 outline-dashed outline-3 outline-offset-4 outline-yellow-800 rounded-xl text-yellow-400 bg-yellow-700 p-1">
                                     {item.books?.map((book, bookIndex) => (
                                         <h2
                                             key={bookIndex}
-                                            className="p-1 text-base sm:text-lg md:text-xl font-arabicUI2 break-words text-center"
+                                            className="p-1  text-base sm:text-lg md:text-xl font-arabicUI2 break-words text-center"
                                         >
                                             {book}
                                         </h2>
