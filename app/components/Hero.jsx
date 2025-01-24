@@ -127,7 +127,7 @@ const Hero = () => {
                     open={isOpen} // This will control the visibility of the dialog
                     className="rounded-xl max-w-[90%] font-arabicUI2 transition mt-24 backdrop-blur-lg p-3 bg-black/20 z-50 mr-auto ml-auto"
                 >
-                    <h1 className="bg-paton rtl bg-cover p-3 rounded-xl text-black text-center text-3xl">
+                    <h1 className="bg-paton  rtl bg-cover p-3 rounded-xl text-amber-950 text-center text-3xl">
                         {message ? message : 'Loading message...'}
                     </h1>
                     <button onClick={closeDialog} className="bg-non text-white bg-cover p-3 my-2 rounded-xl">
@@ -166,8 +166,9 @@ const Hero = () => {
                         />
 
 
-                        <span className="  leading-normal  text-right  text-2xl md:leading-normal md:text-5xl rtl  " >
-                            موقع كويزاتك اكبر بنك اسئلة للمراجعة النهائية من جميع الكتب الخارجيه ...
+                        <span className="  leading-normal  text-right  text-4xl md:leading-normal bg-cover bg-daark bg-clip-text text-transparent md:text-5xl rtl   " >
+                            موقع كويزاتك اكبر بنك اسئلة للثانوية العامة
+                            ❤️
                         </span>
                     </h3>
                 </div>
