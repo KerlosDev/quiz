@@ -71,15 +71,15 @@ const Subjects = () => {
                             <div>
                                 {/* Subject Image */}
                                 <Image
-                                    width={800}
-                                    className="group-hover:scale-90 transition-transform duration-300"
-                                    height={800}
+                                    width={200}
+                                    className="group-hover:scale-90 mx-auto flex transition-transform duration-300"
+                                    height={500}
                                     src={item.img}
                                     alt={item.name}
                                 />
 
                                 {/* Subject Name */}
-                                <h3 className="flex bg-daark bg-cover bg-clip-text m-auto justify-center p-1 leading-relaxed text-transparent text-2xl sm:text-3xl lg:text-7xl font-arabicUI4">
+                                <h3 className="flex bg-daark bg-cover bg-clip-text m-auto justify-center  leading-relaxed text-transparent text-7xl font-arabicUI4">
                                     {item.name}
                                 </h3>
 

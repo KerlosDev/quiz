@@ -183,7 +183,7 @@ const Hero = () => {
                         <HiBadgeCheck />
                     </h1>
 
-                    <div className="relative mt-6 gap-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ">
+                    <div className="relative mt-6 gap-9 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ">
                         {Features.map((item, index) => (
                             <div
                                 key={index}
