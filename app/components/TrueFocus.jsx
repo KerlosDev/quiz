@@ -67,7 +67,7 @@ return (
         <span
           key={index}
           ref={(el) => (wordRefs.current[index] = el)}
-          className="relative text-[5rem] font-black cursor-pointer"
+          className="relative sm:text-[2.5rem] md:text-[5rem] font-black cursor-default"
           style={{
             filter: manualMode
               ? isActive

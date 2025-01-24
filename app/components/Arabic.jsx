@@ -3,12 +3,13 @@ import Image from 'next/image';
 import GlobalApi from '../api/GlobalApi';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { BsPatchCheckFill } from "react-icons/bs";
 import { useUser } from '@clerk/nextjs';
 import { FaLock, FaPlay } from 'react-icons/fa';
 import RedButton from './RedButton';
 import GreenButton from './GreenButton';
 import YellowButton from './YellowButton';
+import { usePremiumUser } from '../context/PremiumUserContext';
+
 
 const Arabic = () => {
     const [activeBook, setActiveBook] = useState(false);
@@ -16,41 +17,10 @@ const Arabic = () => {
     const [dataBook, setDataBook] = useState([]);
     const [numbook, setNumBook] = useState(0);
     const [numberofquiz, setNumberQuiz] = useState(0);
-    const [premuserorNot, setPremUser] = useState(false);
-
+    const premuserorNot = usePremiumUser();
     const { user } = useUser();
 
 
-    useEffect(() => {
-        // Check if the premium status is already stored
-        const storedPremStatus = localStorage.getItem("premuserorNot");
-        if (storedPremStatus) {
-            setPremUser(JSON.parse(storedPremStatus));
-        } else if (user?.primaryEmailAddress?.emailAddress) {
-            // Fetch premium status if not stored
-            premiumusers(user?.primaryEmailAddress?.emailAddress);
-        }
-    }, [user]);
-
-
-    const premiumusers = async (email) => {
-        try {
-            const res = await GlobalApi.premUsers(email);
-
-            if (res && res.premiumUsersReqs && res.premiumUsersReqs.length > 0 && res.premiumUsersReqs[0]) {
-                const isPremium = res.premiumUsersReqs[0].isHePaid;
-                setPremUser(isPremium);
-
-                // Store the premium status in localStorage
-                localStorage.setItem("premuserorNot", JSON.stringify(isPremium));
-            } else {
-                console.warn("No enrollment data found for the user.");
-                setPremUser(false); // Default to not premium if no data
-            }
-        } catch (error) {
-            console.error("Error fetching premium user status:", error);
-        }
-    };
 
 
     // Handle click dynamically
@@ -65,7 +35,7 @@ const Arabic = () => {
 
     // Fetch data on component mount
     useEffect(() => {
-        chemData("chem");
+        chemData();
     }, []);
 
     const chemData = () => {
@@ -83,36 +53,46 @@ const Arabic = () => {
     // Function to filter and render quizzes based on numbook
     const renderQuizzes = () => {
         let filterKey = '';
-        if (numbook === 1) filterKey = 'hard';
-        if (numbook === 4) filterKey = 'hard2';
-        if (numbook === 2) filterKey = 'med';
-        if (numbook === 3) filterKey = 'easy';
+        if (numbook === 1) filterKey = 'naho1';
+        if (numbook === 2) filterKey = 'naho2';
+        if (numbook === 3) filterKey = 'bala3a1';
+        if (numbook === 4) filterKey = 'bala3a2';
+        if (numbook === 5) filterKey = 'adb';
+        if (numbook === 6) filterKey = 'shamel';
+
 
         return dataBook
             ?.filter((item) => item.level === filterKey)
             ?.map((item, index) => {
                 const quizLink = !user
                     ? "/sign-up" // If no user is logged in, redirect to the sign-up page
-                    : (premuserorNot || index < 2
-                        ? `/arabic/${item.id}` // If the user is premium or it's one of the first two exams, allow access
-                        : `/payment`);
+                    : (
+                        filterKey === 'naho1'
+                            ? `/arabic/${item.id}`
+                            : (premuserorNot ? `/arabic/${item.id}` : `/payment`)
+                    );
                 return (
                     <Link key={item.id} href={quizLink}>
                         <h4 className='hover:scale-105   justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto  flex'>
                             {item?.namequiz || 'No Title Available'}
 
-                            {index > 1 ? (
+                            {filterKey === 'naho1' ?
 
-                                premuserorNot ? (
-                                    <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-                                ) : (
-                                    <FaLock className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-                                )
-                            ) : (
+
                                 <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-                            )}
 
+                                :
+
+                                (
+                                    premuserorNot ? (
+                                        <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
+                                    ) : (
+                                        <FaLock className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
+                                    )
+                                )
+                            }
                         </h4>
+
                     </Link>
                 );
             });
@@ -132,8 +112,10 @@ const Arabic = () => {
                     alt='ar'
                     src='/ar.png'
                 />
-                <h3 className='font-arabicUI3 text-center drop-shadow-2xl text-yellow-900 text-4xl sm:text-5xl md:text-6xl lg:text-7xl lg:leading-snug'>
+                <h3 className='font-arabicUI3 rtl text-center drop-shadow-2xl text-yellow-900 text-4xl sm:text-5xl md:text-6xl lg:text-7xl lg:leading-snug'>
                     {title}
+
+
                 </h3>
 
                 <div className='bg-yellow-800 bg-daark bg-cover cursor-default shadow-xl shadow-yellow-800/50 rounded-xl m-4 p-4'>
@@ -146,7 +128,6 @@ const Arabic = () => {
                             عافر حلمك يستاهل
                         </h4>
                     </div>}
-
                     {/* Render quizzes dynamically */}
                     {renderQuizzes()}
                 </div>
@@ -158,11 +139,11 @@ const Arabic = () => {
                 <RedButton handleClick={() => handleClick("اول تلات وحدات نحو", 1)} title="نحو 1" number={1} ></RedButton>
                 <RedButton handleClick={() => handleClick("باقي وحدات النحو ", 2)} title="نحو 2" number={2} ></RedButton>
                 <YellowButton handleClick={() => handleClick("النص الاول من البلاغة", 3)} title="بلاغة 1" number={3} ></YellowButton>
-                <YellowButton handleClick={() => handleClick("النص التاني من البلاغة", 3)} title="بلاغة 2"  number={4} ></YellowButton>
+                <YellowButton handleClick={() => handleClick("النص التاني من البلاغة", 3)} title="بلاغة 2" number={4} ></YellowButton>
                 <GreenButton handleClick={() => handleClick("الادب", 5)} title="الادب" number={5} ></GreenButton>
                 <GreenButton handleClick={() => handleClick("شوامل ", 6)} title="شوامل" number={6}  ></GreenButton>
             </div>
-            
+
         </div>
     );
 };

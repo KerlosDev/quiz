@@ -1,5 +1,6 @@
 import React from 'react'
 import Physics from '../components/Physics'
+import { PremiumUserProvider } from '../context/PremiumUserContext';
 
 
 export const metadata = {
@@ -11,13 +12,13 @@ const page = () => {
     return (
 
 
-        <div>
+        <PremiumUserProvider>
 
          
             <Physics></Physics>
 
 
-        </div>
+        </PremiumUserProvider>
 
     )
 }

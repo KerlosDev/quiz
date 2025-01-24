@@ -3,12 +3,12 @@ import Image from 'next/image';
 import GlobalApi from '../api/GlobalApi';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { BsPatchCheckFill } from "react-icons/bs";
 import { useUser } from '@clerk/nextjs';
 import { FaLock, FaPlay } from 'react-icons/fa';
 import RedButton from './RedButton';
 import GreenButton from './GreenButton';
 import YellowButton from './YellowButton';
+import { usePremiumUser } from '../context/PremiumUserContext';
 
 const Geo = () => {
     const [activeBook, setActiveBook] = useState(false);
@@ -16,41 +16,11 @@ const Geo = () => {
     const [dataBook, setDataBook] = useState([]);
     const [numbook, setNumBook] = useState(0);
     const [numberofquiz, setNumberQuiz] = useState(0);
-    const [premuserorNot, setPremUser] = useState(false);
+
+    const premuserorNot = usePremiumUser();
 
     const { user } = useUser();
 
-
-    useEffect(() => {
-        // Check if the premium status is already stored
-        const storedPremStatus = localStorage.getItem("premuserorNot");
-        if (storedPremStatus) {
-            setPremUser(JSON.parse(storedPremStatus));
-        } else if (user?.primaryEmailAddress?.emailAddress) {
-            // Fetch premium status if not stored
-            premiumusers(user?.primaryEmailAddress?.emailAddress);
-        }
-    }, [user]);
-
-
-    const premiumusers = async (email) => {
-        try {
-            const res = await GlobalApi.premUsers(email);
-
-            if (res && res.premiumUsersReqs && res.premiumUsersReqs.length > 0 && res.premiumUsersReqs[0]) {
-                const isPremium = res.premiumUsersReqs[0].isHePaid;
-                setPremUser(isPremium);
-
-                // Store the premium status in localStorage
-                localStorage.setItem("premuserorNot", JSON.stringify(isPremium));
-            } else {
-                console.warn("No enrollment data found for the user.");
-                setPremUser(false); // Default to not premium if no data
-            }
-        } catch (error) {
-            console.error("Error fetching premium user status:", error);
-        }
-    };
 
     // Handle click dynamically
     const handleClick = (namebook, index) => {
@@ -87,32 +57,40 @@ const Geo = () => {
         if (numbook === 3) filterKey = 'fasl3';
 
         return dataBook
-            ?.filter((item) => item.level === filterKey)
-            ?.map((item, index) => {
-                const quizLink = !user
-                    ? "/sign-up" // If no user is logged in, redirect to the sign-up page
-                    : (premuserorNot || index < 2
-                        ? `/geo/${item.id}` // If the user is premium or it's one of the first two exams, allow access
-                        : `/payment`);
-                return (
-                    <Link key={item.id} href={quizLink}>
-                        <h4 className='hover:scale-105   justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto  flex'>
-                            {item?.namequiz || 'No Title Available'}
+        ?.filter((item) => item.level === filterKey)
+        ?.map((item, index) => {
+            const quizLink = !user
+                ? "/sign-up" // If no user is logged in, redirect to the sign-up page
+                : (
+                    filterKey === 'fasl1'
+                        ? `/geo/${item.id}`
+                        : (premuserorNot ? `/geo/${item.id}` : `/payment`)
+                );
+            return (
+                <Link key={item.id} href={quizLink}>
+                    <h4 className='hover:scale-105   justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto  flex'>
+                        {item?.namequiz || 'No Title Available'}
 
-                            {index > 1 ? (
+                        {filterKey === 'fasl1' ?
+
+
+                            <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
+
+                            :
+
+                            (
                                 premuserorNot ? (
                                     <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
                                 ) : (
                                     <FaLock className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
                                 )
-                            ) : (
-                                <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-                            )}
+                            )
+                        }
+                    </h4>
 
-                        </h4>
-                    </Link>
-                );
-            });
+                </Link>
+            );
+        });
     };
 
     return (

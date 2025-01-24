@@ -1,5 +1,6 @@
 import React from 'react'
 import English from '../components/English'
+import { PremiumUserProvider } from '../context/PremiumUserContext';
 
 
 export const metadata = {
@@ -10,15 +11,16 @@ export const metadata = {
 
 const page = () => {
     return (
+        <PremiumUserProvider>
+
+            <div>
+                <English></English>
+
+            </div>
+        </PremiumUserProvider>
 
 
-        <div>
 
-            <English></English>
-
-
-
-        </div>
 
     )
 }

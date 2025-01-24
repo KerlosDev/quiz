@@ -59,7 +59,7 @@ const Subjects = () => {
 
 
 
-            <h3 className="flex rtl justify-center items-center m-auto font-arabicUI2 gap-2 text-4xl sm:text-6xl lg:text-7xl text-white text-center">
+            <h3 className="flex rtl justify-center cursor-default items-center m-auto font-arabicUI2 gap-2 text-4xl sm:text-6xl lg:text-7xl text-white text-center">
 
                 <TrueFocus
                     sentence="يلا امتحن دلوقتي"
@@ -76,7 +76,7 @@ const Subjects = () => {
 
 
             {/* Subjects Grid */}
-            <div className="p-3 m-3 mt-7 rtl grid grid-cols-1   sm:grid-cols-3 lg:grid-cols-4 gap-14">
+            <div className="p-3 m-3 mt-7 rtl grid grid-cols-1   md:grid-cols-2 lg:grid-cols-4 gap-14">
                 {subjects.map((item, index) => (
                     <Link key={index} href={item.link}>
                         <div

@@ -3,7 +3,6 @@ import Image from 'next/image';
 import GlobalApi from '../api/GlobalApi';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { BsPatchCheckFill } from "react-icons/bs";
 import { useUser } from '@clerk/nextjs';
 import { FaLock, FaPlay } from 'react-icons/fa';
 import RedButton from './RedButton';

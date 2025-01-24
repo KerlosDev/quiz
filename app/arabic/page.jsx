@@ -1,5 +1,6 @@
 import React from 'react'
 import Arabic from '../components/Arabic'
+import { PremiumUserProvider } from '../context/PremiumUserContext';
 
 export const metadata = {
     title: " امتحانات لغة عربية | كويزاتك ",
@@ -13,12 +14,12 @@ const page = () => {
     return (
 
 
-        <div>
+        <PremiumUserProvider>
 
             <Arabic></Arabic>
 
             
-        </div>
+        </PremiumUserProvider>
 
     )
 }

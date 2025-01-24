@@ -1,6 +1,7 @@
 
 import React from 'react'
 import Chem from '../components/Chem';
+import { PremiumUserProvider } from '../context/PremiumUserContext';
 
 
 
@@ -18,11 +19,11 @@ const page = () => {
     return (
 
 
-        <div className=' '>
+        <PremiumUserProvider>
 
             <Chem></Chem>
 
-        </div>
+        </PremiumUserProvider>
 
     )
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import Bio from '../components/Bio'
+import { PremiumUserProvider } from '../context/PremiumUserContext';
 
 
 
@@ -12,13 +13,15 @@ export const metadata = {
 const page = () => {
     return (
 
-
-        <div>
-
-       
+        <PremiumUserProvider>
             <Bio></Bio>
+        </PremiumUserProvider>
 
-        </div>
+
+
+
+
+
 
     )
 }

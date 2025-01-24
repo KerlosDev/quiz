@@ -1,5 +1,6 @@
 import React from 'react'
 import Geo from '../components/Geo'
+import { PremiumUserProvider } from '../context/PremiumUserContext';
 
 
 export const metadata = {
@@ -11,12 +12,14 @@ export const metadata = {
 const page = () => {
     return (
 
-
-        <div>
+        <PremiumUserProvider>
 
             <Geo></Geo>
 
-        </div>
+        </PremiumUserProvider>
+
+
+
 
     )
 }
