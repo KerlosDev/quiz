@@ -7,20 +7,20 @@ import { FaBookOpenReader } from "react-icons/fa6";
 const Subjects = () => {
     const subjects = [
         {
-            name: "عربي",
+            name: "عربى",
             img: "/ar.png",
             books: ["نحو", "ادب", "بلاغة", "شوامل"],
             link: "/arabic"
 
         },
         {
-            name: "انجليزي",
+            name: "انجليزى",
             img: "/en.png",
             books: ["كل وحدات المنهج", "شوامل"],
             link: "/english"
         },
         {
-            name: "فرنساوي",
+            name: "فرنساوى",
             img: "/fr.png",
             books: ["الاربع وحدات", "شوامل"],
             link: "/french"
@@ -66,7 +66,7 @@ const Subjects = () => {
                     <Link key={index} href={item.link}>
                         <div
                             key={index}
-                            className="relative h-fit group bg-paton hover:outline-none cursor-pointer  hover:brightness-75 bg-repeat bg-center bg-cover hover:scale-105 transition-transform duration-500 w-full  p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl  outline-dashed outline-offset-2 outline-yellow-300 bg-yellow-400"
+                            className="relative h-fit group bg-paton hover:outline-none cursor-pointer  hover:brightness-75 bg-repeat bg-center bg-cover hover:scale-105 transition-transform duration-500 w-full  p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl  outline-dashed outline-offset-4 outline-yellow-300 bg-yellow-400"
                         >
                             <div>
                                 {/* Subject Image */}
@@ -79,12 +79,12 @@ const Subjects = () => {
                                 />
 
                                 {/* Subject Name */}
-                                <h3 className="flex bg-daark bg-cover bg-clip-text m-auto justify-center  leading-relaxed text-transparent text-7xl font-arabicUI4">
+                                <h3 className="flex bg-daark bg-cover bg-clip-text m-auto justify-center  leading-relaxed text-transparent text-7xl font-arabicUI2 ">
                                     {item.name}
                                 </h3>
 
 
-                                <div className="flex m-auto bg-daark bg-cover justify-center flex-wrap w-fit mt-10 outline-dashed outline-3 outline-offset-4 outline-yellow-800 rounded-xl text-yellow-400 bg-yellow-700 p-1">
+                                <div className="flex m-auto bg-daark bg-cover justify-center flex-wrap w-fit mt-2 outline-dashed outline-3 outline-offset-4 outline-yellow-800 rounded-xl text-yellow-400 bg-yellow-700 p-1">
                                     {item.books?.map((book, bookIndex) => (
                                         <h2
                                             key={bookIndex}
@@ -96,12 +96,14 @@ const Subjects = () => {
                                 </div>
 
                                 {/* Hover Overlay */}
-                                <div className="absolute font-arabicUI2 inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl sm:text-3xl lg:text-4xl font-bold opacity-0 group-hover:opacity-100 transition duration-300">
+                                <div className="absolute font-arabicUI2 inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white  text-5xl font-bold opacity-0 group-hover:opacity-100 transition duration-300">
                                     <div className="grid grid-cols-1">
-                                        فتح الامتحانات
                                         <span className="m-auto flex justify-center">
-                                            <FaBookOpenReader />
+                                            <FaBookOpenReader className=" text-[89px] flex" />
                                         </span>
+
+                                        فتح الامتحانات
+
                                     </div>
                                 </div>
                             </div>
@@ -109,6 +111,50 @@ const Subjects = () => {
                         </div>
                     </Link>
                 ))}
+
+                <div
+
+                    className="relative h-fit group bg-non3 hover:outline-none cursor-pointer  hover:brightness-75 bg-repeat bg-center bg-cover hover:scale-105 transition-transform duration-500 w-full  p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl  outline-dashed outline-offset-4 outline-blue-600 bg-yellow-400"
+                >
+                    <div>
+                        {/* Subject Image */}
+                        <Image
+                            width={200}
+                            className="group-hover:scale-90 mx-auto flex transition-transform duration-300"
+                            height={500}
+                            src='/prize.png'
+                            alt='trophy'
+                        />
+
+                        {/* Subject Name */}
+                        <h3 className="flex m-auto justify-center  leading-relaxed text-white text-7xl font-arabicUI2 ">
+                            الكاس
+                        </h3>
+
+
+                        <div className="flex m-auto bg-white justify-center flex-wrap w-fit mt-2 outline-dashed outline-3 outline-offset-2 outline-white rounded-xl text-blue-700  p-1">
+
+                            <h2
+                                className="p-1  text-base sm:text-lg md:text-xl font-arabicUI2 break-words text-center"
+                            >
+                                قريبا..
+                            </h2>
+
+                        </div>
+
+                        {/* Hover Overlay */}
+                        <div className="absolute font-arabicUI2 inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white  text-6xl font-bold opacity-0 group-hover:opacity-100 transition duration-300">
+                            <div className="flex gap-2">
+                                قريبا..
+                                <span className="m-auto flex justify-center">
+                                    <FaBookOpenReader />
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
         </div>
     );
