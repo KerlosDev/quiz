@@ -137,6 +137,9 @@ const Bio = () => {
                     {/* Render quizzes dynamically */}
                     {renderQuizzes()}
                 </div>
+
+                <CoutText number={2654} />
+
             </div>
 
 
