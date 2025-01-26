@@ -61,6 +61,9 @@ const Bio = () => {
         if (numbook === 4) filterKey = 'fasl4';
         if (numbook === 5) filterKey = 'fasl5';
         if (numbook === 6) filterKey = 'fasl6';
+        if (numbook === 7) filterKey = 'shamel1';
+        if (numbook === 8) filterKey = 'shamel2';
+        if (numbook === 9) filterKey = 'shamel3';
 
 
     
@@ -145,11 +148,13 @@ const Bio = () => {
 
                 <RedButton handleClick={() => handleClick('الفصل الاول', 1)} title='الفصل الاول' number={1}  ></RedButton>
                 <RedButton handleClick={() => handleClick('الفصل الثاني', 2)} title='الفصل الثاني' number={2}  ></RedButton>
-                <YellowButton handleClick={() => handleClick('الفصل الثالث', 3)} title='الفصل الثالث' number={3}  ></YellowButton>
+                <RedButton handleClick={() => handleClick('الفصل الثالث', 3)} title='الفصل الثالث' number={3}  ></RedButton>
                 <YellowButton handleClick={() => handleClick('الفصل الرابع', 4)} title='الفصل الرابع' number={4}  ></YellowButton>
-                <GreenButton handleClick={() => handleClick('الفصل الخامس', 5)} title='الفصل الخامس' number={5}  ></GreenButton>
-                <GreenButton handleClick={() => handleClick('الفصل السادس', 6)} title='الفصل السادس' number={6} size={4}  ></GreenButton>
-                <RedButton handleClick={() => handleClick('شوامل', 7)} title='شوامل' number={7}   ></RedButton>
+                <YellowButton handleClick={() => handleClick('الفصل الخامس', 5)} title='الفصل الخامس' number={5}  ></YellowButton>
+                <YellowButton handleClick={() => handleClick('الفصل السادس', 6)} title='الفصل السادس' number={6} size={4}  ></YellowButton>
+                <GreenButton handleClick={() => handleClick('شوامل 1' , 7)} title='شوامل 1' number={7}   ></GreenButton>
+                <GreenButton handleClick={() => handleClick('شوامل 2', 8)} title='شوامل 2' number={8}   ></GreenButton>
+                <GreenButton handleClick={() => handleClick('شوامل 3', 9)} title='شوامل 3' number={9}   ></GreenButton>
              
 
 
