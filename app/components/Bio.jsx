@@ -9,6 +9,7 @@ import RedButton from './RedButton';
 import GreenButton from './GreenButton';
 import YellowButton from './YellowButton';
 import { usePremiumUser } from '../context/PremiumUserContext';
+import CoutText from './CoutText';
 
 const Bio = () => {
     const [activeBook, setActiveBook] = useState(false);
@@ -18,12 +19,12 @@ const Bio = () => {
     const [numberofquiz, setNumberQuiz] = useState(0);
     const premuserorNot = usePremiumUser();
 
-    
+
     const { user } = useUser();
 
-   
+
     console.log(premuserorNot)
-    
+
 
     // Handle click dynamically
     const handleClick = (namebook, index) => {
@@ -66,7 +67,7 @@ const Bio = () => {
         if (numbook === 9) filterKey = 'shamel3';
 
 
-    
+
         return dataBook
             ?.filter((item) => item.level === filterKey)
             ?.map((item, index) => {
@@ -138,7 +139,9 @@ const Bio = () => {
                     {renderQuizzes()}
                 </div>
 
+
                 <CoutText number={2654} />
+
 
             </div>
 
@@ -155,10 +158,10 @@ const Bio = () => {
                 <YellowButton handleClick={() => handleClick('الفصل الرابع', 4)} title='الفصل الرابع' number={4}  ></YellowButton>
                 <YellowButton handleClick={() => handleClick('الفصل الخامس', 5)} title='الفصل الخامس' number={5}  ></YellowButton>
                 <YellowButton handleClick={() => handleClick('الفصل السادس', 6)} title='الفصل السادس' number={6} size={4}  ></YellowButton>
-                <GreenButton handleClick={() => handleClick('شوامل 1' , 7)} title='شوامل 1' number={7}   ></GreenButton>
+                <GreenButton handleClick={() => handleClick('شوامل 1', 7)} title='شوامل 1' number={7}   ></GreenButton>
                 <GreenButton handleClick={() => handleClick('شوامل 2', 8)} title='شوامل 2' number={8}   ></GreenButton>
                 <GreenButton handleClick={() => handleClick('شوامل 3', 9)} title='شوامل 3' number={9}   ></GreenButton>
-             
+
 
 
             </div>
