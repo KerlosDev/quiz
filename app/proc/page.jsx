@@ -67,6 +67,22 @@ const QuizAutoProcessor = () => {
 
   };
 
+  const handleReset = () => {
+    setInputText('');
+    setParsedQuestions('');
+    toast.success("تم المسح", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      className: 'font-arabicUI3 w-fit m-7text-lg p-4 rounded-lg shadow-lg',
+    })
+  };
+  
   const handleCopyToClipboard = () => {
 
 
@@ -128,6 +144,8 @@ const QuizAutoProcessor = () => {
       <div className=" flex ">
         <button className=' bg-white font-arabicUI3 text-black text-4xl p-2 w-fit rounded-xl m-3 active:bg-black/80 transition duration-300 drop-shadow-2xl active:ring-black/20 active:ring-4 ' onClick={handleProcess}>Convert</button>
         <button className=' bg-white font-arabicUI3 text-black text-4xl p-2 w-fit rounded-xl m-3 active:bg-black/80 transition duration-300 drop-shadow-2xl active:ring-black/20 active:ring-4 ' onClick={handleCopyToClipboard}>Copy</button>
+
+        <button className=' bg-red-500 font-arabicUI3 text-white border-white border-4 text-4xl p-2 w-fit rounded-xl m-3 active:bg-red-700 transition duration-300 drop-shadow-2xl active:ring-red-700/20 active:ring-4 ' onClick={handleReset}>Reset</button>
 
 
       </div>
