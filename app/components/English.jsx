@@ -10,6 +10,7 @@ import GreenButton from './GreenButton';
 import YellowButton from './YellowButton';
 import { usePremiumUser } from '../context/PremiumUserContext';
 import CoutText from './CoutText';
+import BlueButton from './BlueButton';
 
 
 const English = () => {
@@ -120,7 +121,7 @@ const English = () => {
                     alt='en'
                     src='/en.png'
                 />
-                <h3 className='font-arabicUI3 text-center drop-shadow-2xl text-yellow-900 text-4xl sm:text-5xl md:text-6xl lg:text-7xl'>
+                <h3 className='font-arabicUI3 leading-normal text-center drop-shadow-2xl text-6xl text-yellow-900   '>
                     {title}
                 </h3>
 
@@ -140,7 +141,7 @@ const English = () => {
                     {/* Render quizzes dynamically */}
                     {renderQuizzes()}
                 </div>
-                <CoutText number={1000}></CoutText>
+                <CoutText number={1885}></CoutText>
             </div>
 
             {/* Books Grid Section */}
@@ -161,6 +162,7 @@ const English = () => {
                 <GreenButton handleClick={() => handleClick('UNIT 11', 11)} title='UNIT 11' number={11} font="font-arabicUI3"  ></GreenButton>
                 <GreenButton handleClick={() => handleClick('UNIT 12', 12)} title='UNIT 12' number={12} font="font-arabicUI3"  ></GreenButton>
 
+                <BlueButton handleClick={() => handleClick('هيتم اضافة الشوامل قريبا', 13)} title='شوامل' number={13} font="font-arabicUI3"  ></BlueButton>
 
 
 
