@@ -20,7 +20,7 @@ const page = () => {
     const [outputText, setOutputText] = useState('');
 
     const handleConvert = () => {
-        if (outputText.length > 0) {
+        if (inputText.length > 0) {
             toast.success(" تمت المعالجة", {
                 position: "top-right",
                 autoClose: 5000,

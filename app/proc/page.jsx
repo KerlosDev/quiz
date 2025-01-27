@@ -35,7 +35,7 @@ const QuizAutoProcessor = () => {
     }
 
     setParsedQuestions(questions);
-    if (parsedQuestions.length !== 0) {
+    if (inputText.length !== 0) {
 
       toast.success("تمت المعالجة", {
         position: "top-right",
@@ -62,7 +62,7 @@ const QuizAutoProcessor = () => {
         className: 'font-arabicUI3 w-fit m-7text-lg p-4 rounded-lg shadow-lg',
       })
     }
- 
+
 
 
   };
@@ -74,7 +74,7 @@ const QuizAutoProcessor = () => {
 
 
     if (parsedQuestions.length === 0) {
-     
+
       toast.error(" مفيش بيانات يسطا", {
         position: "top-right",
         autoClose: 5000,
@@ -120,7 +120,18 @@ const QuizAutoProcessor = () => {
       className="bg-yellow-500 p-4 m-4 rounded-xl font-arabicUI3  "
 
     >
+
+
       <h1 className=" text-4xl m-4">{`مضيف الاسهم ==>`}</h1>
+
+
+      <div className=" flex ">
+        <button className=' bg-white font-arabicUI3 text-black text-4xl p-2 w-fit rounded-xl m-3 active:bg-black/80 transition duration-300 drop-shadow-2xl active:ring-black/20 active:ring-4 ' onClick={handleProcess}>Convert</button>
+        <button className=' bg-white font-arabicUI3 text-black text-4xl p-2 w-fit rounded-xl m-3 active:bg-black/80 transition duration-300 drop-shadow-2xl active:ring-black/20 active:ring-4 ' onClick={handleCopyToClipboard}>Copy</button>
+
+
+      </div>
+
       <div className=" flex">
         <textarea
           rows="10"
@@ -148,13 +159,6 @@ const QuizAutoProcessor = () => {
             ))}
           </div>
         )}
-
-      </div>
-
-      <div className=" flex ">
-        <button className=' bg-white font-arabicUI3 text-black text-4xl p-2 w-fit rounded-xl m-3 active:bg-black/80 transition duration-300 drop-shadow-2xl active:ring-black/20 active:ring-4 ' onClick={handleProcess}>Convert</button>
-        <button className=' bg-white font-arabicUI3 text-black text-4xl p-2 w-fit rounded-xl m-3 active:bg-black/80 transition duration-300 drop-shadow-2xl active:ring-black/20 active:ring-4 ' onClick={handleCopyToClipboard}>Copy</button>
-
 
       </div>
 
