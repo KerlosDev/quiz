@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 
 const ImageFormatter = () => {
   const [input, setInput] = useState('');
@@ -15,14 +16,53 @@ const ImageFormatter = () => {
       )
       .join('\n');
     setOutput(formatted);
+
+    if (input.length !== 0) {
+
+      toast.success("تمت المعالجة", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        className: 'font-arabicUI3 w-fit m-7text-lg p-4 rounded-lg shadow-lg',
+      })
+
+    } else {
+      toast.error(" مفيش بيانات يسطا", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        className: 'font-arabicUI3 w-fit m-7text-lg p-4 rounded-lg shadow-lg',
+      })
+    }
+
+
   };
 
   const copyToClipboard = () => {
     if (output) {
       navigator.clipboard.writeText(output)
         .then(() => {
-          setCopySuccess('Copied to clipboard!');
-          setTimeout(() => setCopySuccess(''), 2000); // Clear message after 2 seconds
+          toast.success("تم النسخ", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            className: 'font-arabicUI3 w-fit m-7text-lg p-4 rounded-lg shadow-lg',
+          }) 
         })
         .catch(() => {
           setCopySuccess('Failed to copy!');
@@ -31,47 +71,65 @@ const ImageFormatter = () => {
     }
   };
 
+  const handleReset = () => {
+    setInput('');
+    setOutput('');
+    toast.success("تم المسح", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      className: 'font-arabicUI3 w-fit m-7text-lg p-4 rounded-lg shadow-lg',
+    })
+  };
+
   return (
-    <div className='flex flex-col items-center font-arabicUI3 bg-yellow-400 min-h-screen p-6'>
-      <h1 className='bg-black text-yellow-400 p-3 rounded-xl'>Image Link Formatter</h1>
-      
-      <textarea
-        rows="5"
-        cols="50"
-        className='p-4 rounded-xl m-4 w-3/4'
-        placeholder="Enter image links separated by commas"
-        value={input}
-        onChange={e => setInput(e.target.value)}
-      />
-      
-      <div className="flex gap-4">
-        <button
-          onClick={formatImages}
-          className='bg-blue-500 text-white px-4 py-2 rounded-xl hover:bg-blue-600'
-        >
-          Format Links
-        </button>
-        <button
-          onClick={copyToClipboard}
-          className='bg-green-500 text-white px-4 py-2 rounded-xl hover:bg-green-600'
-          disabled={!output} // Disable if there's no output
-        >
-          Copy to Clipboard
-        </button>
+    <div
+      className="bg-yellow-500 p-4 m-4 rounded-xl font-arabicUI3  "
+
+    >
+
+      <h1 className=" text-4xl m-4 ">{` اللي بيظبط الـمصفوفة [] `}</h1>
+
+      <div className=" flex ">
+        <button className=' bg-white font-arabicUI3 text-black text-4xl p-2 w-fit rounded-xl m-3 active:bg-black/80 transition duration-300 drop-shadow-2xl active:ring-black/20 active:ring-4 ' onClick={formatImages}>Convert</button>
+        <button className=' bg-white font-arabicUI3 text-black text-4xl p-2 w-fit rounded-xl m-3 active:bg-black/80 transition duration-300 drop-shadow-2xl active:ring-black/20 active:ring-4 ' onClick={copyToClipboard}>Copy</button>
+
+        <button className=' bg-red-500 font-arabicUI3 text-white border-white border-4 text-4xl p-2 w-fit rounded-xl m-3 active:bg-red-700 transition duration-300 drop-shadow-2xl active:ring-red-700/20 active:ring-4 ' onClick={handleReset}>Reset</button>
+
       </div>
-      
-      {copySuccess && (
-        <p className='text-green-600 mt-2'>{copySuccess}</p>
-      )}
-      
-      <h3 className='bg-black text-yellow-400 p-3 rounded-xl mt-4'>Formatted Output:</h3>
-      <textarea
-        rows="10"
-        cols="50"
-        readOnly
-        className='p-4 rounded-xl m-4 w-3/4 bg-gray-100'
-        value={output}
-      />
+
+      <div className=' grid grid-cols-2'>
+
+        <textarea
+          rows="10"
+          cols="50"
+          className='p-4 rounded-xl m-4 '
+          placeholder="Enter image links separated by commas"
+          value={input}
+          onChange={e => setInput(e.target.value)}
+        />
+
+
+        <pre className='p-4 rounded-xl font-arabicUI3 m-4 '
+        >{output}</pre>
+      </div>
+
+
+
+
+
+      <ToastContainer></ToastContainer>
+
+
+
+
+
+
     </div>
   );
 };
