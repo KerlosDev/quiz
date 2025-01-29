@@ -1,6 +1,6 @@
 'use client'
 import { useState } from "react";
-
+import { ToastContainer, toast } from 'react-toastify';
 export default function Quiz() {
     const [questionsInput, setQuestionsInput] = useState("");
     const [questions, setQuestions] = useState([]);
@@ -31,6 +31,17 @@ export default function Quiz() {
             setAnswers(Array(parsedQuestions.length).fill(null));
             setSubmitted(false);
             setOutput("");
+            toast.success("اتضاف الاختيارات", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                className: 'font-arabicUI3 w-fit m-7text-lg p-4 rounded-lg shadow-lg',
+              })
         } catch (error) {
             alert("Invalid input format. Please enter valid structured text.");
         }
@@ -45,7 +56,19 @@ export default function Quiz() {
 
     const handleSubmit = () => {
         if (answers.includes(null)) {
-            alert("Please answer all questions before submitting.");
+
+            toast.error(" جاوب علي كل الاسئلة", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                className: 'font-arabicUI3 w-fit m-7text-lg p-4 rounded-lg shadow-lg',
+            })
+
             return;
         }
         setSubmitted(true);
@@ -56,13 +79,44 @@ export default function Quiz() {
             })
             .join("\n");
         setOutput(formattedOutput);
+        toast.success("الاجابات اتضافت", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            className: 'font-arabicUI3 w-fit m-7text-lg p-4 rounded-lg shadow-lg',
+        })
     };
 
     const handleCopy = () => {
         navigator.clipboard.writeText(output).then(() => {
-            alert("تم نسخ الإجابات إلى الحافظة");
+            toast.success("تم النسخ", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                className: 'font-arabicUI3 w-fit m-7text-lg p-4 rounded-lg shadow-lg',
+            })
         }, (err) => {
-            alert("فشل في نسخ الإجابات");
+            toast.error(" مفيش بيانات يسطا", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                className: 'font-arabicUI3 w-fit m-7text-lg p-4 rounded-lg shadow-lg',
+            })
         });
     };
 
@@ -72,6 +126,17 @@ export default function Quiz() {
         setAnswers([]);
         setSubmitted(false);
         setOutput("");
+        toast.success("تم المسح", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            className: 'font-arabicUI3 w-fit m-7text-lg p-4 rounded-lg shadow-lg',
+        })
     };
 
     return (
@@ -102,18 +167,18 @@ export default function Quiz() {
                     نسخ
                 </button>
 
-             
+
             </div>
 
             <button onClick={handleReset} className="w-full mt-4 text-5xl bg-red-500 text-white p-4 rounded">
-                    إعادة تعيين
-                </button>
+                إعادة تعيين
+            </button>
 
             <div className=" grid grid-cols-2 md:grid-cols-4 ">
                 {questions.length > 0 ? (
                     questions.map((q, index) => (
                         <div key={index} className="m-2 grid grid-cols-4 border-black border-2 p-2 rounded-lg bg-gray-400 shadow">
-                            
+
                             <h4 className=" text-5xl text-gray-800 m-2">{index + 1}</h4>
                             <div className="flex gap-4 mt-2">
                                 {q.options.map((opt, i) => (
@@ -134,6 +199,9 @@ export default function Quiz() {
                     <p className="text-gray-500">لا توجد أسئلة متاحة</p>
                 )}
             </div>
+
+
+            <ToastContainer></ToastContainer>
 
 
             {submitted && (
