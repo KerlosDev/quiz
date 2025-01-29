@@ -75,7 +75,7 @@ export default function Quiz() {
     };
 
     return (
-        <div className="p-6 m-20 font-arabicUI3 bg-gray-300 rounded-xl">
+        <div className="p-6 m-3 font-arabicUI3 bg-gray-300 rounded-xl">
             <h1 className="text-4xl font-arabicUI3 mb-4">اختيار الاختيارات</h1>
 
             <div className=" grid grid-cols-6">
@@ -109,11 +109,12 @@ export default function Quiz() {
                     إعادة تعيين
                 </button>
 
-            <div className=" grid grid-cols-4">
+            <div className=" grid grid-cols-2 md:grid-cols-4 ">
                 {questions.length > 0 ? (
                     questions.map((q, index) => (
-                        <div key={index} className="m-2 flex border-black border-2 p-2 rounded-lg bg-gray-400 shadow">
-                            <h4 className=" text-5xl m-2">{index+1}</h4>
+                        <div key={index} className="m-2 grid grid-cols-4 border-black border-2 p-2 rounded-lg bg-gray-400 shadow">
+                            
+                            <h4 className=" text-5xl text-gray-800 m-2">{index + 1}</h4>
                             <div className="flex gap-4 mt-2">
                                 {q.options.map((opt, i) => (
                                     <button
