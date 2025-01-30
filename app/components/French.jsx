@@ -8,6 +8,8 @@ import { FaLock, FaPlay } from 'react-icons/fa';
 import RedButton from './RedButton';
 import GreenButton from './GreenButton';
 import YellowButton from './YellowButton';
+import BlueButton from './BlueButton';
+import CoutText from './CoutText';
 
 const French = () => {
     const [activeBook, setActiveBook] = useState(false);
@@ -156,6 +158,7 @@ const French = () => {
                     {/* Render quizzes dynamically */}
                     {renderQuizzes()}
                 </div>
+                <CoutText number={450}></CoutText>
             </div>
 
             {/* Books Grid Section */}
@@ -164,12 +167,8 @@ const French = () => {
 
                 <RedButton handleClick={() => handleClick(' من 1 لـ 10 شوامل', 1)} title='شوامل 1' number={1} font="font-arabicUI3"   ></RedButton>
                 <RedButton handleClick={() => handleClick(' من 11 لـ 20 شوامل', 2)} title='شوامل 2' number={2} font="font-arabicUI3"  ></RedButton>
-                <RedButton handleClick={() => handleClick(' من 21 لـ 30 شوامل', 3)} title='شوامل 3' number={3} font="font-arabicUI3"  ></RedButton>
-                <YellowButton handleClick={() => handleClick(' من 31 لـ 40 شوامل', 4)} title='شوامل 4' number={4} font="font-arabicUI3"  ></YellowButton>
-                <YellowButton handleClick={() => handleClick(' من 41 لـ 50 شوامل', 5)} title='شوامل 5' number={5} font="font-arabicUI3"  ></YellowButton>
-                <YellowButton handleClick={() => handleClick(' من 51 لـ 60 شوامل', 6)} title='شوامل 6' number={6} font="font-arabicUI3"  ></YellowButton>
-                <GreenButton handleClick={() => handleClick(' من 61 لـ 67 شوامل', 7)} title='شوامل 7' number={9} font="font-arabicUI3"   ></GreenButton>
-
+             
+                <BlueButton handleClick={() => handleClick('هيتم اضافة المزيد', 30)} title='قريبا' number={2} font="font-arabicUI3"  ></BlueButton>
 
             </div >
 

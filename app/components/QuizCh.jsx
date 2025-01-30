@@ -30,7 +30,7 @@ export default function QuizCh({ params }) {
     const [quizDetails, setQuizDetalis] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentImage, setCurrentImage] = useState('');
-    const [resultJson, setResultJson] = useState(null); // State for result JSON
+
     const encryptionKey = 'jdfhaksjdh38457389475fjks46jy6i786kadhfkjsahdfkjash';
 
     const openModal = (imageUrl) => {
@@ -55,6 +55,7 @@ export default function QuizCh({ params }) {
         })
 
     }
+
 
 
     useEffect(() => {
@@ -251,8 +252,6 @@ export default function QuizCh({ params }) {
                         quizName: quizDetails.namequiz,
                         sub: quizDetails.subject,
                     };
-
-                    // Encrypt the result data
                     const encryptedResultData = CryptoJS.AES.encrypt(JSON.stringify(resultData), encryptionKey).toString();
 
                     const saveGrade = async () => {
@@ -352,6 +351,7 @@ export default function QuizCh({ params }) {
     const displayResult = () => {
 
 
+
         return (
             <div className="bg-quiz2 cursor-default bg-cover rounded-xl  م-2 p-1 md:p-8 md:م-4">
                 <div className="backdrop-blur-3xl rounded-xl p-6">
@@ -372,7 +372,7 @@ export default function QuizCh({ params }) {
                                         src={item.imageUrl}
                                         alt={`Question ${index + 1} Image`}
                                         width={400}
-                                        height={400}
+                                        height={200}
                                     />
                                 )}
                                 <h2
@@ -474,17 +474,17 @@ export default function QuizCh({ params }) {
                         <div id="question" className="mt-8">
 
                             {questions[currentQuestionIndex] && questions[currentQuestionIndex]?.imageUrl ? (
-                                <div className="grid max-lg:grid-cols-1 items-center grid-cols-3">
-                                    <h2 className=" col-span-2 text-xl md:text-5xl order-1 h-fit cursor-pointer leading-normal font-arabicUI3  max-sm:mt-6 p-2 md:p-4 rounded-lg  text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800">
+                                <div className="grid  max-lg:grid-cols-1 items-center grid-cols-3">
+                                    <h2 className=" p-2  col-span-1 text-xl md:text-5xl order-1 h-fit cursor-pointer leading-normal font-arabicUI3  max-sm:mt-6  md:p-4 rounded-lg  text-center duration-500 transition active:ring-4 select-none bg-white text-gray-800">
                                         {questions[currentQuestionIndex]?.question}
                                     </h2>
 
-                                    <div className="col-span-1 max-sm:w-full rounded-xl">
+                                    <div className="col-span-2 max-sm:w-full rounded-xl">
                                         <img
                                             className="cursor-pointer rounded-xl"
                                             src={questions[currentQuestionIndex]?.imageUrl}
                                             alt="Quiz Image"
-                                            width={400}
+                                            width={800}
                                             height={400}
                                             onClick={() => openModal(questions[currentQuestionIndex]?.imageUrl)}
                                         />

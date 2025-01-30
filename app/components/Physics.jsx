@@ -12,6 +12,7 @@ import RedButton from './RedButton';
 import GreenButton from './GreenButton';
 import YellowButton from './YellowButton';
 import { usePremiumUser } from '../context/PremiumUserContext';
+import BlueButton from './BlueButton';
 
 
 const Physics = () => {
@@ -150,7 +151,7 @@ const Physics = () => {
                 <YellowButton handleClick={() => handleClick('الفصل السادس', 6)} title='الفصل السادس' number={6} size={4}  ></YellowButton>
                 <GreenButton handleClick={() =>  handleClick('الفصل السابع', 7)} title='الفصل السابع' number={7}   ></GreenButton>
                 <GreenButton handleClick={() =>  handleClick('الفصل الثامن', 8)} title=' الفصل الثامن' number={8}  ize={4}  ></GreenButton>
-                <GreenButton handleClick={() =>  handleClick('شوامل ', 9)} title='شوامل ' number={9}  ></GreenButton>
+                <BlueButton handleClick={() => handleClick('هيتم اضافة شوامل', 30)} title='قريبا' number={2} font="font-arabicUI3"  ></BlueButton>
 
 
 

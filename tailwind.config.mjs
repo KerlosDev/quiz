@@ -46,7 +46,9 @@ export default {
         'non3': "url('/non3.png')",
         'non4': "url('/non4.png')",
         'non5': "url('/non5.png')",
-      }
+
+      }    
+ 
     },
   },
   plugins: [],

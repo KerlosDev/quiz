@@ -116,10 +116,8 @@ const Hero = () => {
         <PremiumUserProvider>
             <div className="relative select-none cursor-default  selection:text-yellow-400 mt-5 selection:bg-yellow-800  bg-cover flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8">
                 {/* Main Hero Section */}
-                <div className=' absolute w-80 h-80 bg-slate-900 left-0 -bottom-48 rounded-full blur-2xl -z-20'></div>
-                <div className=' absolute w-80 h-80 bg-slate-900 right-0  -bottom-48 rounded-full blur-2xl -z-20'></div>
-                <div className=' absolute w-80 h-80 bg-slate-900 right-auto left-auto -bottom-48 rounded-full blur-2xl -z-20'></div>
 
+                
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-60  md:mx-8">
                     {/* Main Section */}
 

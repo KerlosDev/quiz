@@ -13,12 +13,13 @@ import CryptoJS from "crypto-js";
 
 export default function QuizCh({ params }) {
 
+
     const { quizid } = React.use(params);
     const { user } = useUser();
     const email = user?.primaryEmailAddress?.emailAddress;
 
 
-
+    console.log(params)
 
     const [questions, setQuestions] = useState([]); // Store the parsed quiz questions
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Index of the current question

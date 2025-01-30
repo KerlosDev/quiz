@@ -30,8 +30,8 @@ const Header = () => {
     return (
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-4 relative">
             {/* Background blur effect */}
-            <div className="absolute w-80 h-80 bg-slate-900 left-0 top-16 rounded-full blur-2xl -z-20"></div>
 
+            
             {/* Logo Section */}
             <Link href="/" className="order-1 md:order-2">
                 <div className="flex place-items-center text-yellow-500 text-5xl p-3 rounded-t-2xl rounded-l-2xl">

@@ -113,7 +113,7 @@ const Page = () => {
 
                         <div className=' bg-black/30 max-sm:w-full w-fit p-2 rounded-xl border shadow-2xl shadow-white/20'>
                             <h1 className='m-auto max-sm:text-3xl mt-6 flex justify-center text-center  font-arabicUI3 place-items-center leading-relaxed max-md:text-4xl'>
-                                <span>عشان تفعل باقي الامتحانات حول 50 جنيه فودافون كاش</span>
+                                <span>عشان تفعل باقي الامتحانات حول 100 جنيه فودافون كاش</span>
                             </h1>
                             <h1 className=' w-fit m-auto justify-center rounded-xl bg-black '>
                                 <span className='m-auto text-3xl  bg-cover drop-shadow-2xl w-fit p-3 rounded-xl bg-paton bg-clip-text  text-transparent md:text-5xl mt-6 flex justify-center font-arabicUI3 place-items-center'>
@@ -127,7 +127,7 @@ const Page = () => {
                         </div>
 
                         <h1 className='m-auto mt-6 flex justify-center font-arabicUI3 bg-black/15 border shadow-2xl shadow-white/20 p-4 rounded-xl w-fit place-items-center'>
-                            مبلغ : 50 جنيه
+                            مبلغ : 100 جنيه
                         </h1>
                         <h1 className='m-auto mt-6 flex justify-center leading-relaxed text-center text-sm font-arabicUI3 place-items-center'>
                             علي كل عمليه دفع بيتم تحويل 5 جنية لجمعية الهلال الاحمر الفلسطيني عشان توصل لاخواتنا هناك

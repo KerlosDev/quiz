@@ -9,6 +9,8 @@ import RedButton from './RedButton';
 import GreenButton from './GreenButton';
 import YellowButton from './YellowButton';
 import { usePremiumUser } from '../context/PremiumUserContext';
+import CoutText from './CoutText';
+import BlueButton from './BlueButton';
 
 const Geo = () => {
     const [activeBook, setActiveBook] = useState(false);
@@ -127,6 +129,7 @@ const Geo = () => {
                     {/* Render quizzes dynamically */}
                     {renderQuizzes()}
                 </div>
+                <CoutText number={400}></CoutText>
             </div>
 
             {/* Books Grid Section */}
@@ -137,6 +140,8 @@ const Geo = () => {
                 <RedButton handleClick={() => handleClick('الباب الاول', 1)} title='الباب الاول' number={1} font="font-arabicUI3"  ></RedButton>
                 <YellowButton handleClick={() => handleClick('الباب التاني', 2)} title='الباب التاني' number={2} font="font-arabicUI3"  ></YellowButton>
                 <GreenButton handleClick={() => handleClick('الباب التالت', 3)} title='الباب التالت' number={3} size={4} font="font-arabicUI3"   ></GreenButton>
+
+                <BlueButton handleClick={() => handleClick('هيتم اضافة المزيد', 30)} title='قريبا' number={2} font="font-arabicUI3"  ></BlueButton>
 
 
             </div>

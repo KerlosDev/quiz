@@ -9,6 +9,8 @@ import RedButton from './RedButton';
 import YellowButton from './YellowButton';
 import GreenButton from './GreenButton';
 import { usePremiumUser } from '../context/PremiumUserContext';
+import BlueButton from './BlueButton';
+import CoutText from './CoutText';
 
 const English = () => {
     const [activeBook, setActiveBook] = useState(false);
@@ -119,7 +121,7 @@ const English = () => {
 
                 <div className='bg-yellow-800 bg-daark bg-cover cursor-default shadow-xl shadow-yellow-800/50 rounded-xl m-4 p-4'>
                     <h4 className='text-2xl sm:text-4xl md:text-5xl text-center  font-arabicUI2 bg-paton text-transparent bg-clip-text m-auto justify-center flex'>
-                        {title === 'كيمياء' ? 'يلا اختار كتاب تحله' : 'امتحانات الكتاب'}
+                        {title === 'كيمياء' ? 'يلا اختار فصل تحله' : 'امتحانات الفصل'}
                     </h4>
 
                     {title === 'كيمياء' && <div>
@@ -131,6 +133,7 @@ const English = () => {
                     {/* Render quizzes dynamically */}
                     {renderQuizzes()}
                 </div>
+                <CoutText number={2052}></CoutText>
             </div>
 
             {/* Books Grid Section */}
@@ -142,9 +145,13 @@ const English = () => {
                 <YellowButton handleClick={() => handleClick("الباب التالت", 3)} title="الباب التالت" number={3} ></YellowButton>
                 <YellowButton handleClick={() => handleClick("الباب الرابع", 4)} title="الباب الرابع" number={4} ></YellowButton>
                 <GreenButton handleClick={() => handleClick("الباب الخامس", 5)} title="الباب الخامس" number={5} size={4}  ></GreenButton>
-                <GreenButton handleClick={() => handleClick("الباب السادس", 6)} title="الباب السادس" number={6} size={4} ></GreenButton>
+                <BlueButton handleClick={() => handleClick("شوامل", 6)} title="شوامل" number={6} size={4} ></BlueButton>
+         
+              
             </div>
 
+            
+     
 
 
         </div>

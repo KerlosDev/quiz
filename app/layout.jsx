@@ -54,7 +54,8 @@ export default function RootLayout({ children }) {
 
       <html lang="en">
         <body
-          className={`bg-slate-950 select-none relative  antialiased`}
+          
+          className={`bg-slate-950 bg-shitos select-none relative  antialiased`}
         >
 
 
