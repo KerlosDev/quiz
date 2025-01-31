@@ -174,17 +174,17 @@ export default function Quiz() {
                 إعادة تعيين
             </button>
 
-            <div className=" grid grid-cols-2 ">
+            <div className=" grid grid-cols-1 ">
                 {questions.length > 0 ? (
                     questions.map((q, index) => (
                         <div key={index} className="m-2 grid grid-cols-4 border-black border-2 p-2 rounded-lg bg-gray-400 shadow">
 
-                            <h4 className=" text-5xl text-gray-800 m-2">{index + 1}</h4>
+                            <h4 className=" text-9xl text-gray-800 m-2">{index + 1}</h4>
                             <div className="flex gap-4 mt-2">
                                 {q.options.map((opt, i) => (
                                     <button
                                         key={i}
-                                        className={`p-3  text-4xl  border rounded ${answers[index] === ['a', 'b', 'c', 'd'][i] ? "bg-blue-500 text-white" : "bg-gray-200"
+                                        className={`p-7  text-8xl  border rounded ${answers[index] === ['a', 'b', 'c', 'd'][i] ? "bg-blue-500 text-white" : "bg-gray-200"
                                             }`}
                                         onClick={() => handleSelect(index, i)}
                                     >

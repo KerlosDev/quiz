@@ -12,6 +12,14 @@ function convertFormat(input) {
     return input.replace(/(\([أبجد]\))/g, (match) => {
         const arabicLetter = match[1];
         return `(${arabicToEnglish[arabicLetter]})`;
+    }).replace(/«([^»]+)»/g, (match, p1) => {
+        const parts = p1.split(' - ');
+        if (parts.length === 2) {
+            return `(${parts[0]} - ${parts[1]})`;
+        }
+        return match;
+    }).replace(/(\d+)\. (.+?) » .*\nأ\.\s*(.+?)\nب\.\s*(.+?)\nج\.\s*(.+?)\nد\.\s*(.+?)(?=\n|$)/g, (match, p1, p2, a, b, c, d) => {
+        return `${p1}. ${p2} :\n\n(a) ${a}\n(b) ${b}\n(c) ${c}\n(d) ${d}`;
     });
 }
 
@@ -118,5 +126,3 @@ const page = () => {
 };
 
 export default page;
-
-// ...existing code...

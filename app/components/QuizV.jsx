@@ -62,8 +62,7 @@ const QuizV = () => {
         acc[item.sub].quizGrade += item.score;
         return acc;
     }, {});
-
-    console.log(filteredData.length)
+ 
 
     if (filteredData.length === 0) return <div>
         <div className=' cursor-default  backdrop-blur-xl rounded-xl w-fit m-auto outline-dashed mb-8  outline-2 bg-black/20 outline-white  p-5'>

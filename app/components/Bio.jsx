@@ -22,9 +22,7 @@ const Bio = () => {
 
     const { user } = useUser();
 
-
-    console.log(premuserorNot)
-
+ 
 
     // Handle click dynamically
     const handleClick = (namebook, index) => {

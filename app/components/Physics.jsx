@@ -13,6 +13,7 @@ import GreenButton from './GreenButton';
 import YellowButton from './YellowButton';
 import { usePremiumUser } from '../context/PremiumUserContext';
 import BlueButton from './BlueButton';
+import CoutText from './CoutText';
 
 
 const Physics = () => {
@@ -137,6 +138,7 @@ const Physics = () => {
                     {/* Render quizzes dynamically */}
                     {renderQuizzes()}
                 </div>
+                <CoutText number={1647}> </CoutText>
             </div>
 
             {/* Books Grid Section */}

@@ -9,7 +9,7 @@ import { usePremiumUser } from '../context/PremiumUserContext';
 const ActiveSqu = () => {
     const { user } = useUser();
     const premuserorNot = usePremiumUser();
-    console.log(premuserorNot)
+    
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {

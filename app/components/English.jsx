@@ -21,8 +21,8 @@ const English = () => {
     const [numberofquiz, setNumberQuiz] = useState(0);
     const { user } = useUser();
     const premuserorNot = usePremiumUser();
-    console.log(premuserorNot)
-
+    
+    
     // Handle click dynamically
     const handleClick = (namebook, index) => {
         setActiveBook(true);
