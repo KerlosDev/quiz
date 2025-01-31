@@ -63,6 +63,7 @@ const QuizV = () => {
         return acc;
     }, {});
  
+    const totalPoints = filteredData.reduce((acc, item) => acc + item.score, 0);
 
     if (filteredData.length === 0) return <div>
         <div className=' cursor-default  backdrop-blur-xl rounded-xl w-fit m-auto outline-dashed mb-8  outline-2 bg-black/20 outline-white  p-5'>
@@ -135,6 +136,7 @@ const QuizV = () => {
 
                         </div>
 
+
                         <div className='cursor-default mt-8 backdrop-blur-xl rounded-xl w-fit m-auto outline-dashed mb-8 outline-2 bg-black/20 outline-white p-5'>
                             <h4 className='m-auto flex gap-4 rtl place-items-center justify-center font-arabicUI2 text-xl md:text-5xl text-center text-white'>
                                 مستواك فكل مادة النهاردة
@@ -202,6 +204,14 @@ const QuizV = () => {
                                 </div>
                             ))}
                         </div>
+                        
+                        {totalPoints > 0 && (
+                            <div className='cursor-default mt-8 backdrop-blur-xl rounded-xl w-fit m-auto outline-dashed mb-8 outline-2 bg-black/20 outline-white p-5'>
+                                <h4 className='m-auto flex gap-4 rtl place-items-center justify-center font-arabicUI2 text-xl md:text-5xl text-center text-white'>
+                                    مجموع النقاط: {totalPoints}
+                                </h4>
+                            </div>
+                        )}
                     </div>
 
                 ) }
