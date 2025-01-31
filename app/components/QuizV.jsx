@@ -195,7 +195,7 @@ const QuizV = () => {
                                             } else if (percentage >= 60) {
                                                 return "مقبول ";
                                             } else {
-                                                return "سئ للغاية ";
+                                                return "مش حلو";
                                             }
                                         })()}
 
