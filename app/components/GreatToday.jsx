@@ -39,6 +39,7 @@ const GreatToday = () => {
     };
 
     const getFirstTwoWords = (name) => {
+        if (!name) return ""; // Check if name is null or undefined
         return name.split(" ").slice(0, 2).join(" ");
     };
 
