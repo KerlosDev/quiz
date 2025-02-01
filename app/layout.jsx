@@ -58,14 +58,12 @@ export default function RootLayout({ children }) {
           className={`bg-slate-950   select-none relative  antialiased`}
         >
 
-{children}
 
-          
-{/* 
+
           <Header></Header>
           
           {children}
-          <Footer></Footer> */}
+          <Footer></Footer>
         </body>
       </html>
     </ClerkProvider>
