@@ -16,10 +16,6 @@ export default function QuizCh({ params }) {
     const { quizid } = React.use(params);
     const { user } = useUser();
     const email = user?.primaryEmailAddress?.emailAddress;
-
-
-
-
     const [questions, setQuestions] = useState([]); // Store the parsed quiz questions
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Index of the current question
     const [selectedAnswer, setSelectedAnswer] = useState(null); // Track the user's selected answer
