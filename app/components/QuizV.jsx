@@ -8,7 +8,7 @@ import { IoBarChart } from 'react-icons/io5';
 import CryptoJS from 'crypto-js';
 
 const QuizV = () => {
-    const [showMore, setShowMore] = useState(false);
+    
     const { user } = useUser();
     const email = user?.primaryEmailAddress?.emailAddress;
     const [quiz, setQuiz] = useState([]);
