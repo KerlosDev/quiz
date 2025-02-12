@@ -7,8 +7,9 @@ import { TbMessageFilled } from "react-icons/tb";
 import ActiveSqu from "./ActiveSqu";
 import GreatToday from "./GreatToday";
 import Image from 'next/image';
-
+import { IoPersonSharp } from "react-icons/io5";
 import { PremiumUserProvider } from '../context/PremiumUserContext';
+import Link from "next/link";
 
 const Hero = () => {
     const Features = [
@@ -70,7 +71,7 @@ const Hero = () => {
         , " لا تحزن إن الله معنا ❤️🐥"
         , "اتركها تأتي كما كتبها الله لك لعلها تأتي كما تمناها قلبك يا كتكوتي ❤️🐥 "
         , " يكفي أننا عند الله لا نهون ❤️🐥"
-        , " لله في تأخيره تدبيرٌ عظيم فاصبر ❤️🐥" 
+        , " لله في تأخيره تدبيرٌ عظيم فاصبر ❤️🐥"
     ];
 
     // Get a random message from the array
@@ -126,11 +127,13 @@ const Hero = () => {
 
 
                     <div className=" mt-2  cursor-pointer hover:brightness-90 transition  justify-center  col-span-1 h-full bg-red-500 shadow-2xl bg-non bg-cover outline-dashed outline-offset-2 outline-red-500  p-6 md:p-9 rounded-xl flex items-center ">
-
-                        <h3 onClick={openDialog} className="flex flex-col  md:text-5xl select-none  font-arabicUI3 items-center justify-center text-3xl  lg:text-4xl text-center text-white">
-                            <TbMessageFilled className="text-7xl lg:text-8xl transition hover:scale-150 hover:cursor-pointer" />
-                            رسالة اليوم
-                        </h3>                </div>
+                        <Link href='/friends'>
+                            <h3 className="flex flex-col  md:text-5xl select-none  font-arabicUI3 items-center justify-center text-3xl  lg:text-4xl text-center text-white">
+                                <IoPersonSharp className="text-7xl lg:text-8xl transition hover:scale-150 hover:cursor-pointer" />
+                                دعوة الاصدقاء
+                            </h3>
+                        </Link>
+                    </div>
 
 
                     <ActiveSqu />
