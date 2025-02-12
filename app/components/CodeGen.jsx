@@ -108,7 +108,7 @@ const CodeGen = () => {
                 {peopleInvented.length > 0 ? (
                     <ul className='font-arabicUI3 xl:text-xl  bg-black/10   text-sm  lg:text-lg m-4 p-1 md:p-2 border-4 text-center rounded-xl border-black'>
                         {peopleInvented.map((person, index) => (
-                            <li className='my-3' key={index}><span className={` ${ index < 9 ? "bg-black text-white/90  " : "bg-green-500 text-white/90 "}  rounded-full p-1 `}>{index + 1}</span> - {person.email}</li>
+                            <li className='my-3' key={index}><span className={` ${ index < 9 ? "bg-black text-white/90 " : "bg-green-500 text-white/90 "}  rounded-full p-1 `}>{index + 1}</span> - {person.email}</li>
                         ))}
                     </ul>
                 ) : (
