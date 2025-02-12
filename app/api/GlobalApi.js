@@ -13,7 +13,7 @@ const apifr = process.env.NEXT_PUBLIC_MASTER_URL_FRENCH
 const apigeo = process.env.NEXT_PUBLIC_MASTER_URL_GEO
 const premusers = process.env.NEXT_PUBLIC_MASTER_URL_PREMUSERS
 const token = process.env.NEXT_PUBLIC_HYGRAPH_API_TOKEN
-
+const codes = "https://ap-south-1.cdn.hygraph.com/content/cm6yhh1kz01x307uqs702lnc0/master"
 
 const testSaveQuizres = async (jsondata) => {
   // Fetch current results
@@ -62,7 +62,134 @@ const testSaveQuizres = async (jsondata) => {
   const reslut6 = await request(apiQuiz, updateQuery, variables);
   return reslut6;
 }
- 
+
+
+const codegen = async (jsondata) => {
+
+
+  const fetchQuery = gql`
+ query MyQuery {
+  codetests(where: {id: "cm6zrfl772wen07o6pt57vmuq"}) {
+    jsonres
+  }
+}
+    
+  `;
+
+  const currentResults = await request(codes, fetchQuery);
+
+  let existingResults = currentResults.codetests[0]?.jsonres;
+
+  // Ensure existingResults is an array
+  if (!Array.isArray(existingResults)) {
+    existingResults = [];
+  }
+
+  // Check if the code already exists
+  if (existingResults.includes(jsondata)) {
+    return; // Code already exists, do not add it again
+  }
+
+  // Append new code
+  const updatedResults = [...existingResults, jsondata];
+
+
+  // Update results
+  const updateQuery = gql`
+ mutation MyMutation($jsonres: Json!) {
+   updateCodetest(
+     data: {jsonres: $jsonres}
+     where: {id: "cm6zrfl772wen07o6pt57vmuq"}
+   ) {
+     id
+   }
+
+  
+    publishManyCodetestsConnection {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+    
+ }`;
+
+  const variables = {
+    jsonres: updatedResults
+  };
+
+  const reslut6 = await request(codes, updateQuery, variables);
+  return reslut6;
+
+}
+
+const codegen2 = async (jsondata) => {
+  const fetchQuery = gql`
+    query MyQuery {
+      codetests(where: { id: "cm6zrfl772wen07o6pt57vmuq" }) {
+        jsonres2
+      }
+    }
+  `;
+
+  const currentResults = await request(codes, fetchQuery);
+  let existingResults = currentResults.codetests[0]?.jsonres2 || [];
+
+  // Ensure existingResults is an array
+  if (!Array.isArray(existingResults)) {
+    existingResults = [];
+  }
+
+  // Check if an entry with the same email already exists
+  const hasEmail = existingResults.some(entry => entry.email === jsondata.email);
+
+  if (hasEmail) {
+    return; // If email already exists, do not update
+  }
+
+  // Append new code
+  const updatedResults = [...existingResults, jsondata];
+
+  // Update results
+  const updateQuery = gql`
+    mutation MyMutation($jsonres2: Json!) {
+      updateCodetest(data: { jsonres2: $jsonres2 }, where: { id: "cm6zrfl772wen07o6pt57vmuq" }) {
+        id
+      }
+      publishManyCodetestsConnection {
+        edges {
+          node {
+            id
+          }
+        }
+      }
+    }
+  `;
+
+  const variables = {
+    jsonres2: updatedResults
+  };
+
+  const result6 = await request(codes, updateQuery, variables);
+  return result6;
+};
+
+const invetedPeople = async () => {
+  const fetchQuery = gql`
+  query MyQuery {
+    codetests(where: { id: "cm6zrfl772wen07o6pt57vmuq" }) {
+      jsonres2
+    }
+  }
+`;
+
+  const currentResults = await request(codes, fetchQuery);
+  return currentResults
+}
+
+
+
 const vquiz = async () => {
   const qmon = gql`
   query MyQuery {
@@ -400,7 +527,8 @@ export default {
   chemstryDAta,
   physicsData,
   geoData,
-
+  codegen,
+  codegen2,
   quizAr,
   quizEn,
   quizFr,
@@ -408,9 +536,9 @@ export default {
   quizPh,
   quizbio,
   quizgeo,
-
+  invetedPeople,
   greatDay,
-  
+
   premUsers,
   vquiz,
   sendEnrollData,

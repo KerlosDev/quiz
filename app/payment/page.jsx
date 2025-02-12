@@ -10,7 +10,7 @@ import Link from 'next/link';
 const Page = () => {
 
 
-    const [text, setText] = useState('');
+
     const [number, setNumber] = useState('');
     const [loading, setLoading] = useState(false); // State for loading status
     const [showmodel, setshowmodel] = useState(false);

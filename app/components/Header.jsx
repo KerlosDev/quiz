@@ -63,7 +63,7 @@ const Header = () => {
                 ) : (
                     <div className="flex items-center gap-5">
                         {/* Sign In Button */}
-                        <div className="flex items-center bg-red-500 text-xl md:text-2xl p-2 h-16 rounded-xl text-white font-arabicUI shadow-xl shadow-red-600/40 outline-dashed outline-red-500 outline-offset-4">
+                        <div className="flex items-center bg-non bg-cover bg-red-500 text-xl md:text-2xl p-2 h-16 rounded-xl text-white font-arabicUI shadow-xl shadow-red-600/40 outline-dashed outline-red-500 outline-offset-4">
                             <button onClick={handleSignIn}>تسجيل الدخول</button>
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 448 512">
                                 <path
@@ -73,7 +73,7 @@ const Header = () => {
                             </svg>
                         </div>
                         {/* Sign Up Button */}
-                        <div className="flex items-center bg-blue-500 text-xl md:text-2xl px-4 py-2 h-16 rounded-xl text-white font-arabicUI shadow-xl shadow-blue-600/40 outline-dashed outline-blue-400 outline-offset-4">
+                        <div className="flex items-center bg-non3 bg-cover bg-blue-500 text-xl md:text-2xl px-4 py-2 h-16 rounded-xl text-white font-arabicUI shadow-xl shadow-blue-600/40 outline-dashed outline-blue-700 outline-offset-4">
                             <button onClick={handleSignUp}>انشاء حساب</button>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

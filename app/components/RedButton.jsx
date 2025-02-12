@@ -35,7 +35,7 @@ const RedButton = ({ title, number, handleClick,font = "font-arabicUI2" }) => {
                     <rect width={24} height={24} fill="#fff" mask="url(#lineMdSpeedTwotoneLoop0)"></rect>
                 </svg>
             </span>
-            <span className="text-5xl">{title}</span>
+            <span className="text-4xl">{title}</span>
         </div>
     );
 };

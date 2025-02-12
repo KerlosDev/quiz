@@ -26,7 +26,7 @@ const YellowButton = ({ title, number, handleClick,size = 5, font = "font-arabic
                     </mask>
                     <rect width={24} height={24} fill="#000" mask="url(#lineMdSpeedTwotoneLoop0)"></rect>
                 </svg>       </span>
-            <span className={` text-black text-${size}xl `}>{title}</span>
+            <span className={` text-black text-4xl `}>{title}</span>
         </div>
 
     )
