@@ -28,7 +28,7 @@ const CodeGen = () => {
     }, [code]);
 
     const codeapi = () => {
-        GlobalApi.codegen(code);
+        GlobalApi.codegen({ "studentCode": code, "email": email });
         GlobalApi.invetedPeople().then((res) => {
             const filteredPeople = res.codetests[0].jsonres2.filter(person => person.sentcode === code);
             setPeopleInvented(filteredPeople);
@@ -71,7 +71,7 @@ const CodeGen = () => {
         setSuccess(false);
         try {
             if (user) {
-                const res = await GlobalApi.codegen2({ "sentcode": sentcode, "email": email });
+                const res = await GlobalApi.codegen2({ "friend code": sentcode, "email": email });
                 console.log(res);
                 if (!res || res.errors) {
                     setError("انت بعت كود خلاص غير متاح انك تبعت تاني للاسف ..");
