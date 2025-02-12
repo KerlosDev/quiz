@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { IoPersonSharp } from "react-icons/io5";
 import { PremiumUserProvider } from '../context/PremiumUserContext';
 import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
 
 const Hero = () => {
     const Features = [
@@ -92,6 +93,7 @@ const Hero = () => {
         }
     };
 
+    const {user} = useUser()
     // Update the message after the component mounts
     useEffect(() => {
         setMessage(getRandomMessage());
@@ -127,7 +129,7 @@ const Hero = () => {
 
 
                     <div className=" mt-2  cursor-pointer hover:brightness-90 transition  justify-center  col-span-1 h-full bg-red-500 shadow-2xl bg-non bg-cover outline-dashed outline-offset-2 outline-red-500  p-6 md:p-9 rounded-xl flex items-center ">
-                        <Link href='/friends'>
+                        <Link href={` ${user ? '/friends' : '/sign-up'}`}>
                             <h3 className="flex flex-col  md:text-5xl select-none  font-arabicUI3 items-center justify-center text-3xl  lg:text-4xl text-center text-white">
                                 <IoPersonSharp className="text-7xl lg:text-8xl transition hover:scale-150 hover:cursor-pointer" />
                                 دعوة الاصدقاء
