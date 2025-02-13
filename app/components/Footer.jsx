@@ -12,10 +12,12 @@ const Footer = () => {
 
 
                         Devloped By &nbsp;
-                        <span className=' hover:scale-105  bg-paton bg-clip-text text-transparent'>
-                            Kerlos Hany
-                            &nbsp;
-                        </span>
+                        <a href="https://kerlos.site">
+                            <span className=' hover:scale-105  bg-paton bg-clip-text text-transparent'>
+                                Kerlos Hany
+                                &nbsp;
+                            </span>
+                        </a>
                         <Link href='/'>
 
                             <span className=' bg-paton text-slate-900  px-2 rounded-xl bg-cover font-arabicUI2 '>
