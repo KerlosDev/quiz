@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaFaceAngry } from "react-icons/fa6";
+import Swal from 'sweetalert2';
 
 
 const TimeTable = () => {
@@ -186,7 +187,7 @@ const TimeTable = () => {
                     className: 'font-arabicUI3 w-fit m-7 text-lg p-4 rounded-lg shadow-lg',
                 });
             } else {
-                toast.error(  ' 😡 مذاكرتش ليهه', {
+                toast.error(' 😡 مذاكرتش ليهه', {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -213,15 +214,33 @@ const TimeTable = () => {
         const totalCount = checkboxes.length;
         const progressPercentage = (checkedCount / totalCount) * 100;
         setProgress(progressPercentage);
-        
+
     };
 
     const clearLocalStorage = () => {
-        localStorage.removeItem('generatedTimeTable');
-        localStorage.removeItem('checkboxStates');
-        setGeneratedTimeTable([]);
-        setShowModel(false);
-        setProgress(0);
+        Swal.fire({
+            title: 'هل أنت متأكد؟',
+            text: " اي انجاز انت عملته هيتمسح  !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'نعم، احذفها!',
+            cancelButtonText: 'إلغاء'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem('generatedTimeTable');
+                localStorage.removeItem('checkboxStates');
+                setGeneratedTimeTable([]);
+                setShowModel(false);
+                setProgress(0);
+                Swal.fire(
+                    'تم الحذف!',
+                    'تم حذف الجدول الزمني.',
+                    'success'
+                )
+            }
+        })
     };
 
     return (
