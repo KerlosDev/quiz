@@ -5,6 +5,7 @@ import { PiBaseballHelmetFill } from "react-icons/pi";
 import { FaRegCalendarDays } from "react-icons/fa6";
 import { FaBook } from "react-icons/fa";
 import Image from 'next/image';
+import Link from 'next/link';
 
 
 const TimeTable = () => {
@@ -196,7 +197,7 @@ const TimeTable = () => {
 
     return (
         <div className='bg-back2 rounded-xl p-2 md:p-8 m-3 md:m-8'>
-           
+
             <div className="backdrop-blur-lg mx-auto w-fit border border-white/40 text-5xl text-white p-4 m-4 rounded-xl flex flex-row items-center">
                 <PiBaseballHelmetFill className=' ' />
                 <h2 className='font-arabicUI2'>المنقذ</h2>
@@ -313,7 +314,16 @@ const TimeTable = () => {
                         </div>
                     </div>
                 )}
+
+
             </div>
+
+            <Link href='https://t.me/ToopSecbot?start=r04854140460'>
+                <div dir='rtl' className="backdrop-blur-lg mx-auto gap-3 w-fit border border-white/40 text-xl md:text-5xl text-white p-4 m-4 rounded-xl flex flex-row items-center">
+                    <h2 className='font-arabicUI2'>3200 مذكرة ثانوية عامة مجانا  </h2>
+                    <FaBook />
+                </div>
+            </Link>
 
         </div>
     )
