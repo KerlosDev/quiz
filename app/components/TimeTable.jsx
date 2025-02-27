@@ -196,9 +196,13 @@ const TimeTable = () => {
 
     return (
         <div className='bg-back2 rounded-xl p-2 md:p-8 m-3 md:m-8'>
+           
             <div className="backdrop-blur-lg mx-auto w-fit border border-white/40 text-5xl text-white p-4 m-4 rounded-xl flex flex-row items-center">
                 <PiBaseballHelmetFill className=' ' />
                 <h2 className='font-arabicUI2'>المنقذ</h2>
+            </div>
+            <div dir='rtl' className={` backdrop-blur-lg mx-auto  border border-white/40 text-xl ${showModel ? "lg:w-full" : "lg:w-1/4"}  text-white p-4 m-4 rounded-xl flex flex-row items-center `}>
+                <p className='font-arabicUI2 text-center flex justify-center '>خلاص يشباب هانت التزم علي قد متقدر بالجدول اللي انت هتعمله عشان انت اللي هتخسر صدقني مش والدك او والدتك او اي حد غيرك دي حياتك انت اصحا وفوق !</p>
             </div>
 
             <div dir='rtl' className={` ${!showModel ? "w-fit " : "lg:grid-cols-3"} font-arabicUI3 text-white backdrop-blur-xl mx-auto border border-white/40 md:p-8 m-4 grid  rounded-xl`}>
@@ -209,7 +213,7 @@ const TimeTable = () => {
                                 <h2 className='text-2xl font-bold mb-2 border-white/40 border bg-black/20 p-4 rounded-xl w-fit flex place-items-center gap-3'>اليوم {day.day} <FaRegCalendarDays /></h2>
                                 <div className='grid grid-cols-1 bg-black/20 border-white/40 border grid-flow-row p-4 rounded-xl  gap-4'>
                                     {day.lessons.map((lesson, lessonIndex) => (
-                                        <div id='task' key={lessonIndex} className='flex transition ease-in-out hover:scale-105 bg-gray-300/10  outline outline-1 outline-gray-400 rounded-xl place-items-center justify-between p-2' onClick={handleTaskClick}>
+                                        <div id='task' key={lessonIndex} className='flex transition  ease-in-out hover:scale-105 bg-gray-300/10  outline outline-1 outline-gray-400 rounded-xl place-items-center justify-between p-2' onClick={handleTaskClick}>
 
                                             <div className=' place-items-center flex gap-4'>
 
@@ -223,15 +227,15 @@ const TimeTable = () => {
 
                                                 <div>
                                                     <div className='font-bold'>{lesson.subjectName}</div>
-                                                    <div>{lesson.lessonName}</div>
+                                                    <div className=' '>{lesson.lessonName}</div>
                                                 </div>
 
                                             </div>
 
-                                            <label className="neon-checkbox">
+                                            <label className="neon-checkbox  place-items-center">
                                                 <input type="checkbox" />
-                                                <div className="neon-checkbox__frame">
-                                                    <div className="neon-checkbox__box">
+                                                <div className="neon-checkbox__frame ">
+                                                    <div className="neon-checkbox__box  ">
                                                         <div className="neon-checkbox__check-container">
                                                             <svg viewBox="0 0 24 24" className="neon-checkbox__check">
                                                                 <path d="M3,12.5l7,7L21,5"></path>
@@ -267,16 +271,16 @@ const TimeTable = () => {
 
 
 
-                        <button onClick={clearLocalStorage} className='buttonn hover:bg-blue-700 text-black py-2 px-4 rounded'>
+                        <button onClick={clearLocalStorage} className='buttonn hover:bg-blue-700 m-4 text-black py-2 px-4 rounded'>
                             <span className='text-white text-3xl'>مسح الجدول</span>
                         </button>
 
                     </>
                 ) : (
-                    <div dir='rtl' className='mx-auto flex justify-center font-arabicUI2 text-white'>
+                    <div dir='rtl' className='mx-auto flex justify-center p-4 font-arabicUI2 text-white'>
                         <div className='gap-y-6 flex flex-col'>
                             <div>
-                                <h2 dir='rtl' className='text-2xl flex place-items-center gap-2 font-bold mb-2'>
+                                <h2 dir='rtl' className='text-2xl flex place-items-center gap-2 font-bold  mb-2'>
                                     عدد الايام
                                     <FaRegCalendarDays />
                                 </h2>
