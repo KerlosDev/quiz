@@ -6,6 +6,8 @@ import { FaRegCalendarDays } from "react-icons/fa6";
 import { FaBook } from "react-icons/fa";
 import Image from 'next/image';
 import Link from 'next/link';
+import { ToastContainer, toast } from 'react-toastify';
+import { FaFaceAngry } from "react-icons/fa6";
 
 
 const TimeTable = () => {
@@ -170,6 +172,32 @@ const TimeTable = () => {
             checkbox.checked = !checkbox.checked;
             saveCheckboxStates();
             updateProgress();
+
+            if (checkbox.checked) {
+                toast.success('❤️ برافو يبطل', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    className: 'font-arabicUI3 w-fit m-7 text-lg p-4 rounded-lg shadow-lg',
+                });
+            } else {
+                toast.error(  ' 😡 مذاكرتش ليهه', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    className: 'font-arabicUI3 w-fit m-7 text-lg p-4 rounded-lg shadow-lg',
+                });
+            }
         }
     };
 
@@ -185,6 +213,7 @@ const TimeTable = () => {
         const totalCount = checkboxes.length;
         const progressPercentage = (checkedCount / totalCount) * 100;
         setProgress(progressPercentage);
+        
     };
 
     const clearLocalStorage = () => {
@@ -205,6 +234,7 @@ const TimeTable = () => {
             <div dir='rtl' className={` backdrop-blur-lg mx-auto  border border-white/40 text-xl ${showModel ? "lg:w-full" : "lg:w-1/4"}  text-white p-4 m-4 rounded-xl flex flex-row items-center `}>
                 <p className='font-arabicUI2 text-center flex justify-center '>خلاص يشباب هانت التزم علي قد متقدر بالجدول اللي انت هتعمله عشان انت اللي هتخسر صدقني مش والدك او والدتك او اي حد غيرك دي حياتك انت اصحا وفوق !</p>
             </div>
+            <ToastContainer></ToastContainer>
 
             <div dir='rtl' className={` ${!showModel ? "w-fit " : "lg:grid-cols-3"} font-arabicUI3 text-white backdrop-blur-xl mx-auto border border-white/40 md:p-8 m-4 grid  rounded-xl`}>
                 {showModel ? (
@@ -225,7 +255,6 @@ const TimeTable = () => {
                                                 {lesson.subjectName == 'لغة فرنسية' && <Image src='/fr.png' width={50} height={50} alt='en' />}
                                                 {lesson.subjectName == 'كيمياء' && <Image src='/chem.jpg' width={50} height={50} alt='en' />}
                                                 {lesson.subjectName == 'احياء' && <Image src='/bio2.jpg' width={50} height={50} alt='en' />}
-
                                                 <div>
                                                     <div className='font-bold'>{lesson.subjectName}</div>
                                                     <div className=' '>{lesson.lessonName}</div>
