@@ -46,6 +46,11 @@ export default {
         'non3': "url('/non3.png')",
         'non4': "url('/non4.png')",
         'non5': "url('/non5.png')",
+        'back': "url('/back.jpg')",
+        'back2': "url('/back2.jpg')",
+        'back3': "url('/back3.jpg')",
+        'back5': "url('/back5.jpg')",
+        'back6': "url('/back.jpg')",
 
       }    
  

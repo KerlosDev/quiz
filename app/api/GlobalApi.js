@@ -523,7 +523,29 @@ const dataToAdmin = async () => {
 }
 
 
+
+const timetabledata = async () => {
+  const fetchQuery = gql`
+ 
+  query MyQuery {
+  timetablejsons {
+    timetable
+  }
+}
+
+
+`
+    
+    ;
+
+  const currentResults = await request(apiQuiz, fetchQuery);
+  return currentResults
+}
+
+
+
 export default {
+  timetabledata,
   dataToAdmin,
   arabicData,
   englishData,
