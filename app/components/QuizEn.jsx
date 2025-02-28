@@ -385,6 +385,7 @@ export default function QuizCh({ params }) {
                     </div>
 
                     <div className="grid max-sm:grid-cols-1 grid-cols-3">
+                        <AdComponent></AdComponent>
                         {questions.map((item, index) => (
                             <div key={index}>
                                 <h2
@@ -425,8 +426,10 @@ export default function QuizCh({ params }) {
                                 })}
                             </div>
                         ))}
+                        
                     </div>
 
+                    
 
 
                     <Link href="/">

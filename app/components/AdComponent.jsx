@@ -26,7 +26,7 @@ const AdComponent = () => {
     }, []);
 
     return (
-        <div id="ad-container" className='w-40 flex justify-center mx-auto h-72'>
+        <div id="ad-container" className='w-40 flex justify-center m-5 mx-auto h-72'>
             {/* Ad will be injected here */}
         </div>
     );
