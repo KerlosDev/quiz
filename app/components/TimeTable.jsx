@@ -27,8 +27,24 @@ const TimeTable = () => {
 
     useEffect(() => {
         getSubjects();
-       
-        
+        const savedTimeTable = localStorage.getItem('generatedTimeTable');
+        const savedCheckboxes = localStorage.getItem('checkboxStates');
+        if (savedTimeTable) {
+            setGeneratedTimeTable(JSON.parse(savedTimeTable));
+            setShowModel(true);
+        }
+        if (savedCheckboxes) {
+            const checkboxes = JSON.parse(savedCheckboxes);
+            setTimeout(() => {
+                checkboxes.forEach((checked, index) => {
+                    const checkbox = document.querySelectorAll('input[type="checkbox"]')[index];
+                    if (checkbox) {
+                        checkbox.checked = checked;
+                    }
+                });
+                updateProgress();
+            }, 0);
+        }
     }, [])
 
     const getSubjects = () => {
@@ -291,7 +307,7 @@ const TimeTable = () => {
     
         setGeneratedTimeTable(timetable);
         setShowModel(true);
-
+        localStorage.setItem('generatedTimeTable', JSON.stringify(timetable));
     };
     
     const handleTaskClick = (e) => {
@@ -332,7 +348,7 @@ const TimeTable = () => {
     const saveCheckboxStates = () => {
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         const checkboxStates = Array.from(checkboxes).map(checkbox => checkbox.checked);
-
+        localStorage.setItem('checkboxStates', JSON.stringify(checkboxStates));
     };
 
     const updateProgress = () => {
@@ -356,7 +372,8 @@ const TimeTable = () => {
             cancelButtonText: 'إلغاء'
         }).then((result) => {
             if (result.isConfirmed) {
-              
+                localStorage.removeItem('generatedTimeTable');
+                localStorage.removeItem('checkboxStates');
                 setGeneratedTimeTable([]);
                 setShowModel(false);
                 setProgress(0);
