@@ -1,4 +1,5 @@
 import QuizCh from "@/app/components/QuizCh"
+import { PremiumUserProvider } from "@/app/context/PremiumUserContext"
 
 import React from "react"
 
@@ -7,10 +8,14 @@ const page = ({ params }) => {
 
 
   return (
-    
-    <QuizCh params={params}></QuizCh>
 
-    
+    <PremiumUserProvider>
+
+      <QuizCh params={params}></QuizCh>
+
+    </PremiumUserProvider>
+
+
   )
 }
 

@@ -10,9 +10,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useUser } from "@clerk/nextjs";
 import CryptoJS from "crypto-js";
 import AdComponent from "./AdComponent";
+import { usePremiumUser } from "../context/PremiumUserContext";
 
 
 export default function QuizCh({ params }) {
+    const premuserorNot = usePremiumUser();
+    console.log(premuserorNot)
 
     const { quizid } = React.use(params);
     const { user } = useUser();
@@ -350,6 +353,7 @@ export default function QuizCh({ params }) {
 
 
         return (
+            
             <div className="bg-quiz2 cursor-default bg-cover rounded-xl  م-2 p-1 md:p-8 md:م-4">
                 <div className="backdrop-blur-3xl rounded-xl p-6">
                     <h1 className="font-arabicUI3 text-6xl max-sm:text-3xl text-center text-white">

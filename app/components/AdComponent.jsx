@@ -1,7 +1,15 @@
 'use client'
 import React, { useEffect } from 'react';
+import { usePremiumUser } from '../context/PremiumUserContext';
 
 const AdComponent = () => {
+
+    const premuserorNot = usePremiumUser();
+    console.log(premuserorNot)
+    
+    if (premuserorNot) {
+        return;
+    }
     useEffect(() => {
         const script1 = document.createElement('script');
         script1.type = 'text/javascript';

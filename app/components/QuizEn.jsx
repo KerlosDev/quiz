@@ -13,6 +13,7 @@ import AdComponent from "./AdComponent";
 
 
 export default function QuizCh({ params }) {
+  
 
     const { quizid } = React.use(params);
     const { user } = useUser();
@@ -426,10 +427,10 @@ export default function QuizCh({ params }) {
                                 })}
                             </div>
                         ))}
-                        
+
                     </div>
 
-                    
+
 
 
                     <Link href="/">
