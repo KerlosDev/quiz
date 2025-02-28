@@ -69,7 +69,7 @@ const Geo = () => {
                 return (
                     <Link key={item.id} href={quizLink}>
                         <h4 className='hover:scale-105   justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto  flex'>
-                            {item?.namequiz || 'No Title Available'}
+                            {item?.namequiz || 'No Title '}
 
                      
                             
