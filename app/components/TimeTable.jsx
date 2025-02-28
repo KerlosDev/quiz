@@ -429,22 +429,25 @@ const TimeTable = () => {
     return (
         <div className='bg-back2 rounded-xl p-2 md:p-8 m-3 md:m-8'>
 
-            
+
             <div className="backdrop-blur-lg mx-auto w-fit border border-white/40 text-5xl text-white p-4 m-4 rounded-xl flex flex-row items-center">
                 <PiBaseballHelmetFill className=' ' />
                 <h2 className='font-arabicUI2'>المنقذ</h2>
             </div>
 
-
+            
             <AdComponent />
 
-            
+
             <div dir='rtl' className={` backdrop-blur-lg mx-auto  border border-white/40 text-xl ${showModel ? "lg:w-full" : "lg:w-1/4"}  text-white p-4 m-4 rounded-xl flex flex-row items-center `}>
                 <p className='font-arabicUI2 text-center flex justify-center '>خلاص يشباب هانت التزم علي قد متقدر بالجدول اللي انت هتعمله عشان انت اللي هتخسر صدقني مش والدك او والدتك او اي حد غيرك دي حياتك انت اصحا وفوق !</p>
             </div>
             <ToastContainer></ToastContainer>
 
             <div dir='rtl' className={` ${!showModel ? "w-fit " : "lg:grid-cols-3"} font-arabicUI3 text-white backdrop-blur-xl mx-auto border border-white/40 md:p-8 m-4 grid  rounded-xl`}>
+
+
+
                 {showModel ? (
                     <>
                         {generatedTimeTable.map((day, index) => (

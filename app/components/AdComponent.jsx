@@ -2,32 +2,33 @@ import React, { useEffect } from 'react';
 
 const AdComponent = () => {
     useEffect(() => {
-        const script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.innerHTML = `
+        const script1 = document.createElement('script');
+        script1.type = 'text/javascript';
+        script1.innerHTML = `
             atOptions = {
-                'key' : 'b13c7df0a00e4233831ce74ddb728656',
+                'key' : '60b0a91c5ffc6069248a290aa7a65edd',
                 'format' : 'iframe',
-                'height' : 300,
-                'width' : 160,
+                'height' : 250,
+                'width' : 300,
                 'params' : {}
             };
         `;
-        document.body.appendChild(script);
+        document.getElementById('ad-container').appendChild(script1);
 
-        const invokeScript = document.createElement('script');
-        invokeScript.type = 'text/javascript';
-        invokeScript.src = '//www.highperformanceformat.com/b13c7df0a00e4233831ce74ddb728656/invoke.js';
-        document.body.appendChild(invokeScript);
+        const script2 = document.createElement('script');
+        script2.type = 'text/javascript';
+        script2.src = '//www.highperformanceformat.com/60b0a91c5ffc6069248a290aa7a65edd/invoke.js';
+        document.getElementById('ad-container').appendChild(script2);
 
+        // Clean up the scripts when the component unmounts
         return () => {
-            document.body.removeChild(script);
-            document.body.removeChild(invokeScript);
+            document.getElementById('ad-container').removeChild(script1);
+            document.getElementById('ad-container').removeChild(script2);
         };
     }, []);
 
     return (
-        <div id="ad-container" style={{ width: '160px', height: '300px' }}>
+        <div id="ad-container" className='w-40 flex justify-center mx-auto h-72'>
             {/* Ad will be injected here */}
         </div>
     );
