@@ -9,7 +9,7 @@ import { usePremiumUser } from '../context/PremiumUserContext';
 const ActiveSqu = () => {
     const { user } = useUser();
     const premuserorNot = usePremiumUser();
-
+    
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
@@ -41,21 +41,21 @@ const ActiveSqu = () => {
                         <Link href='/sign-up'>
                             <h3 className="flex justify-items-center place-items-center flex-col font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-white cursor-pointer">
                                 <FaExclamationTriangle className="text-6xl md:text-8xl transition hover:scale-150" />
-                                الغاء الاعلانات
+                                تفعيل الحساب
                             </h3>
                         </Link>
                     ) : (
                         <Link href='/payment'>
                             <h3 className="flex flex-col  justify-items-center place-items-center  font-arabicUI3 items-center justify-center text-xl md:text-3xl lg:text-4xl text-center text-white cursor-pointer">
                                 <FaExclamationTriangle className="text-6xl md:text-8xl transition hover:scale-150" />
-                                الغاء الاعلانات
+                                تفعيل الحساب
                             </h3>
                         </Link>
                     )
                 ) : (
                     <h3 onClick={handleScrollToSub} className="flex flex-col font-arabicUI3 items-center justify-center text-3xl md:text-5xl text-center text-white cursor-pointer">
                         <PiHeartFill className="text-7xl md:text-8xl transition hover:scale-150 hover:cursor-pointer" />
-                         تم الغاء الاعلانات
+                        الحساب اتفعل
                     </h3>
                 )}
             </div>

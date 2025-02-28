@@ -113,7 +113,7 @@ const Page = () => {
 
                         <div className=' bg-black/30 max-sm:w-full w-fit p-2 rounded-xl border shadow-2xl shadow-white/20'>
                             <h1 className='m-auto max-sm:text-3xl mt-6 flex justify-center text-center  font-arabicUI3 place-items-center leading-relaxed max-md:text-4xl'>
-                                <span>عشان تلغي كل الاعلانات عالموقع حول 55 جنيه فودافون كاش</span>
+                                <span>عشان تفتح امتحانات كل المواد حول 55 جنيه فودافون كاش</span>
                             </h1>
                             <h1 className=' w-fit m-auto justify-center rounded-xl  border-dashed border-2  hover:ease-in-out transition mt-3 hover:scale-110 border-yellow-400 bg-yellow-400/10 '>
                                 <span className='m-auto text-3xl drop-shadow-2xl w-fit  rounded-xl text-yellow-400 md:text-5xl p-4 flex justify-center font-arabicUI3 place-items-center'>
@@ -191,5 +191,4 @@ const Page = () => {
 };
 
 export default Page;
-
 

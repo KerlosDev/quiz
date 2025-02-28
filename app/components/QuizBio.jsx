@@ -9,7 +9,6 @@ import Swal from "sweetalert2";
 import { ToastContainer, toast } from 'react-toastify';
 import { useUser } from "@clerk/nextjs";
 import CryptoJS from "crypto-js";
-import AdComponent from "./AdComponent";
 
 
 export default function QuizCh({ params }) {
@@ -365,8 +364,6 @@ export default function QuizCh({ params }) {
                     </div>
 
                     <div className="grid max-sm:grid-cols-1 grid-cols-3">
-                    <AdComponent></AdComponent>
-
                         {questions.map((item, index) => (
                             <div key={index}>
                                 {item.imageUrl && (
@@ -414,8 +411,6 @@ export default function QuizCh({ params }) {
 
                                     return null; // Do not render options that are neither correct nor selected
                                 })}
-
-                              
                             </div>
                         ))}
                     </div>
@@ -540,7 +535,6 @@ export default function QuizCh({ params }) {
                             </div>
                         </div>
 
-                        <AdComponent></AdComponent>
                     </div>
                     <ToastContainer />
 

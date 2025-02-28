@@ -1,6 +1,5 @@
 import React from 'react'; 
 import QuizV from './QuizV';
-import AdComponent from './AdComponent';
 
 const Subs = () => {
     
@@ -10,8 +9,8 @@ const Subs = () => {
 
             
             <div className='p-1 md:p-5 '>
+                
                <QuizV />
-                <AdComponent></AdComponent>
             </div>
         </div>
     );

@@ -11,7 +11,6 @@ import YellowButton from './YellowButton';
 import { usePremiumUser } from '../context/PremiumUserContext';
 import CoutText from './CoutText';
 import BlueButton from './BlueButton';
-import AdComponent from './AdComponent';
 
 const Geo = () => {
     const [activeBook, setActiveBook] = useState(false);
@@ -60,26 +59,40 @@ const Geo = () => {
         if (numbook === 3) filterKey = 'fasl3';
 
         return dataBook
-            ?.filter((item) => item.level === filterKey)
-            ?.map((item, index) => {
-                const quizLink = !user
-                    ? "/sign-up" // If no user is logged in, redirect to the sign-up page
-                    :
-                    `/geo/${item.id}`
-                return (
-                    <Link key={item.id} href={quizLink}>
-                        <h4 className='hover:scale-105   justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto  flex'>
-                            {item?.namequiz || 'No Title '}
-
-                     
-                            
-                                <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
- 
-                        </h4>
-
-                    </Link>
+        ?.filter((item) => item.level === filterKey)
+        ?.map((item, index) => {
+            const quizLink = !user
+                ? "/sign-up" // If no user is logged in, redirect to the sign-up page
+                : (
+                    filterKey === 'fasl1'
+                        ? `/geo/${item.id}`
+                        : (premuserorNot ? `/geo/${item.id}` : `/payment`)
                 );
-            });
+            return (
+                <Link key={item.id} href={quizLink}>
+                    <h4 className='hover:scale-105   justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto  flex'>
+                        {item?.namequiz || 'No Title Available'}
+
+                        {filterKey === 'fasl1' ?
+
+
+                            <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
+
+                            :
+
+                            (
+                                premuserorNot ? (
+                                    <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
+                                ) : (
+                                    <FaLock className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
+                                )
+                            )
+                        }
+                    </h4>
+
+                </Link>
+            );
+        });
     };
 
     return (
@@ -124,7 +137,6 @@ const Geo = () => {
 
             <div className="grid grid-cols-1 p-5 sm:grid-cols-2 lg:grid-cols-2 h-fit gap-6 lg:col-span-2">
 
-                <AdComponent></AdComponent>
                 <RedButton handleClick={() => handleClick('الباب الاول', 1)} title='الباب الاول' number={1} font="font-arabicUI3"  ></RedButton>
                 <YellowButton handleClick={() => handleClick('الباب التاني', 2)} title='الباب التاني' number={2} font="font-arabicUI3"  ></YellowButton>
                 <GreenButton handleClick={() => handleClick('الباب التالت', 3)} title='الباب التالت' number={3} size={4} font="font-arabicUI3"   ></GreenButton>

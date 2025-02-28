@@ -10,7 +10,6 @@ import GreenButton from './GreenButton';
 import YellowButton from './YellowButton';
 import { usePremiumUser } from '../context/PremiumUserContext';
 import CoutText from './CoutText';
-import AdComponent from './AdComponent';
 
 const Bio = () => {
     const [activeBook, setActiveBook] = useState(false);
@@ -23,7 +22,7 @@ const Bio = () => {
 
     const { user } = useUser();
 
-
+ 
 
     // Handle click dynamically
     const handleClick = (namebook, index) => {
@@ -72,16 +71,31 @@ const Bio = () => {
             ?.map((item, index) => {
                 const quizLink = !user
                     ? "/sign-up" // If no user is logged in, redirect to the sign-up page
-                    :  `/bio/${item.id}` 
+                    : (
+                        filterKey === 'fasl1'
+                            ? `/bio/${item.id}`
+                            : (premuserorNot ? `/bio/${item.id}` : `/payment`)
+                    );
                 return (
                     <Link key={item.id} href={quizLink}>
                         <h4 className='hover:scale-105   justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto  flex'>
                             {item?.namequiz || 'No Title Available'}
 
-                           
+                            {filterKey === 'fasl1' ?
+
 
                                 <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
- 
+
+                                :
+
+                                (
+                                    premuserorNot ? (
+                                        <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
+                                    ) : (
+                                        <FaLock className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
+                                    )
+                                )
+                            }
                         </h4>
 
                     </Link>
@@ -135,7 +149,7 @@ const Bio = () => {
 
 
             <div className="grid grid-cols-1 p-5 sm:grid-cols-2 lg:grid-cols-2 h-fit gap-6 lg:col-span-2">
-                <AdComponent></AdComponent>
+
                 <RedButton handleClick={() => handleClick('الفصل الاول', 1)} title='الفصل الاول' number={1}  ></RedButton>
                 <RedButton handleClick={() => handleClick('الفصل الثاني', 2)} title='الفصل الثاني' number={2}  ></RedButton>
                 <RedButton handleClick={() => handleClick('الفصل الثالث', 3)} title='الفصل الثالث' number={3}  ></RedButton>
