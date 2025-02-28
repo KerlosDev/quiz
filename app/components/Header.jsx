@@ -63,7 +63,7 @@ const Header = () => {
                 ) : (
                     <div className="flex items-center gap-5">
                         {/* Sign In Button */}
-                        <div className="flex items-center bg-non bg-cover bg-red-500 text-xl md:text-2xl p-2 h-16 rounded-xl text-white font-arabicUI shadow-xl shadow-red-600/40 outline-dashed outline-red-500 outline-offset-4">
+                        <div className="flex items-center bg-non bg-cover bg-red-500 text-xl md:text-2xl p-1 h-16  rounded-xl text-white font-arabicUI shadow-xl shadow-red-600/40 outline-dashed outline-red-500 outline-offset-4">
                             <button onClick={handleSignIn}>تسجيل الدخول</button>
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 448 512">
                                 <path
