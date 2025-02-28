@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaFaceAngry } from "react-icons/fa6";
 import Swal from 'sweetalert2';
-
+import AdComponent from './AdComponent';
 
 const TimeTable = () => {
 
@@ -59,7 +59,7 @@ const TimeTable = () => {
             console.error("No lessons data available");
             return;
         }
-    
+
         if (days <= 0 || subjectsPerDay <= 0) {
             toast.error("الرجاء إدخال قيم صحيحة للأيام والمواد في اليوم", {
                 position: "top-right",
@@ -74,11 +74,11 @@ const TimeTable = () => {
             });
             return;
         }
-    
+
         // Create a map of subjects and their lessons
         let subjectMap = {};
         let totalLessonsCount = 0;
-    
+
         // Check the data structure and organize lessons
         if (Array.isArray(aronelessons)) {
             aronelessons.forEach(subject => {
@@ -90,7 +90,7 @@ const TimeTable = () => {
                         lessonName: lesson.lessonName,
                         originalIndex: index // Keep track of original order
                     }));
-                    
+
                     subjectMap[subjectName] = {
                         name: subjectName,
                         lessons: lessons,
@@ -99,7 +99,7 @@ const TimeTable = () => {
                         lessonsPerDay: 1, // Default initial value
                         currentLessonIndex: 0 // Track which lesson to use next
                     };
-                    
+
                     totalLessonsCount += lessons.length;
                 }
             });
@@ -114,7 +114,7 @@ const TimeTable = () => {
                         lessonName: lesson.lessonName,
                         originalIndex: index // Keep track of original order
                     }));
-                    
+
                     subjectMap[subjectName] = {
                         name: subjectName,
                         lessons: lessons,
@@ -123,14 +123,14 @@ const TimeTable = () => {
                         lessonsPerDay: 1, // Default initial value
                         currentLessonIndex: 0 // Track which lesson to use next
                     };
-                    
+
                     totalLessonsCount += lessons.length;
                 }
             });
         }
-    
+
         const subjectNames = Object.keys(subjectMap);
-        
+
         // If no lessons are found, show an error message
         if (subjectNames.length === 0 || totalLessonsCount === 0) {
             toast.error("لم نتمكن من العثور على أي دروس في البيانات", {
@@ -147,7 +147,7 @@ const TimeTable = () => {
             console.error("Structured data:", aronelessons);
             return;
         }
-    
+
         // Calculate optimal lessons per day for each subject
         // For subjects with many lessons, assign more lessons per day
         subjectNames.forEach(subjectName => {
@@ -155,17 +155,17 @@ const TimeTable = () => {
             // Calculate how many lessons per day this subject should have
             // Based on relative size compared to other subjects
             const lessonsPerDay = Math.max(1, Math.ceil(subject.totalLessons / days));
-            
+
             // Limit the lessons per day to a reasonable number (adjust as needed)
             subject.lessonsPerDay = Math.min(lessonsPerDay, 3);
-            
+
             console.log(`Subject ${subjectName}: ${subject.totalLessons} lessons, ${subject.lessonsPerDay} per day`);
         });
-    
+
         // Create the timetable with ordered lessons
         const timetable = [];
         let daySubjectMap = {}; // Track which subjects were used on which days
-        
+
         // Calculate the minimum required days to complete all lessons
         const minRequiredDays = Math.ceil(
             subjectNames.reduce((total, subjectName) => {
@@ -173,7 +173,7 @@ const TimeTable = () => {
                 return total + Math.ceil(subject.totalLessons / subject.lessonsPerDay);
             }, 0) / subjectsPerDay
         );
-        
+
         if (minRequiredDays > days) {
             toast.warning(`قد تحتاج على الأقل ${minRequiredDays} أيام لإكمال جميع الدروس بالإعدادات الحالية.`, {
                 position: "top-right",
@@ -187,25 +187,25 @@ const TimeTable = () => {
                 className: 'font-arabicUI3 w-fit m-7 text-lg p-4 rounded-lg shadow-lg',
             });
         }
-        
+
         // Function to get subjects for a specific day with smart rotation but ensuring ordered lessons
         const getSubjectsForDay = (day) => {
             // First, get subjects that still have lessons and weren't used recently
             // Check which subjects were used in the last 2 days
-            const recentDays = [day-1, day-2].filter(d => d > 0);
+            const recentDays = [day - 1, day - 2].filter(d => d > 0);
             const recentlyUsedSubjects = new Set();
-            
+
             recentDays.forEach(d => {
                 if (daySubjectMap[d]) {
                     daySubjectMap[d].forEach(s => recentlyUsedSubjects.add(s));
                 }
             });
-            
+
             // Filter subjects that have remaining lessons
-            const availableSubjects = subjectNames.filter(subjectName => 
+            const availableSubjects = subjectNames.filter(subjectName =>
                 subjectMap[subjectName].remainingLessons.length > 0
             );
-            
+
             // Sort subjects by priority:
             // 1. Subjects not used recently
             // 2. Subjects with the most remaining lessons relative to their total
@@ -214,36 +214,36 @@ const TimeTable = () => {
                 const aRecent = recentlyUsedSubjects.has(a) ? 1 : 0;
                 const bRecent = recentlyUsedSubjects.has(b) ? 1 : 0;
                 if (aRecent !== bRecent) return aRecent - bRecent;
-                
+
                 // Second priority: subjects with highest ratio of remaining lessons
                 const aRatio = subjectMap[a].remainingLessons.length / subjectMap[a].totalLessons;
                 const bRatio = subjectMap[b].remainingLessons.length / subjectMap[b].totalLessons;
                 return bRatio - aRatio;
             });
         };
-        
+
         // Distribute lessons across days, but always take lessons in order
         for (let day = 1; day <= days; day++) {
             const dayLessons = [];
             const todaySubjects = new Set();
-            
+
             // Get prioritized subjects for today
             const prioritizedSubjects = getSubjectsForDay(day);
-            
+
             // Take up to subjectsPerDay subjects
             const selectedSubjects = prioritizedSubjects.slice(0, subjectsPerDay);
-            
+
             // For each selected subject, add the appropriate number of lessons IN ORDER
             selectedSubjects.forEach(subjectName => {
                 const subject = subjectMap[subjectName];
                 const lessonCount = Math.min(
-                    subject.lessonsPerDay, 
+                    subject.lessonsPerDay,
                     subject.remainingLessons.length
                 );
-                
+
                 // Sort the remaining lessons by their original index to maintain order
                 subject.remainingLessons.sort((a, b) => a.originalIndex - b.originalIndex);
-                
+
                 // Add the lessons to today's schedule in their original order
                 for (let i = 0; i < lessonCount; i++) {
                     if (subject.remainingLessons.length > 0) {
@@ -254,21 +254,21 @@ const TimeTable = () => {
                     }
                 }
             });
-            
+
             // If we still have room for more lessons and there are subjects with remaining lessons,
             // add more lessons from subjects with the most remaining
             if (selectedSubjects.length < subjectsPerDay) {
                 const additionalSubjects = prioritizedSubjects.slice(selectedSubjects.length);
-                
+
                 // Fill remaining subject slots
                 for (let i = 0; i < subjectsPerDay - selectedSubjects.length; i++) {
                     if (i < additionalSubjects.length) {
                         const subjectName = additionalSubjects[i];
                         const subject = subjectMap[subjectName];
-                        
+
                         // Sort to maintain order
                         subject.remainingLessons.sort((a, b) => a.originalIndex - b.originalIndex);
-                        
+
                         if (subject.remainingLessons.length > 0) {
                             const lesson = subject.remainingLessons.shift();
                             dayLessons.push(lesson);
@@ -277,42 +277,42 @@ const TimeTable = () => {
                     }
                 }
             }
-            
+
             // Record which subjects were used today
             daySubjectMap[day] = Array.from(todaySubjects);
-            
+
             // Add the day to the timetable
             timetable.push({
                 day: day,
                 lessons: dayLessons
             });
-            
+
             // Check if all lessons have been distributed
             const remainingLessonsCount = subjectNames.reduce(
                 (total, name) => total + subjectMap[name].remainingLessons.length, 0
             );
-            
+
             if (remainingLessonsCount === 0) {
                 break;  // Exit the loop if all lessons have been distributed
             }
         }
-        
+
         // Check if we have any remaining lessons that didn't fit
         const remainingLessonsCount = subjectNames.reduce(
             (total, name) => total + subjectMap[name].remainingLessons.length, 0
         );
-        
+
         if (remainingLessonsCount > 0) {
             // Distribute remaining lessons
             const remainingLessons = [];
-            
+
             // Sort lessons from each subject by their original index to maintain order
             subjectNames.forEach(name => {
                 const subject = subjectMap[name];
                 subject.remainingLessons.sort((a, b) => a.originalIndex - b.originalIndex);
                 remainingLessons.push(...subject.remainingLessons);
             });
-            
+
             // Sort remaining lessons by subject name and then by original index
             remainingLessons.sort((a, b) => {
                 if (a.subjectName !== b.subjectName) {
@@ -320,18 +320,18 @@ const TimeTable = () => {
                 }
                 return a.originalIndex - b.originalIndex;
             });
-            
+
             // Sort days by the number of lessons (ascending)
             const dayIndices = Array.from({ length: timetable.length }, (_, i) => i)
                 .sort((a, b) => timetable[a].lessons.length - timetable[b].lessons.length);
-            
+
             // Distribute remaining lessons to days with fewer lessons
             for (const lesson of remainingLessons) {
                 timetable[dayIndices[0]].lessons.push(lesson);
                 // Re-sort after adding a lesson
                 dayIndices.sort((a, b) => timetable[a].lessons.length - timetable[b].lessons.length);
             }
-            
+
             toast.info(`ملحوظة: لا يمكن ملاءمة جميع الدروس بشكل مثالي في جدول ${days} يوم. قد تحتوي بعض الأيام على دروس أكثر من غيرها.`, {
                 position: "top-right",
                 autoClose: 5000,
@@ -344,12 +344,12 @@ const TimeTable = () => {
                 className: 'font-arabicUI3 w-fit m-7 text-lg p-4 rounded-lg shadow-lg',
             });
         }
-    
+
         setGeneratedTimeTable(timetable);
         setShowModel(true);
         localStorage.setItem('generatedTimeTable', JSON.stringify(timetable));
     };
-    
+
     const handleTaskClick = (e) => {
         const checkbox = e.currentTarget.querySelector('input[type="checkbox"]');
         if (checkbox) {
@@ -429,10 +429,16 @@ const TimeTable = () => {
     return (
         <div className='bg-back2 rounded-xl p-2 md:p-8 m-3 md:m-8'>
 
+            
             <div className="backdrop-blur-lg mx-auto w-fit border border-white/40 text-5xl text-white p-4 m-4 rounded-xl flex flex-row items-center">
                 <PiBaseballHelmetFill className=' ' />
                 <h2 className='font-arabicUI2'>المنقذ</h2>
             </div>
+
+
+            <AdComponent />
+
+            
             <div dir='rtl' className={` backdrop-blur-lg mx-auto  border border-white/40 text-xl ${showModel ? "lg:w-full" : "lg:w-1/4"}  text-white p-4 m-4 rounded-xl flex flex-row items-center `}>
                 <p className='font-arabicUI2 text-center flex justify-center '>خلاص يشباب هانت التزم علي قد متقدر بالجدول اللي انت هتعمله عشان انت اللي هتخسر صدقني مش والدك او والدتك او اي حد غيرك دي حياتك انت اصحا وفوق !</p>
             </div>
@@ -549,6 +555,7 @@ const TimeTable = () => {
 
             </div>
 
+
             <Link href='https://t.me/ToopSecbot?start=r04854140460'>
                 <div dir='rtl' className="backdrop-blur-lg mx-auto gap-3 w-fit border border-white/40 text-xl md:text-5xl text-white p-4 m-4 rounded-xl flex flex-row items-center">
                     <h2 className='font-arabicUI2'>3200 مذكرة ثانوية عامة مجانا  </h2>
@@ -560,4 +567,4 @@ const TimeTable = () => {
     )
 }
 
-export default TimeTable; 
+export default TimeTable;
