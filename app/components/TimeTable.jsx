@@ -331,7 +331,11 @@ const TimeTable = () => {
                 // Re-sort after adding a lesson
                 dayIndices.sort((a, b) => timetable[a].lessons.length - timetable[b].lessons.length);
             }
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> 07ae02a (ew)
             toast.info(`ملحوظة: لا يمكن ملاءمة جميع الدروس بشكل مثالي في جدول ${days} يوم. قد تحتوي بعض الأيام على دروس أكثر من غيرها.`, {
                 position: "top-right",
                 autoClose: 5000,
@@ -570,4 +574,4 @@ const TimeTable = () => {
     )
 }
 
-export default TimeTable;
+export default TimeTable; 
