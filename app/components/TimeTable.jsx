@@ -16,7 +16,7 @@ const TimeTable = () => {
 
     const [aronelessons, setArOneLessons] = useState([])
     const [showModel, setShowModel] = useState(false)
-    const [days, setDays] = useState(30)
+    const [days, setDays] = useState(35)
     const [subjectsPerDay, setSubjectsPerDay] = useState(4)
     const [generatedTimeTable, setGeneratedTimeTable] = useState([])
     const [progress, setProgress] = useState(0)
@@ -61,7 +61,17 @@ const TimeTable = () => {
         }
     
         if (days <= 0 || subjectsPerDay <= 0) {
-            alert("Please enter valid values for days and subjects per day");
+            toast.error("الرجاء إدخال قيم صحيحة للأيام والمواد في اليوم", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                className: 'font-arabicUI3 w-fit m-7 text-lg p-4 rounded-lg shadow-lg',
+            });
             return;
         }
     
@@ -123,7 +133,17 @@ const TimeTable = () => {
         
         // If no lessons are found, show an error message
         if (subjectNames.length === 0 || totalLessonsCount === 0) {
-            alert("Couldn't find any lessons in the data");
+            toast.error("لم نتمكن من العثور على أي دروس في البيانات", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                className: 'font-arabicUI3 w-fit m-7 text-lg p-4 rounded-lg shadow-lg',
+            });
             console.error("Structured data:", aronelessons);
             return;
         }
@@ -155,7 +175,17 @@ const TimeTable = () => {
         );
         
         if (minRequiredDays > days) {
-            alert(`Warning: You may need at least ${minRequiredDays} days to complete all lessons with your current settings.`);
+            toast.warning(`قد تحتاج على الأقل ${minRequiredDays} أيام لإكمال جميع الدروس بالإعدادات الحالية.`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                className: 'font-arabicUI3 w-fit m-7 text-lg p-4 rounded-lg shadow-lg',
+            });
         }
         
         // Function to get subjects for a specific day with smart rotation but ensuring ordered lessons
@@ -302,7 +332,17 @@ const TimeTable = () => {
                 dayIndices.sort((a, b) => timetable[a].lessons.length - timetable[b].lessons.length);
             }
             
-            alert(`Note: Not all lessons could fit perfectly in your ${days} day schedule. Some days may have more lessons than others.`);
+            toast.info(`ملحوظة: لا يمكن ملاءمة جميع الدروس بشكل مثالي في جدول ${days} يوم. قد تحتوي بعض الأيام على دروس أكثر من غيرها.`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                className: 'font-arabicUI3 w-fit m-7 text-lg p-4 rounded-lg shadow-lg',
+            });
         }
     
         setGeneratedTimeTable(timetable);
@@ -520,4 +560,4 @@ const TimeTable = () => {
     )
 }
 
-export default TimeTable;
+export default TimeTable; 
