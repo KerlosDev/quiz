@@ -4,6 +4,7 @@ import React from "react";
 import { FaFireAlt } from "react-icons/fa";
 import { FaBookOpenReader } from "react-icons/fa6";
 import TrueFocus from "./TrueFocus";
+import AdComponent from "./AdComponent";
 
 const Subjects = () => {
     const subjects = [
@@ -68,6 +69,7 @@ const Subjects = () => {
 
             </h3>
 
+            <AdComponent></AdComponent>
 
             {/* Subjects Grid */}
             <div className="p-3 m-3 mt-7 rtl grid grid-cols-1   md:grid-cols-2 lg:grid-cols-4 gap-14">

@@ -10,6 +10,7 @@ import GreenButton from './GreenButton';
 import YellowButton from './YellowButton';
 import { usePremiumUser } from '../context/PremiumUserContext';
 import CoutText from './CoutText';
+import AdComponent from './AdComponent';
 
 
 const Arabic = () => {
@@ -136,8 +137,12 @@ const Arabic = () => {
             </div>
 
             {/* Books Grid Section */}
+       
 
             <div className="grid grid-cols-1 p-5 sm:grid-cols-2 lg:grid-cols-2 h-fit gap-6 lg:col-span-2">
+            
+            <AdComponent></AdComponent>
+            
                 <RedButton handleClick={() => handleClick("اول تلات وحدات نحو", 1)} title="نحو 1" number={1} ></RedButton>
                 <RedButton handleClick={() => handleClick("باقي وحدات النحو ", 2)} title="نحو 2" number={2} ></RedButton>
                 <YellowButton handleClick={() => handleClick("النص الاول من البلاغة", 3)} title="بلاغة 1" number={3} ></YellowButton>

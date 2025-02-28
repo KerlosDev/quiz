@@ -11,6 +11,7 @@ import YellowButton from './YellowButton';
 import { usePremiumUser } from '../context/PremiumUserContext';
 import CoutText from './CoutText';
 import BlueButton from './BlueButton';
+import AdComponent from './AdComponent';
 
 
 const English = () => {
@@ -148,6 +149,7 @@ const English = () => {
 
 
             <div className="grid grid-cols-1 p-5 sm:grid-cols-2 lg:grid-cols-2 h-fit gap-6 lg:col-span-2">
+            <AdComponent></AdComponent>
 
                 <RedButton handleClick={() => handleClick('UNIT 1', 1)} title='UNIT 1' number={1} font="font-arabicUI3"  ></RedButton>
                 <RedButton handleClick={() => handleClick('UNIT 2', 2)} title='UNIT 2' number={2} font="font-arabicUI3"  ></RedButton>
