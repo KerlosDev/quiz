@@ -14,6 +14,7 @@ import YellowButton from './YellowButton';
 import { usePremiumUser } from '../context/PremiumUserContext';
 import BlueButton from './BlueButton';
 import CoutText from './CoutText';
+import AdComponent from './AdComponent';
 
 
 const Physics = () => {
@@ -145,6 +146,7 @@ const Physics = () => {
 
             <div className="grid grid-cols-1 p-5 sm:grid-cols-2 lg:grid-cols-2 h-fit gap-6 lg:col-span-2">
 
+                <AdComponent></AdComponent>
                 <RedButton handleClick={() =>    handleClick('الفصل الاول', 1)} title='الفصل الاول' number={1}  ></RedButton>
                 <RedButton handleClick={() =>    handleClick('الفصل الثاني', 2)} title='الفصل الثاني' number={2}  ></RedButton>
                 <RedButton handleClick={() =>    handleClick('الفصل الثالث', 3)} title='الفصل الثالث' number={3}  ></RedButton>

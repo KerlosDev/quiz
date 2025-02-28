@@ -11,6 +11,7 @@ import GreenButton from './GreenButton';
 import { usePremiumUser } from '../context/PremiumUserContext';
 import BlueButton from './BlueButton';
 import CoutText from './CoutText';
+import AdComponent from './AdComponent';
 
 const English = () => {
     const [activeBook, setActiveBook] = useState(false);
@@ -140,6 +141,9 @@ const English = () => {
 
 
             <div className="grid grid-cols-1 p-5 sm:grid-cols-2 lg:grid-cols-2 h-fit gap-6 lg:col-span-2">
+                
+                <AdComponent></AdComponent>
+                
                 <RedButton handleClick={() => handleClick("الباب الاول", 1)} title="الباب الاول" number={1} ></RedButton>
                 <RedButton handleClick={() => handleClick("الباب التاني", 2)} title="الباب التاني" number={2} ></RedButton>
                 <YellowButton handleClick={() => handleClick("الباب التالت", 3)} title="الباب التالت" number={3} ></YellowButton>

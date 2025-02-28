@@ -10,6 +10,7 @@ import GreenButton from './GreenButton';
 import YellowButton from './YellowButton';
 import BlueButton from './BlueButton';
 import CoutText from './CoutText';
+import AdComponent from './AdComponent';
 
 const French = () => {
     const [activeBook, setActiveBook] = useState(false);
@@ -165,6 +166,7 @@ const French = () => {
 
             <div className="grid grid-cols-1 p-5 sm:grid-cols-2 lg:grid-cols-2 h-fit gap-6 lg:col-span-2">
 
+                <AdComponent></AdComponent>
                 <RedButton handleClick={() => handleClick(' من 1 لـ 10 شوامل', 1)} title='شوامل 1' number={1} font="font-arabicUI3"   ></RedButton>
                 <RedButton handleClick={() => handleClick(' من 11 لـ 20 شوامل', 2)} title='شوامل 2' number={2} font="font-arabicUI3"  ></RedButton>
              
