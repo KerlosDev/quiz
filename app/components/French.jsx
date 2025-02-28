@@ -6,8 +6,7 @@ import Link from 'next/link';
 import { useUser } from '@clerk/nextjs';
 import { FaLock, FaPlay } from 'react-icons/fa';
 import RedButton from './RedButton';
-import GreenButton from './GreenButton';
-import YellowButton from './YellowButton';
+
 import BlueButton from './BlueButton';
 import CoutText from './CoutText';
 import AdComponent from './AdComponent';
@@ -18,39 +17,14 @@ const French = () => {
     const [dataBook, setDataBook] = useState([]);
     const [numbook, setNumBook] = useState(0);
     const [numberofquiz, setNumberQuiz] = useState(0);
-    const [premuserorNot, setPremUser] = useState(false);
 
+    
     const { user } = useUser();
 
-    useEffect(() => {
-        // Check if the premium status is already stored
-        const storedPremStatus = localStorage.getItem("premuserorNot");
-        if (storedPremStatus) {
-            setPremUser(JSON.parse(storedPremStatus));
-        } else if (user?.primaryEmailAddress?.emailAddress) {
-            // Fetch premium status if not stored
-            premiumusers(user?.primaryEmailAddress?.emailAddress);
-        }
-    }, [user]);
+ 
 
-    const premiumusers = async (email) => {
-        try {
-            const res = await GlobalApi.premUsers(email);
-
-            if (res && res.premiumUsersReqs && res.premiumUsersReqs.length > 0 && res.premiumUsersReqs[0]) {
-                const isPremium = res.premiumUsersReqs[0].isHePaid;
-                setPremUser(isPremium);
-
-                // Store the premium status in localStorage
-                localStorage.setItem("premuserorNot", JSON.stringify(isPremium));
-            } else {
-                console.warn("No enrollment data found for the user.");
-                setPremUser(false); // Default to not premium if no data
-            }
-        } catch (error) {
-            console.error("Error fetching premium user status:", error);
-        }
-    };
+   
+    
     // Handle click dynamically
     const handleClick = (namebook, index) => {
         setActiveBook(true);
@@ -93,33 +67,23 @@ const French = () => {
         return dataBook
             ?.filter((item) => item.level === filterKey)
             ?.map((item, index) => {
-                const quizLink = !user
+               
+                
+                    const quizLink = !user
                     ? "/sign-up" // If no user is logged in, redirect to the sign-up page
                     : (
-                        filterKey === 'ex10'
-                            ? `/french/${item.id}`
-                            : (premuserorNot ? `/french/${item.id}` : `/payment`)
+                       
+                            `/french/${item.id}` 
                     );
                 return (
                     <Link key={item.id} href={quizLink}>
                         <h4 className='hover:scale-105   justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto  flex'>
                             {item?.namequiz || 'No Title Available'}
 
-                            {filterKey === 'ex10' ?
-
 
                                 <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
 
-                                :
-
-                                (
-                                    premuserorNot ? (
-                                        <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-                                    ) : (
-                                        <FaLock className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-                                    )
-                                )
-                            }
+                            
                         </h4>
 
                     </Link>

@@ -75,31 +75,16 @@ const Physics = () => {
         ?.map((item, index) => {
             const quizLink = !user
                 ? "/sign-up" // If no user is logged in, redirect to the sign-up page
-                : (
-                    filterKey === 'fasl1'
-                        ? `/phys/${item.id}`
-                        : (premuserorNot ? `/phys/${item.id}` : `/payment`)
-                );
+                : `/phys/${item.id}` 
+                
             return (
                 <Link key={item.id} href={quizLink}>
                     <h4 className='hover:scale-105   justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto  flex'>
                         {item?.namequiz || 'No Title Available'}
 
-                        {filterKey === 'fasl1' ?
-
-
+                    
                             <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-
-                            :
-
-                            (
-                                premuserorNot ? (
-                                    <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-                                ) : (
-                                    <FaLock className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-                                )
-                            )
-                        }
+ 
                     </h4>
 
                 </Link>
