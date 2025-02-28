@@ -21,10 +21,7 @@ const AdComponent = () => {
         document.getElementById('ad-container').appendChild(script2);
 
         // Clean up the scripts when the component unmounts
-        return () => {
-            document.getElementById('ad-container').removeChild(script1);
-            document.getElementById('ad-container').removeChild(script2);
-        };
+        
     }, []);
 
     return (
