@@ -208,7 +208,7 @@ const sendEnrollData = async (userEmail, phonenumber) => {
       id
       userEmail
     }
-    publishManyUserEnrollsConnection(where: {}) {
+    publishManyUserEnrollsConnection(first: 1000) {
       edges {
         node {
           id
