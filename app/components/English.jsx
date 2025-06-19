@@ -3,40 +3,35 @@ import Image from 'next/image';
 import GlobalApi from '../api/GlobalApi';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useUser } from '@clerk/nextjs';
 import { FaLock, FaPlay } from 'react-icons/fa';
 import RedButton from './RedButton';
 import GreenButton from './GreenButton';
 import YellowButton from './YellowButton';
-import { usePremiumUser } from '../context/PremiumUserContext';
 import CoutText from './CoutText';
 import BlueButton from './BlueButton';
-
+import { useRouter } from 'next/navigation';
 
 const English = () => {
     const [activeBook, setActiveBook] = useState(false);
     const [title, setTitle] = useState('لغة انجليزية');
     const [dataBook, setDataBook] = useState([]);
-    const [numbook, setNumBook] = useState(0);
+    const [numbook, setNumBook] = useState(null); // Changed to null initially
     const [numberofquiz, setNumberQuiz] = useState(0);
-    const { user } = useUser();
-    const premuserorNot = usePremiumUser();
-    
-    
-    // Handle click dynamically
+    const [hasPremiumAccess, setHasPremiumAccess] = useState(false);
+    const router = useRouter();
+
+    useEffect(() => {
+        const premiumAccess = localStorage.getItem('premiumAccess') === 'true';
+        setHasPremiumAccess(premiumAccess);
+        chemData();
+    }, []);
+
     const handleClick = (namebook, index) => {
         setActiveBook(true);
         setTitle(namebook);
-        setNumBook(index);
-
-        // Scroll to top when the button is clicked
+        setNumBook(index - 1); // Subtracting 1 since index starts from 1 in the buttons
         window.scroll({ top: 0, behavior: 'smooth' });
     };
-
-    // Fetch data on component mount
-    useEffect(() => {
-        chemData("chem");
-    }, []);
 
     const chemData = () => {
         GlobalApi.englishData("en")
@@ -49,61 +44,47 @@ const English = () => {
             });
     };
 
+    const handleQuizClick = (quizId, chapterNumber) => {
+        // Allow free access to first chapter
+        if (chapterNumber === 1) {
+            router.push(`/english/${quizId}`);
+            return;
+        }
 
-    // Function to filter and render quizzes based on numbook
+        // Check premium access for other chapters
+        if (hasPremiumAccess) {
+            router.push(`/english/${quizId}`);
+        } else {
+            router.push('/payment');
+        }
+    };
+
     const renderQuizzes = () => {
-        let filterKey = '';
-        if (numbook === 1) filterKey = 'unit1';
-        if (numbook === 2) filterKey = 'unit2';
-        if (numbook === 3) filterKey = 'unit3';
-        if (numbook === 4) filterKey = 'unit4';
-        if (numbook === 5) filterKey = 'unit5';
-        if (numbook === 6) filterKey = 'unit6';
-        if (numbook === 7) filterKey = 'unit7';
-        if (numbook === 8) filterKey = 'unit8';
-        if (numbook === 9) filterKey = 'unit9';
-        if (numbook === 10) filterKey = 'unit10';
-        if (numbook === 11) filterKey = 'unit11';
-        if (numbook === 12) filterKey = 'unit12';
+        if (!dataBook || numbook === null) return null; // Don't render if no unit is selected
+
+        // Filter quizzes for the current unit
+        const currentUnit = `unit${numbook + 1}`;
+        const unitQuizzes = dataBook.filter(quiz => quiz.level === currentUnit);
+
+        return unitQuizzes.map((quiz, index) => {
+            const chapterNumber = numbook + 1;
+            const isLocked = chapterNumber !== 1 && !hasPremiumAccess;
+
+            return (
+                <div
+                    key={quiz.id}
+                    onClick={() => handleQuizClick(quiz.id, chapterNumber)}
+                    className="cursor-pointer"
+                >   <h4 className='hover:scale-105   justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto  flex'>
+                        {quiz?.namequiz || 'No Title Available'}
 
 
-        return dataBook
-            ?.filter((item) => item.level === filterKey)
-            ?.map((item, index) => {
-                const quizLink = !user
-                    ? "/sign-up" // If no user is logged in, redirect to the sign-up page
-                    : (
-                        filterKey === 'unit1'
-                            ? `/english/${item.id}`
-                            : (premuserorNot ? `/english/${item.id}` : `/payment`)
-                    );
-                return (
-                    <Link key={item.id} href={quizLink}>
-
-                        <h4 className='hover:scale-105   justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto  flex'>
-                            {item?.namequiz || 'No Title Available'}
-
-                            {filterKey === 'unit1' ?
-
-
-                                <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-
-                                :
-
-                                (
-                                    premuserorNot ? (
-                                        <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-                                    ) : (
-                                        <FaLock className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-                                    )
-                                )
-                            }
-
-
-                        </h4>
-                    </Link>
-                );
-            });
+                        {isLocked ? <FaLock className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" /> : <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />}
+                    </h4>
+                   
+                </div>
+            );
+        });
     };
 
     return (

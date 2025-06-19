@@ -1,7 +1,6 @@
 import React from 'react'
 import Physics from '../components/Physics'
-import { PremiumUserProvider } from '../context/PremiumUserContext';
-
+ 
 
 export const metadata = {
     title: " امتحانات فيزياء | كويزاتك ",
@@ -11,14 +10,10 @@ export const metadata = {
 const page = () => {
     return (
 
-
-        <PremiumUserProvider>
-
-         
+ 
             <Physics></Physics>
 
-
-        </PremiumUserProvider>
+ 
 
     )
 }

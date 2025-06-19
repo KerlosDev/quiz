@@ -1,5 +1,4 @@
 import React from 'react'
-import { PremiumUserProvider } from '../context/PremiumUserContext';
 import Arabic from '../components/Arabic';
 
 export const metadata = {
@@ -13,14 +12,10 @@ const page = () => {
 
     return (
 
-
-        <PremiumUserProvider>
-
             <Arabic></Arabic>
 
 
 
-        </PremiumUserProvider>
 
     )
 }

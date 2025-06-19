@@ -1,5 +1,5 @@
 'use client'
-import { useUser } from '@clerk/nextjs';
+
 import React, { useState, useEffect } from 'react'
 import CountUp from './CountUp';
 import GlobalApi from '../api/GlobalApi';
@@ -17,7 +17,6 @@ const CodeGen = () => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
     const [peopleInvented, setPeopleInvented] = useState([]);
-    const { user } = useUser();
     const email = user?.primaryEmailAddress?.emailAddress;
     const clerkId = user?.id;
 

@@ -1,43 +1,35 @@
 'use client'
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import GlobalApi from '../api/GlobalApi';
-import { useUser } from '@clerk/nextjs';
 
 const PremiumUserContext = createContext();
 
 export const PremiumUserProvider = ({ children }) => {
-    const { user } = useUser();
-    const [premuserorNot, setPremUser] = useState(false);
+    const [hasPremiumAccess, setHasPremiumAccess] = useState(false);
 
     useEffect(() => {
-        const storedPremStatus = localStorage.getItem("premuserorNot");
-        if (storedPremStatus) {
-            setPremUser(JSON.parse(storedPremStatus));
-        } else if (user?.primaryEmailAddress?.emailAddress) {
-            premiumusers(user?.primaryEmailAddress?.emailAddress);
-        }
-    }, [user]);
+        // Check premium access from localStorage on mount
+        const premiumAccess = localStorage.getItem('premiumAccess') === 'true';
+        setHasPremiumAccess(premiumAccess);
+    }, []);
 
-    const premiumusers = async (email) => {
-        try {
-            const res = await GlobalApi.premUsers(email);
-            if (res && res.premiumUsersReqs && res.premiumUsersReqs.length > 0 && res.premiumUsersReqs[0]) {
-                const isPremium = res.premiumUsersReqs[0].isHePaid;
-                setPremUser(isPremium);
-                localStorage.setItem("premuserorNot", JSON.stringify(isPremium));
-            } else {
-                setPremUser(false);
-            }
-        } catch (error) {
-            console.error("Error fetching premium user status:", error);
-        }
+    const setPremiumAccess = (value) => {
+        localStorage.setItem('premiumAccess', value.toString());
+        setHasPremiumAccess(value);
     };
 
     return (
-        <PremiumUserContext.Provider value={premuserorNot}>
+        <PremiumUserContext.Provider value={{ hasPremiumAccess, setPremiumAccess }}>
             {children}
         </PremiumUserContext.Provider>
     );
 };
 
-export const usePremiumUser = () => useContext(PremiumUserContext);
+export const usePremiumUser = () => {
+    const context = useContext(PremiumUserContext);
+    if (!context) {
+        throw new Error('usePremiumUser must be used within a PremiumUserProvider');
+    }
+    return context;
+};
+
+export default PremiumUserContext;

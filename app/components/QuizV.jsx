@@ -1,15 +1,14 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import GlobalApi from '../api/GlobalApi';
-import { useUser } from '@clerk/nextjs';
+
 import ProgCircle from './ProgCircle';
 import { BsPatchCheckFill } from 'react-icons/bs';
 import { IoBarChart } from 'react-icons/io5';
 import CryptoJS from 'crypto-js';
 
 const QuizV = () => {
-    
-    const { user } = useUser();
+
     const email = user?.primaryEmailAddress?.emailAddress;
     const [quiz, setQuiz] = useState([]);
 
@@ -62,7 +61,7 @@ const QuizV = () => {
         acc[item.sub].quizGrade += item.score;
         return acc;
     }, {});
- 
+
     const totalPoints = filteredData.reduce((acc, item) => acc + item.score, 0);
 
     if (filteredData.length === 0) return <div>
@@ -204,7 +203,7 @@ const QuizV = () => {
                                 </div>
                             ))}
                         </div>
-                        
+
                         {totalPoints > 0 && (
                             <div className='cursor-default mt-8 backdrop-blur-xl rounded-xl w-fit m-auto outline-dashed mb-8 outline-2 bg-black/20 outline-white p-5'>
                                 <h4 className='m-auto flex gap-4 rtl place-items-center justify-center font-arabicUI2 text-xl md:text-5xl text-center text-white'>
@@ -214,7 +213,7 @@ const QuizV = () => {
                         )}
                     </div>
 
-                ) }
+                )}
 
         </div>
 

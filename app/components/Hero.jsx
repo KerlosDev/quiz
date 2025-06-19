@@ -10,8 +10,7 @@ import Image from 'next/image';
 import { IoPersonSharp } from "react-icons/io5";
 import { PremiumUserProvider } from '../context/PremiumUserContext';
 import Link from "next/link";
-import { useUser } from "@clerk/nextjs";
-
+ 
 const Hero = () => {
     const Features = [
         {

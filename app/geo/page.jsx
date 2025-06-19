@@ -1,7 +1,6 @@
 import React from 'react'
 import Geo from '../components/Geo'
-import { PremiumUserProvider } from '../context/PremiumUserContext';
-
+ 
 
 export const metadata = {
     title: " امتحانات جيولوجيا | كويزاتك ",
@@ -12,11 +11,8 @@ export const metadata = {
 const page = () => {
     return (
 
-        <PremiumUserProvider>
-
-            <Geo></Geo>
-
-        </PremiumUserProvider>
+        
+            <Geo></Geo> 
 
 
 

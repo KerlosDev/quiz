@@ -1,7 +1,4 @@
-import QuizData from "@/app/components/QuizData"
-import QuizFr from "@/app/components/QuizFr"
-import QuizPh from "@/app/components/QuizPh"
-import { PremiumUserProvider } from "@/app/context/PremiumUserContext"
+import Quiz from "@/app/components/Quiz"
 import React from "react"
 
 
@@ -9,11 +6,9 @@ const page = ({ params }) => {
 
 
   return (
-    <PremiumUserProvider>
+  
+      <Quiz params={params}></Quiz>
 
-      <QuizFr params={params}></QuizFr>
-
-    </PremiumUserProvider>
     
     
   )

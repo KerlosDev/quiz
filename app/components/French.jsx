@@ -3,7 +3,7 @@ import Image from 'next/image';
 import GlobalApi from '../api/GlobalApi';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useUser } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
 import { FaLock, FaPlay } from 'react-icons/fa';
 import RedButton from './RedButton';
 import GreenButton from './GreenButton';
@@ -16,40 +16,16 @@ const French = () => {
     const [title, setTitle] = useState('لغة فرنسية');
     const [dataBook, setDataBook] = useState([]);
     const [numbook, setNumBook] = useState(0);
-    const [numberofquiz, setNumberQuiz] = useState(0);
-    const [premuserorNot, setPremUser] = useState(false);
-
-    const { user } = useUser();
+    const [numberofquiz, setNumberQuiz] = useState(0); const [hasPremiumAccess, setHasPremiumAccess] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
-        // Check if the premium status is already stored
-        const storedPremStatus = localStorage.getItem("premuserorNot");
-        if (storedPremStatus) {
-            setPremUser(JSON.parse(storedPremStatus));
-        } else if (user?.primaryEmailAddress?.emailAddress) {
-            // Fetch premium status if not stored
-            premiumusers(user?.primaryEmailAddress?.emailAddress);
-        }
-    }, [user]);
+        const premiumAccess = localStorage.getItem('premiumAccess') === 'true';
+        setHasPremiumAccess(premiumAccess);
+    }, []);
 
-    const premiumusers = async (email) => {
-        try {
-            const res = await GlobalApi.premUsers(email);
 
-            if (res && res.premiumUsersReqs && res.premiumUsersReqs.length > 0 && res.premiumUsersReqs[0]) {
-                const isPremium = res.premiumUsersReqs[0].isHePaid;
-                setPremUser(isPremium);
 
-                // Store the premium status in localStorage
-                localStorage.setItem("premuserorNot", JSON.stringify(isPremium));
-            } else {
-                console.warn("No enrollment data found for the user.");
-                setPremUser(false); // Default to not premium if no data
-            }
-        } catch (error) {
-            console.error("Error fetching premium user status:", error);
-        }
-    };
     // Handle click dynamically
     const handleClick = (namebook, index) => {
         setActiveBook(true);
@@ -63,68 +39,71 @@ const French = () => {
     // Fetch data on component mount
     useEffect(() => {
         chemData("fr");
-    }, []);
-
-    const chemData = () => {
+    }, []); const chemData = () => {
         GlobalApi.frenchData("fr")
             .then((res) => {
-                setDataBook(res.dataOfQuizs);
-                setNumberQuiz(res.dataOfQuizs.length);
+                console.log("French API Response:", res);
+                if (res && res.dataOfQuizs) {
+                    console.log("Setting data:", res.dataOfQuizs);
+                    setDataBook(res.dataOfQuizs);
+                    setNumberQuiz(res.dataOfQuizs.length);
+                } else {
+                    console.error("Invalid response structure:", res);
+                    setDataBook([]);
+                    setNumberQuiz(0);
+                }
             })
             .catch((err) => {
-                console.error("Error: ", err);
+                console.error("Error fetching French data:", err);
+                setDataBook([]);
+                setNumberQuiz(0);
             });
+    }; const handleQuizClick = (quizId, level) => {
+        // Allow free access to all exams in first section (ex10)
+        if (level === "ex10") {
+            router.push(`/french/${quizId}`);
+            return;
+        }
+
+        // Check premium access for other sections
+        if (hasPremiumAccess) {
+            router.push(`/french/${quizId}`);
+        } else {
+            router.push('/payment');
+        }
+    }; const renderQuizzes = () => {
+        if (!dataBook || !dataBook.length) return null;
+
+        // Map button numbers to exam levels
+        const levelMap = {
+            1: "ex10",  // First button shows exams 1-10
+            2: "ex20",  // Second button shows exams 11-20
+            30: "ex30"  // Third button (future exams)
+        };
+
+        const currentLevel = levelMap[numbook];
+        const unitQuizzes = dataBook.filter(quiz => quiz.level === currentLevel);
+
+        return unitQuizzes.map((quiz, index) => {
+            const chapterNumber = numbook + 1;
+            const isLocked = chapterNumber !== 1 && !hasPremiumAccess;
+
+            return (<div
+                key={quiz.id}
+                onClick={() => handleQuizClick(quiz.id, quiz.level)}
+                className="cursor-pointer"
+            >
+                <h4 className='hover:scale-105 justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto flex'>
+                    {quiz?.namequiz || 'No Title Available'}
+                    {quiz.level === "ex10" ? <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" /> :
+                        hasPremiumAccess ? <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" /> :
+                            <FaLock className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />}
+                </h4>
+            </div>
+            );
+        });
     };
 
-
-    // Function to filter and render quizzes based on numbook
-    const renderQuizzes = () => {
-        let filterKey = '';
-        if (numbook === 1) filterKey = 'ex10';
-        if (numbook === 2) filterKey = 'ex20';
-        if (numbook === 3) filterKey = 'ex30';
-        if (numbook === 4) filterKey = 'ex40';
-        if (numbook === 5) filterKey = 'ex50';
-        if (numbook === 6) filterKey = 'ex60';
-        if (numbook === 7) filterKey = 'ex70';
-
-
-        return dataBook
-            ?.filter((item) => item.level === filterKey)
-            ?.map((item, index) => {
-                const quizLink = !user
-                    ? "/sign-up" // If no user is logged in, redirect to the sign-up page
-                    : (
-                        filterKey === 'ex10'
-                            ? `/french/${item.id}`
-                            : (premuserorNot ? `/french/${item.id}` : `/payment`)
-                    );
-                return (
-                    <Link key={item.id} href={quizLink}>
-                        <h4 className='hover:scale-105   justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto  flex'>
-                            {item?.namequiz || 'No Title Available'}
-
-                            {filterKey === 'ex10' ?
-
-
-                                <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-
-                                :
-
-                                (
-                                    premuserorNot ? (
-                                        <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-                                    ) : (
-                                        <FaLock className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />
-                                    )
-                                )
-                            }
-                        </h4>
-
-                    </Link>
-                );
-            });
-    };
 
     return (
         <div className='mx-4 sm:mx-8 lg:mx-20 grid grid-cols-1 lg:grid-cols-4 gap-6'>
@@ -167,7 +146,7 @@ const French = () => {
 
                 <RedButton handleClick={() => handleClick(' من 1 لـ 10 شوامل', 1)} title='شوامل 1' number={1} font="font-arabicUI3"   ></RedButton>
                 <RedButton handleClick={() => handleClick(' من 11 لـ 20 شوامل', 2)} title='شوامل 2' number={2} font="font-arabicUI3"  ></RedButton>
-             
+
                 <BlueButton handleClick={() => handleClick('هيتم اضافة المزيد', 30)} title='قريبا' number={2} font="font-arabicUI3"  ></BlueButton>
 
             </div >

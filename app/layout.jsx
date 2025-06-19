@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
-import "./globals.css";
+import { PremiumUserProvider } from './context/PremiumUserContext';
 const ArabicUI = localFont({ src: './fonts/DG-Gaza.ttf' })
 const ArabicUI2 = localFont({ src: './fonts/LANTX.otf' })
 const ArabicUI3 = localFont({ src: './fonts/Rubik.ttf' })
@@ -9,13 +9,6 @@ const ArabicUI4 = localFont({ src: './fonts/galaxy.ttf' })
 const ArabicUI5 = localFont({ src: './fonts/laxr.ttf' })
 import { Anton } from 'next/font/google';
 
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
-} from '@clerk/nextjs'
 
 
 // Configure Anton font
@@ -49,24 +42,22 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
 
 
-      <html lang="en">
-        
-        <body
-          
-          className={`bg-slate-950    select-none relative  antialiased`}
-        >
+    <html lang="en">
+
+      <body
+
+        className={`bg-slate-950    select-none relative  antialiased`}
+      >
 
 
 
-          <Header></Header>
-          
-          {children}
-          <Footer></Footer>
-        </body>
-      </html>
-    </ClerkProvider>
+        <Header></Header>
+
+        {children}
+        <Footer></Footer>
+      </body>
+    </html>
   );
 }

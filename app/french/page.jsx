@@ -1,7 +1,6 @@
 import React from 'react'
 import French from '../components/French'
-import { PremiumUserProvider } from '../context/PremiumUserContext';
-
+ 
 
 export const metadata = {
     title: " امتحانات لغة فرنسية | كويزاتك ",
@@ -15,11 +14,7 @@ const page = () => {
 
         <div>
 
-            <PremiumUserProvider>
-
                 <French></French>
-
-            </PremiumUserProvider>
 
 
         </div>

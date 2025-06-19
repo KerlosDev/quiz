@@ -1,8 +1,7 @@
 
 import React from 'react'
 import Chem from '../components/Chem';
-import { PremiumUserProvider } from '../context/PremiumUserContext';
-
+ 
 
 
 export const metadata = {
@@ -18,12 +17,9 @@ const page = () => {
 
     return (
 
-
-        <PremiumUserProvider>
-
+ 
             <Chem></Chem>
-
-        </PremiumUserProvider>
+ 
 
     )
 }

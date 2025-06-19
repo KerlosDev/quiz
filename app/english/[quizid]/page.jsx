@@ -1,24 +1,17 @@
-import QuizBio from "@/app/components/QuizBio"
-import QuizCh from "@/app/components/QuizCh"
-import QuizData from "@/app/components/QuizData"
-import QuizEn from "@/app/components/QuizEn"
-import QuizPh from "@/app/components/QuizPh"
-import { PremiumUserProvider } from "@/app/context/PremiumUserContext"
+ 
 import React from "react"
+import Quiz from "@/app/components/Quiz"
 
 
 const page = ({ params }) => {
 
 
   return (
-   
-    <PremiumUserProvider>
 
-      <QuizEn params={params}></QuizEn>
+    <Quiz params={params}></Quiz>
 
-    </PremiumUserProvider>
-    
-  
+
+
   )
 }
 

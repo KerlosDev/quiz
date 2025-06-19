@@ -1,5 +1,5 @@
 'use client';
-import { useUser } from '@clerk/nextjs';
+
 import React, { useEffect, useState } from 'react';
 import { FaExclamationTriangle } from "react-icons/fa";
 import { PiHeartFill } from "react-icons/pi";
@@ -7,9 +7,8 @@ import Link from 'next/link';
 import { usePremiumUser } from '../context/PremiumUserContext';
 
 const ActiveSqu = () => {
-    const { user } = useUser();
     const premuserorNot = usePremiumUser();
-    
+
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
