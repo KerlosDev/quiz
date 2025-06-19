@@ -19,7 +19,6 @@ const formatTime = (seconds) => {
 
 export default function Quiz({ params }) {
     const { quizid } = React.use(params);
-    console.log(params)
     const [questions, setQuestions] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -229,15 +228,16 @@ export default function Quiz({ params }) {
                     }
                 }
 
-                const imageMatch = cleanedLine.match(/https:\/\/i\.imgur\.com\/[a-zA-Z0-9]+\.png/);
+                // Support both imgur and postimg URLs
+                const imageMatch = cleanedLine.match(/image==>(https:\/\/[^\s]+)/);
                 if (imageMatch) {
-                    imageUrl = imageMatch[0];
+                    imageUrl = imageMatch[1];
                 }
             });
 
             if (questionText && options.length && correctAnswer) {
                 questions.push({
-                    id: idCounter++, // Add a unique ID for each question
+                    id: idCounter++,
                     question: questionText,
                     options,
                     correctAnswer,
