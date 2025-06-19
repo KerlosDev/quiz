@@ -1,9 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import GlobalApi from "../api/GlobalApi";
 import { BiSolidPencil } from "react-icons/bi";
 import { BsPatchCheckFill, BsLightningChargeFill, BsClock, BsCheckCircleFill } from "react-icons/bs";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
+import { MdRotate90DegreesCcw, MdZoomOutMap } from "react-icons/md";
 import ProgCircle from "./ProgCircle";
 import Link from "next/link";
 import Swal from "sweetalert2";
@@ -39,6 +40,10 @@ export default function Quiz({ params }) {
     const [bookmarked, setBookmarked] = useState([]);
     const [streakCount, setStreakCount] = useState(0);
     const [isSaving, setIsSaving] = useState(false);
+    const [imageRotation, setImageRotation] = useState(0);
+    const [isZoomed, setIsZoomed] = useState(false);
+    const [shouldAutoRotate, setShouldAutoRotate] = useState(false);
+    const imgRef = useRef(null);
     const encryptionKey = 'jdfhaksjdh38457389475fjks46jy6i786kadhfkjsahdfkjash';
 
     // Timer effect: increments timeSpent every second while quiz is active
@@ -445,9 +450,23 @@ export default function Quiz({ params }) {
 
     const displayResult = () => {
         const isArabicQuiz = window.location.pathname.startsWith('/arabic/');
+        const percentage = Math.round((score / questions.length) * 100);
+        const getScoreColor = () => {
+            if (percentage >= 85) return 'text-green-400';
+            if (percentage >= 70) return 'text-blue-400';
+            if (percentage >= 50) return 'text-yellow-400';
+            return 'text-red-400';
+        };
+
+        const getScoreMessage = () => {
+            if (percentage >= 85) return 'ممتاز! أداء رائع';
+            if (percentage >= 70) return 'جيد جداً! استمر في التقدم';
+            if (percentage >= 50) return 'جيد! هناك مجال للتحسين';
+            return 'استمر في المحاولة! أنت تستطيع';
+        };
 
         return (
-            <div className="min-h-screen bg-slate-950 p-4 md:p-8">
+            <div className="min-h-screen bg-slate-950 p-0 md:p-8">
                 <div className="max-w-7xl mx-auto">
                     <div className="bg-slate-900/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-700 p-6 md:p-8">
                         <div className="space-y-8">
@@ -500,7 +519,7 @@ export default function Quiz({ params }) {
                                                                 <BsCheckCircleFill className="text-blue-500" size={16} />
                                                             </div>
                                                             <span className="text-slate-300 font-arabicUI3">
-                                                                  ليلة الامتحان هيكون في مسابقة الكاس بتمتحن انت وصحابك علي اصعب امتحان ع تعرف مستواك                                                             </span>
+                                                                ليلة الامتحان هيكون في مسابقة الكاس بتمتحن انت وصحابك علي اصعب امتحان ع تعرف مستواك                                                             </span>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -512,7 +531,7 @@ export default function Quiz({ params }) {
                                                         <span className="text-4xl font-arabicUI3 text-slate-200">55</span>
                                                         <span className="text-slate-400 font-arabicUI3">جنيه فقط</span>
                                                     </div>
-                                                   
+
                                                 </div>
 
                                                 <div className="flex flex-col gap-4">
@@ -528,7 +547,7 @@ export default function Quiz({ params }) {
                                                         rel="noopener noreferrer"
                                                         className="bg-green-500 hover:bg-green-700 text-slate-200 font-arabicUI3 px-6 py-3 rounded-xl transition-all duration-300 text-center border border-slate-700"
                                                     >
-                                                       للتواصل واتساب
+                                                        للتواصل واتساب
                                                     </a>
                                                 </div>
                                             </div>
@@ -536,17 +555,72 @@ export default function Quiz({ params }) {
                                     </div>
                                 </div>
                             )}
+                            <div dir="rtl" className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm p-8 rounded-2xl border border-slate-600 overflow-hidden">
+                                {/* Decorative Background Elements */}
+                                <div className="absolute inset-0 overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+                                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+                                </div>
 
-                            <div className="bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-600">
-                                <h1 className="font-arabicUI3 text-3xl md:text-6xl text-center text-slate-200 mb-4">
-                                    نتيجتك <span className="text-blue-400">{score}</span>/<span className="text-slate-400">{questions.length}</span>
-                                </h1>
-                                <div className="flex justify-center">
-                                    <div className="w-48 md:w-64">
-                                        <ProgCircle nsaba={(score / questions.length) * 100} />
+                                {/* Main Content */}
+                                <div className="relative">
+                                    {/* Header Section */}
+                                    <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-6 mb-8">
+                                        <div className="text-center md:text-right">
+                                            <h2 className="text-3xl md:text-4xl font-arabicUI3 text-slate-200 mb-3">نتيجة الاختبار 🎯</h2>
+                                            <p className="text-slate-400 font-arabicUI3 text-lg">{getScoreMessage()}</p>
+                                        </div>
+                                        <div className={`relative group cursor-pointer transform transition-all duration-300 hover:scale-110`}>
+                                            <div className={`text-6xl md:text-7xl font-bold ${getScoreColor()} text-center`}>
+                                                {percentage}%
+                                            </div>
+                                            <div className="absolute -top-2 -right-2 w-full h-full bg-white/5 rounded-xl blur transition-all duration-300 group-hover:blur-xl"></div>
+                                        </div>
+                                    </div>
+
+                                    {/* Score Cards */}
+                                    <div className="grid grid-cols-2 gap-4 mb-8">
+                                        <div className="bg-gradient-to-br from-green-500/10 to-green-500/5 p-4 rounded-xl border border-green-500/20">
+                                            <div className="text-center">
+                                                <div className="text-3xl font-bold text-green-400 mb-2">{score}</div>
+                                                <div className="text-sm text-green-300/80 font-arabicUI3">إجابات صحيحة ✓</div>
+                                            </div>
+                                        </div>
+                                        <div className="bg-gradient-to-br from-red-500/10 to-red-500/5 p-4 rounded-xl border border-red-500/20">
+                                            <div className="text-center">
+                                                <div className="text-3xl font-bold text-red-400 mb-2">{questions.length - score}</div>
+                                                <div className="text-sm text-red-300/80 font-arabicUI3">إجابات خاطئة ✗</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Progress Bar Section */}
+                                    <div className="space-y-3">
+                                        <div className="flex justify-between text-sm mb-2">
+                                            <span className="text-slate-300 font-arabicUI3 flex items-center gap-2">
+                                                <div className={`w-2 h-2 rounded-full ${getScoreColor()}`}></div>
+                                                مستوى التقدم
+                                            </span>
+                                            <span className="text-slate-200 font-arabicUI3">{score}/{questions.length}</span>
+                                        </div>
+                                        <div className="h-3 bg-slate-700/50 rounded-lg overflow-hidden backdrop-blur-sm">
+                                            <div
+                                                className={`h-full rounded-lg relative ${percentage >= 85 ? 'bg-gradient-to-r from-green-500 to-green-400' :
+                                                    percentage >= 70 ? 'bg-gradient-to-r from-blue-500 to-blue-400' :
+                                                        percentage >= 50 ? 'bg-gradient-to-r from-yellow-500 to-yellow-400' :
+                                                            'bg-gradient-to-r from-red-500 to-red-400'
+                                                    } transition-all duration-1000 ease-out`}
+                                                style={{ width: `${percentage}%` }}
+                                            >
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+                                                <div className="absolute inset-0 animate-pulse-subtle opacity-50 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+
 
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                                 {questions.map((item) => (
@@ -650,9 +724,42 @@ export default function Quiz({ params }) {
         });
     };
 
+    const handleImageLoad = () => {
+        if (imgRef.current) {
+            const img = imgRef.current;
+            const screenAspectRatio = window.innerHeight / window.innerWidth;
+            const imageAspectRatio = img.naturalHeight / img.naturalWidth;
+
+            // If we're in portrait mode (phone) and image is landscape
+            if (screenAspectRatio > 1 && imageAspectRatio < 1) {
+                setShouldAutoRotate(true);
+            } else {
+                setShouldAutoRotate(false);
+            }
+        }
+    };
+
+    const toggleZoom = (e) => {
+        e.stopPropagation();
+        if (!isZoomed) {
+            setIsZoomed(true);
+            if (shouldAutoRotate) {
+                setImageRotation(90);
+            }
+        } else {
+            setIsZoomed(false);
+            setImageRotation(0);
+        }
+    };
+
+    const rotateImage = (e) => {
+        e.stopPropagation();
+        setImageRotation((prev) => (prev + 90) % 360);
+    };
+
     return (
         <div className="min-h-screen bg-slate-950 py-8 px-4 md:px-8">
-            {!quizComplete ? (
+            {quizComplete ? (
                 displayResult()
             ) : (
                 <div className="max-w-7xl mx-auto space-y-6">
@@ -752,6 +859,8 @@ export default function Quiz({ params }) {
                                             className="w-full h-auto rounded-2xl transition-all duration-300 transform group-hover:scale-105 shadow-lg border border-slate-600 object-contain max-h-[600px]"
                                             src={questions[currentQuestionIndex]?.imageUrl}
                                             alt="Quiz Image"
+                                            ref={imgRef}
+                                            onLoad={handleImageLoad}
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl flex items-end justify-center pb-4">
                                             <span className="text-slate-200 text-sm font-arabicUI3">اضغط للتكبير</span>
@@ -834,27 +943,55 @@ export default function Quiz({ params }) {
                                 </button>
                             )}
                         </div>
-                    </div>
-
-                    {/* Image Modal */}
+                    </div>                    {/* Image Modal */}
                     {isModalOpen && (
-                        <div className="fixed inset-0 bg-slate-950/95 flex items-center justify-center z-50" onClick={closeModal}>
-                            <div className="relative max-w-5xl max-h-[90vh] m-4">
+                        <div
+                            className="fixed inset-0 bg-slate-950/95 flex items-center justify-center z-[9999]"
+                            onClick={closeModal}
+                            style={{ touchAction: 'none' }}
+                        >
+                            <div className={`relative flex items-center justify-center ${isZoomed ? 'w-screen h-screen p-0' : 'w-full max-w-5xl max-h-[90vh] p-4 md:p-8'}`}>
                                 <div className="relative group">
                                     <img
-                                        className="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl border border-slate-600"
+                                        ref={imgRef}
+                                        className={`${isZoomed
+                                                ? 'w-screen h-screen object-contain'
+                                                : 'w-full h-auto max-h-[80vh] object-contain'
+                                            } rounded-xl shadow-2xl border border-slate-600 transition-all duration-300`}
                                         src={currentImage}
                                         alt="Zoomed Image"
                                         onClick={(e) => e.stopPropagation()}
+                                        onLoad={handleImageLoad}
+                                        style={{
+                                            transform: `rotate(${imageRotation}deg)`,
+                                            maxWidth: isZoomed ? 'none' : '100%',
+                                        }}
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
                                 </div>
-                                <button
-                                    className="absolute -bottom-16 right-1/2 transform translate-x-1/2 text-white bg-slate-800 hover:bg-slate-700 px-8 py-4 rounded-xl font-arabicUI3 text-lg transition-all duration-300 hover:scale-105 border border-slate-600 hover:border-blue-500/50"
-                                    onClick={closeModal}
-                                >
-                                    اغلاق الصورة
-                                </button>
+
+                                <div className="fixed bottom-6 left-0 right-0 flex items-center justify-center gap-4 z-[10000]">
+                                    <button
+                                        className="text-white bg-slate-800/90 hover:bg-slate-700 p-4 rounded-xl font-arabicUI3 text-lg transition-all duration-300 hover:scale-105 border border-slate-600 hover:border-blue-500/50 backdrop-blur-sm"
+                                        onClick={rotateImage}
+                                        title="تدوير الصورة"
+                                    >
+                                        <MdRotate90DegreesCcw className="text-2xl" />
+                                    </button>
+                                    <button
+                                        className="text-white bg-slate-800/90 hover:bg-slate-700 p-4 rounded-xl font-arabicUI3 text-lg transition-all duration-300 hover:scale-105 border border-slate-600 hover:border-blue-500/50 backdrop-blur-sm"
+                                        onClick={toggleZoom}
+                                        title={isZoomed ? "تصغير الصورة" : "تكبير الصورة"}
+                                    >
+                                        <MdZoomOutMap className="text-2xl" />
+                                    </button>
+                                    <button
+                                        className="text-white bg-slate-800/90 hover:bg-slate-700 px-8 py-4 rounded-xl font-arabicUI3 text-lg transition-all duration-300 hover:scale-105 border border-slate-600 hover:border-blue-500/50 backdrop-blur-sm"
+                                        onClick={closeModal}
+                                    >
+                                        اغلاق الصورة
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     )}

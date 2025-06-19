@@ -85,7 +85,7 @@ const CreateQuestions = () => {
     };
 
     const handleCorrectAnswerEdit = (index, newAnswer) => {
-        setQuestions(prev => prev.map((q, i) =>
+        setQuestions(prev => prev.map((q, i) => 
             i === index ? { ...q, correctAnswer: newAnswer } : q
         ));
         setEditingIndex(null);
@@ -247,7 +247,7 @@ const CreateQuestions = () => {
                                             <BsPencilFill className="text-xl" />
                                         </button>
                                     </div>
-
+                                    
                                     <div className="flex items-center gap-3 mb-4">
                                         <span className="bg-slate-700/50 text-slate-300 px-3 py-1 rounded-lg font-arabicUI3">
                                             {index + 1}
@@ -263,10 +263,11 @@ const CreateQuestions = () => {
                                                     <button
                                                         key={option}
                                                         onClick={() => handleCorrectAnswerEdit(index, option)}
-                                                        className={`px-6 py-3 rounded-xl text-lg font-arabicUI3 transition-all duration-300 ${q.correctAnswer === option
+                                                        className={`px-6 py-3 rounded-xl text-lg font-arabicUI3 transition-all duration-300 ${
+                                                            q.correctAnswer === option
                                                                 ? 'bg-blue-500 text-white'
                                                                 : 'bg-slate-600/50 text-slate-300 hover:bg-slate-600'
-                                                            }`}
+                                                        }`}
                                                     >
                                                         {option}
                                                     </button>
@@ -279,13 +280,15 @@ const CreateQuestions = () => {
                                         {['a', 'b', 'c', 'd'].map((option) => (
                                             <div
                                                 key={option}
-                                                className={`p-4 rounded-xl ${q.correctAnswer === option
+                                                className={`p-4 rounded-xl ${
+                                                    q.correctAnswer === option
                                                         ? 'bg-green-500/10 border border-green-500/30'
                                                         : 'bg-slate-700/30 border border-slate-600'
-                                                    }`}
+                                                }`}
                                             >
-                                                <span className={`font-arabicUI3 ${q.correctAnswer === option ? 'text-green-400' : 'text-slate-300'
-                                                    }`}>
+                                                <span className={`font-arabicUI3 ${
+                                                    q.correctAnswer === option ? 'text-green-400' : 'text-slate-300'
+                                                }`}>
                                                     {q.options[option]}
                                                 </span>
                                             </div>
