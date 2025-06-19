@@ -444,6 +444,8 @@ export default function Quiz({ params }) {
 
 
     const displayResult = () => {
+        const isArabicQuiz = window.location.pathname.startsWith('/arabic/');
+
         return (
             <div className="min-h-screen bg-slate-950 p-4 md:p-8">
                 <div className="max-w-7xl mx-auto">
@@ -457,6 +459,83 @@ export default function Quiz({ params }) {
                                     {quizDetails.namequiz}
                                 </h4>
                             </div>
+
+                            {isArabicQuiz && (
+                                <div dir="rtl" className="bg-gradient-to-b from-slate-800/80 to-slate-900/80 backdrop-blur-sm rounded-2xl border border-slate-700 overflow-hidden">
+                                    <div className="border-b border-slate-700">
+                                        <div className="px-8 py-6">
+                                            <h3 className="font-arabicUI3 text-2xl text-slate-200 mb-2">
+                                                كلية احلامك ؟!                                            </h3>
+                                            <p className="text-slate-400 font-arabicUI3">
+                                                لو عايز تعرف الوزارة بتفكر ازاي فالامتحانات يبقي لازم تشترك فموقع كويزاتك لان هنا بنضيف ليك اهم الامتحانات
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div className="p-8">
+                                        <div className="grid md:grid-cols-2 gap-8">
+                                            <div className="space-y-6">
+                                                <div className="space-y-4">
+                                                    <h4 className="font-arabicUI3 text-lg text-slate-300">
+                                                        طيب لي اشترك فالموقع ؟
+                                                    </h4>
+                                                    <ul className="space-y-3">
+
+                                                        <li className="flex gap-3 items-start">
+                                                            <div className="mt-1 rounded-full bg-blue-500/10 p-1">
+                                                                <BsCheckCircleFill className="text-blue-500" size={16} />
+                                                            </div>
+                                                            <span className="text-slate-300 font-arabicUI3">
+                                                                هتاخد جميع النماذج الاسترشادية فكل المواد محلولة                                                            </span>
+                                                        </li>
+                                                        <li className="flex gap-3 items-start">
+                                                            <div className="mt-1 rounded-full bg-blue-500/10 p-1">
+                                                                <BsCheckCircleFill className="text-blue-500" size={16} />
+                                                            </div>
+                                                            <span className="text-slate-300 font-arabicUI3">
+                                                                اسئلة علي كل فصل من اصعب الكتب فالسوق عشان تضمن الامتحان فايدك                                                            </span>
+                                                        </li>
+                                                        <li className="flex gap-3 items-start">
+                                                            <div className="mt-1 rounded-full bg-blue-500/10 p-1">
+                                                                <BsCheckCircleFill className="text-blue-500" size={16} />
+                                                            </div>
+                                                            <span className="text-slate-300 font-arabicUI3">
+                                                                  ليلة الامتحان هيكون في مسابقة الكاس بتمتحن انت وصحابك علي اصعب امتحان ع تعرف مستواك                                                             </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex flex-col justify-between space-y-6 md:border-r md:border-slate-700 md:pr-8">
+                                                <div className="space-y-4">
+                                                    <div className="flex items-baseline gap-2">
+                                                        <span className="text-4xl font-arabicUI3 text-slate-200">55</span>
+                                                        <span className="text-slate-400 font-arabicUI3">جنيه فقط</span>
+                                                    </div>
+                                                   
+                                                </div>
+
+                                                <div className="flex flex-col gap-4">
+                                                    <Link
+                                                        href="/payment"
+                                                        className="bg-blue-600 hover:bg-blue-700 text-white font-arabicUI3 px-6 py-3 rounded-xl transition-all duration-300 text-center"
+                                                    >
+                                                        اشترك الآن
+                                                    </Link>
+                                                    <a
+                                                        href="https://wa.me/201080506463"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="bg-green-500 hover:bg-green-700 text-slate-200 font-arabicUI3 px-6 py-3 rounded-xl transition-all duration-300 text-center border border-slate-700"
+                                                    >
+                                                       للتواصل واتساب
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
 
                             <div className="bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-600">
                                 <h1 className="font-arabicUI3 text-3xl md:text-6xl text-center text-slate-200 mb-4">
@@ -573,7 +652,7 @@ export default function Quiz({ params }) {
 
     return (
         <div className="min-h-screen bg-slate-950 py-8 px-4 md:px-8">
-            {quizComplete ? (
+            {!quizComplete ? (
                 displayResult()
             ) : (
                 <div className="max-w-7xl mx-auto space-y-6">
