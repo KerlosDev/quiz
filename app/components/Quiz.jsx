@@ -76,12 +76,8 @@ export default function Quiz({ params }) {
     }, [])
 
     // Helper to determine which API to use based on subject
-    const getApiMethod = () => {
-        console.log('Current quizid:', quizid); // Log the quiz ID
-
-        // First check if we can determine the subject from the URL
+    const getApiMethod = () => {        // First check if we can determine the subject from the URL
         const path = window.location.pathname;
-        console.log('Current path:', path); // Log the current path
 
         // Check URL path first
         if (path.startsWith('/bio/')) return GlobalApi.quizbio;
@@ -94,7 +90,6 @@ export default function Quiz({ params }) {
 
         // If no match in URL, check quizDetails subject
         if (quizDetails && quizDetails.subject) {
-            console.log('Quiz subject:', quizDetails.subject); // Log the subject
             if (quizDetails.subject.toLowerCase().includes('bio')) return GlobalApi.quizbio;
             if (quizDetails.subject.toLowerCase().includes('eng')) return GlobalApi.quizEn;
             if (quizDetails.subject.toLowerCase().includes('chem')) return GlobalApi.quizCh;
@@ -113,25 +108,19 @@ export default function Quiz({ params }) {
             if (quizid.toLowerCase().startsWith('geo')) return GlobalApi.quizgeo;
             if (quizid.toLowerCase().startsWith('fr')) return GlobalApi.quizFr;
             if (quizid.toLowerCase().startsWith('ar')) return GlobalApi.quizAr;
-        }
-
-        console.log('Defaulting to English API'); // Log when defaulting
-        // Default to English if nothing else matches
+        }        // Default to English if nothing else matches
         return GlobalApi.quizEn;
     };
 
     const getdata = () => {
         const apiMethod = getApiMethod();
-        console.log('Selected API method:', apiMethod.name); // Log which API method is being used
         apiMethod(quizid).then(res => {
-            console.log('API Response:', res); // Log the API response
             if (!res || !res.dataOfQuizs || !res.dataOfQuizs[0]) {
-                console.error('Invalid API response structure');
                 return;
             }
             setQuizDetalis(res.dataOfQuizs[0])
         }).catch(error => {
-            console.error('API Error:', error); // Log any API errors
+            // Handle error silently
         });
     }
 
@@ -139,22 +128,16 @@ export default function Quiz({ params }) {
         const fetchQuizData = async () => {
             setLoading(true);
             try {
-                console.log('Quiz Details:', quizDetails); // Log quiz details before fetching file
                 const fileUrl = await waitForFileUrl(quizDetails.fileOfQus?.url);
-                console.log('File URL:', fileUrl); // Log the file URL
 
                 if (!fileUrl) {
-                    console.error("File URL not found in API response");
                     setLoading(false);
                     return;
                 }
 
                 const textResponse = await fetch(fileUrl);
                 const text = await textResponse.text();
-                console.log('Quiz Text Content:', text.substring(0, 200)); // Log first 200 chars of content
-
                 const parsedQuestions = convertTextToJson(text);
-                console.log('Parsed Questions:', parsedQuestions.length); // Log number of parsed questions
                 setQuestions(parsedQuestions);
 
                 // Load data from localStorage, if available
@@ -180,7 +163,6 @@ export default function Quiz({ params }) {
 
                 setLoading(false);
             } catch (error) {
-                console.error("Error fetching quiz data:", error);
                 setLoading(false);
             }
         };
@@ -955,8 +937,8 @@ export default function Quiz({ params }) {
                                     <img
                                         ref={imgRef}
                                         className={`${isZoomed
-                                                ? 'w-screen h-screen object-contain'
-                                                : 'w-full h-auto max-h-[80vh] object-contain'
+                                            ? 'w-screen h-screen object-contain'
+                                            : 'w-full h-auto max-h-[80vh] object-contain'
                                             } rounded-xl shadow-2xl border border-slate-600 transition-all duration-300`}
                                         src={currentImage}
                                         alt="Zoomed Image"
