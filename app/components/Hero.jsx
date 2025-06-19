@@ -4,13 +4,12 @@ import { HiBadgeCheck } from "react-icons/hi";
 
 
 import { TbMessageFilled } from "react-icons/tb";
-import ActiveSqu from "./ActiveSqu";
 import GreatToday from "./GreatToday";
 import Image from 'next/image';
 import { IoPersonSharp } from "react-icons/io5";
 import { PremiumUserProvider } from '../context/PremiumUserContext';
 import Link from "next/link";
- 
+
 const Hero = () => {
     const Features = [
         {
@@ -92,7 +91,7 @@ const Hero = () => {
         }
     };
 
-    const {user} = useUser()
+    const { user } = useUser()
     // Update the message after the component mounts
     useEffect(() => {
         setMessage(getRandomMessage());
@@ -135,9 +134,6 @@ const Hero = () => {
                             </h3>
                         </Link>
                     </div>
-
-
-                    <ActiveSqu />
 
 
                     <div className="col-span-2 lg:col-span-3  h-full  bg-yellow-400 shadow-2xl bg-paton bg-cover  outline-dashed outline-offset-2 outline-yellow-300  p-6 mt-2 rounded-xl flex items-center">
