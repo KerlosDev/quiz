@@ -6,6 +6,8 @@ import { FiTrash2 } from 'react-icons/fi';
 
 const CreateQuestions = () => {
     const [questions, setQuestions] = useState([]);
+    const [pinnedImageUrl, setPinnedImageUrl] = useState('');
+    const [isPinned, setIsPinned] = useState(false);
     const [currentQuestion, setCurrentQuestion] = useState({
         question: 'اختر الاجابة الصحيحة ؟',
         options: {
@@ -18,6 +20,7 @@ const CreateQuestions = () => {
         imageUrl: ''
     });
     const [editingIndex, setEditingIndex] = useState(null);
+    const [pastedText, setPastedText] = useState('');
 
     // Load questions from localStorage on initial render
     useEffect(() => {
@@ -43,6 +46,14 @@ const CreateQuestions = () => {
                     [option]: value
                 }
             }));
+        } else if (name === 'imageUrl') {
+            setCurrentQuestion(prev => ({
+                ...prev,
+                imageUrl: value
+            }));
+            if (isPinned) {
+                setPinnedImageUrl(value);
+            }
         } else {
             setCurrentQuestion(prev => ({
                 ...prev,
@@ -51,10 +62,17 @@ const CreateQuestions = () => {
         }
     };
 
+    const handlePinToggle = () => {
+        setIsPinned(!isPinned);
+        if (!isPinned) {
+            setPinnedImageUrl(currentQuestion.imageUrl);
+        }
+    };
+
     const addQuestion = (e) => {
         e.preventDefault();
         setQuestions(prev => [...prev, currentQuestion]);
-        setCurrentQuestion({
+        setCurrentQuestion(prev => ({
             question: 'اختر الاجابة الصحيحة ؟',
             options: {
                 a: 'أ',
@@ -63,8 +81,8 @@ const CreateQuestions = () => {
                 d: 'د'
             },
             correctAnswer: 'a',
-            imageUrl: ''
-        });
+            imageUrl: isPinned ? pinnedImageUrl : ''
+        }));
     };
 
     const generateText = () => {
@@ -85,7 +103,7 @@ const CreateQuestions = () => {
     };
 
     const handleCorrectAnswerEdit = (index, newAnswer) => {
-        setQuestions(prev => prev.map((q, i) => 
+        setQuestions(prev => prev.map((q, i) =>
             i === index ? { ...q, correctAnswer: newAnswer } : q
         ));
         setEditingIndex(null);
@@ -105,6 +123,70 @@ const CreateQuestions = () => {
         }
     };
 
+    const parseQuestionText = () => {
+        try {
+            // Split by newlines and filter empty lines
+            const lines = pastedText.split('\n').filter(line => line.trim());
+
+            // First line contains the question (remove the number if present)
+            const question = lines[0].replace(/^\d+\s*/, '').trim();
+
+            // Initialize options object
+            const options = {
+                a: '',
+                b: '',
+                c: '',
+                d: ''
+            };
+
+            // Process each line that starts with parentheses or Arabic letters
+            lines.slice(1).forEach(line => {
+                const trimmedLine = line.trim();
+                // Match different possible formats
+                if (trimmedLine.match(/^[)]\s*أ[)]|^أ-|^\(أ\)|^أ\./)) {
+                    options.a = trimmedLine.replace(/^[)]\s*أ[)]|^أ-|^\(أ\)|^أ\./, '').trim();
+                }
+                if (trimmedLine.match(/^[)]\s*ب[)]|^ب-|^\(ب\)|^ب\./)) {
+                    options.b = trimmedLine.replace(/^[)]\s*ب[)]|^ب-|^\(ب\)|^ب\./, '').trim();
+                }
+                if (trimmedLine.match(/^[)]\s*ج[)]|^ج-|^\(ج\)|^ج\./)) {
+                    options.c = trimmedLine.replace(/^[)]\s*ج[)]|^ج-|^\(ج\)|^ج\./, '').trim();
+                }
+                if (trimmedLine.match(/^[)]\s*د[)]|^د-|^\(د\)|^د\./)) {
+                    options.d = trimmedLine.replace(/^[)]\s*د[)]|^د-|^\(د\)|^د\./, '').trim();
+                }
+            });
+
+            // Clean up the text by removing any special characters
+            const cleanText = (text) => {
+                return text
+                    .replace(/[٠-٩]/g, '') // Remove Arabic numerals
+                    .replace(/\s+/g, ' ')   // Replace multiple spaces with single space
+                    .replace(/\u200F/g, '') // Remove RIGHT-TO-LEFT MARK
+                    .replace(/\u200E/g, '') // Remove LEFT-TO-RIGHT MARK
+                    .trim();
+            };
+
+            // Update the current question with cleaned text
+            setCurrentQuestion(prev => ({
+                ...prev,
+                question: cleanText(question),
+                options: {
+                    a: cleanText(options.a),
+                    b: cleanText(options.b),
+                    c: cleanText(options.c),
+                    d: cleanText(options.d)
+                }
+            }));
+
+            // Clear the pasted text
+            setPastedText('');
+        } catch (error) {
+            console.error('Error parsing question:', error);
+            alert('حدث خطأ في تحليل النص. يرجى التأكد من تنسيق النص بشكل صحيح.');
+        }
+    };
+
     return (
         <div className="min-h-screen bg-slate-950 py-8 px-4 md:px-8">
             <div className="max-w-7xl mx-auto space-y-6">
@@ -121,6 +203,29 @@ const CreateQuestions = () => {
 
                     {/* Question Form */}
                     <form onSubmit={addQuestion} className="space-y-6">
+                        <div className="bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-600">
+                            <label className="block text-slate-200 text-lg mb-2 font-arabicUI3">الصق السؤال كاملاً هنا</label>
+                            <textarea
+                                value={pastedText}
+                                onChange={(e) => setPastedText(e.target.value)}
+                                className="w-full bg-slate-700/50 text-slate-200 rounded-xl p-4 border border-slate-600 focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all duration-300 mb-3"
+                                dir="rtl"
+                                rows={6} placeholder="الصق السؤال كاملاً هنا مثال:
+1 حدد المجال الذي يُعد أساسًا لتعزيز الاستدامة الاقتصادية والبيئية.
+)أ( الاجتماعي.
+)ب( التكنولوجي.
+)ج( البيئي.
+)د( الاقتصادي."
+                            />
+                            <button
+                                type="button"
+                                onClick={parseQuestionText}
+                                className="w-full bg-indigo-600/80 hover:bg-indigo-700/80 text-white text-lg font-arabicUI3 px-6 py-3 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl border border-indigo-500/50"
+                            >
+                                توزيع النص إلى الحقول
+                            </button>
+                        </div>
+
                         <div className="bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-600">
                             <label className="block text-slate-200 text-lg mb-2 font-arabicUI3">السؤال</label>
                             <input
@@ -181,6 +286,27 @@ const CreateQuestions = () => {
                                 placeholder="https://i.imgur.com/example.png"
                                 dir="ltr"
                             />
+                            <div className="mt-4 flex items-center gap-3">
+                                <button
+                                    type="button"
+                                    onClick={handlePinToggle}
+                                    className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${isPinned ? 'bg-green-500' : 'bg-slate-600'
+                                        }`}
+                                >
+                                    <span
+                                        className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${isPinned ? 'translate-x-5' : 'translate-x-0'
+                                            }`}
+                                    />
+                                </button>
+                                <span className="text-slate-300 text-sm font-arabicUI3">
+                                    {isPinned ? 'تثبيت رابط الصورة للأسئلة التالية' : 'تثبيت رابط الصورة'}
+                                </span>
+                            </div>
+                            {isPinned && pinnedImageUrl && (
+                                <div className="mt-2 text-green-400 text-sm">
+                                    سيتم استخدام نفس رابط الصورة في الأسئلة التالية
+                                </div>
+                            )}
                         </div>
 
                         <button
@@ -247,7 +373,7 @@ const CreateQuestions = () => {
                                             <BsPencilFill className="text-xl" />
                                         </button>
                                     </div>
-                                    
+
                                     <div className="flex items-center gap-3 mb-4">
                                         <span className="bg-slate-700/50 text-slate-300 px-3 py-1 rounded-lg font-arabicUI3">
                                             {index + 1}
@@ -263,11 +389,10 @@ const CreateQuestions = () => {
                                                     <button
                                                         key={option}
                                                         onClick={() => handleCorrectAnswerEdit(index, option)}
-                                                        className={`px-6 py-3 rounded-xl text-lg font-arabicUI3 transition-all duration-300 ${
-                                                            q.correctAnswer === option
-                                                                ? 'bg-blue-500 text-white'
-                                                                : 'bg-slate-600/50 text-slate-300 hover:bg-slate-600'
-                                                        }`}
+                                                        className={`px-6 py-3 rounded-xl text-lg font-arabicUI3 transition-all duration-300 ${q.correctAnswer === option
+                                                            ? 'bg-blue-500 text-white'
+                                                            : 'bg-slate-600/50 text-slate-300 hover:bg-slate-600'
+                                                            }`}
                                                     >
                                                         {option}
                                                     </button>
@@ -280,15 +405,13 @@ const CreateQuestions = () => {
                                         {['a', 'b', 'c', 'd'].map((option) => (
                                             <div
                                                 key={option}
-                                                className={`p-4 rounded-xl ${
-                                                    q.correctAnswer === option
-                                                        ? 'bg-green-500/10 border border-green-500/30'
-                                                        : 'bg-slate-700/30 border border-slate-600'
-                                                }`}
+                                                className={`p-4 rounded-xl ${q.correctAnswer === option
+                                                    ? 'bg-green-500/10 border border-green-500/30'
+                                                    : 'bg-slate-700/30 border border-slate-600'
+                                                    }`}
                                             >
-                                                <span className={`font-arabicUI3 ${
-                                                    q.correctAnswer === option ? 'text-green-400' : 'text-slate-300'
-                                                }`}>
+                                                <span className={`font-arabicUI3 ${q.correctAnswer === option ? 'text-green-400' : 'text-slate-300'
+                                                    }`}>
                                                     {q.options[option]}
                                                 </span>
                                             </div>

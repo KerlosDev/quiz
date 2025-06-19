@@ -47,32 +47,32 @@ const Arabic = () => {
     // Function to filter and render quizzes based on numbook
     const renderQuizzes = () => {
         let filterKey = '';
-        if (numbook === 1) filterKey = 'shamel1'; // First section (نحو 1) is free
+        if (numbook === 1) filterKey = 'shamel1';
         if (numbook === 2) filterKey = 'shamel2';
         if (numbook === 3) filterKey = 'shamel3';
 
-        return dataBook
-            ?.filter((item) => item.level === filterKey)
-            ?.map((item, index) => {
-                const isFreePart = numbook === 1; // First section (نحو 1) is free
-                const quizLink = isFreePart || hasPremiumAccess ?
-                    `/arabic/${item.id}` : '/payment';
+        const filteredQuizzes = dataBook?.filter((item) => item.level === filterKey);
 
-                return (
-                    <div
-                        key={item.id}
-                        onClick={() => router.push(quizLink)}
-                        className="cursor-pointer"
-                    >
-                        <h4 className='hover:scale-105 justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto flex'>
-                            {item?.namequiz || 'No Title Available'}
-                            {isFreePart || hasPremiumAccess ?
-                                <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" /> :
-                                <FaLock className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />}
-                        </h4>
-                    </div>
-                );
-            });
+        return filteredQuizzes?.map((item, index) => {
+            const isFirstExamInChapterOne = numbook === 1 && index === 0; // Only first exam in chapter one is free
+            const quizLink = isFirstExamInChapterOne || hasPremiumAccess ?
+                `/arabic/${item.id}` : '/payment';
+
+            return (
+                <div
+                    key={item.id}
+                    onClick={() => router.push(quizLink)}
+                    className="cursor-pointer"
+                >
+                    <h4 className='hover:scale-105 justify-between rtl bg-paton bg-cover text-center cursor-pointer transition w-full sm:w-11/12 md:w-10/12 lg:w-9/12 text-xl sm:text-2xl md:text-3xl lg:text-3xl font-arabicUI2 bg-yellow-400 text-yellow-800 p-3 rounded-xl m-3 mx-auto flex'>
+                        {item?.namequiz || 'No Title Available'}
+                        {isFirstExamInChapterOne || hasPremiumAccess ?
+                            <FaPlay className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" /> :
+                            <FaLock className="text-xl sm:text-2xl md:text-3xl lg:text-4xl" />}
+                    </h4>
+                </div>
+            );
+        });
     };
 
     return (
