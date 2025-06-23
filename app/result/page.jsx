@@ -64,10 +64,10 @@ const ResultPage = () => {
             const scorePercentage = (data.score / data.totalQuestions) * 100;
             stats.averageScore += scorePercentage;
             stats.averageTime += data.timeSpent;
-            
+
             // Count subject distribution
             stats.subjectDistribution[data.sub] = (stats.subjectDistribution[data.sub] || 0) + 1;
-            
+
             // Count score ranges
             if (scorePercentage <= 20) stats.scoreRanges['0-20%']++;
             else if (scorePercentage <= 40) stats.scoreRanges['21-40%']++;

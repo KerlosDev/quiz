@@ -99,7 +99,7 @@ const Page = () => {
                     position: "top-center",
                 });
                 await new Promise(resolve => setTimeout(resolve, 2000));
-                window.location.href = "/english";
+                window.location.href = "/";
             } else {
                 toast.error("عذراً، هذا الكود غير صالح. يرجى المحاولة مرة أخرى", {
                     className: "font-arabicUI3",
